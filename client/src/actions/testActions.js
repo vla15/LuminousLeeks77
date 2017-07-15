@@ -1,8 +1,8 @@
-const test = function() {
+const test = () => {
   return {
     type: 'TEST',
     payload: 1
   };
 };
 
-export default test;
+export {test};
