@@ -1,9 +1,9 @@
 {
   "passport": {
     "Google": {
-      "clientID": "GOOGLE_CLIENT_ID",
-      "clientSecret": "GOOGLE_CLIENT_SECRET",
-      "callbackURL": "GOOGLE_CALLBACK_URL"
+      "clientID": "717141302367-l6nhmn48n8b2r94ii5qa7trghi8rhdfa.apps.googleusercontent.com",
+      "clientSecret": "W65sqms9fFcPRu_mJ8IGnwXA",
+      "callbackURL": "http://localhost:3000/auth/google/callback"
     },
 
     "Facebook": {
