@@ -8,7 +8,7 @@ const subdomain = require('subdomain');
 
 const app = express();
 
-app.use(subdomain({ base : process.env.DOMAIN || 'localhost', removeWWW : true }));
+app.use(subdomain({ base: process.env.DOMAIN || 'localhost', removeWWW: true }));
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
