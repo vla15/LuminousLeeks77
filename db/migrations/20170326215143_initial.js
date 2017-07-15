@@ -17,14 +17,14 @@ exports.up = function (knex, Promise) {
       table.string('password', 100).nullable();
       table.string('salt', 100).nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
-    })
+    }),
   ]);
 };
 
 exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('auths'),
-    knex.schema.dropTable('profiles')
+    knex.schema.dropTable('profiles'),
   ]);
 };
 
