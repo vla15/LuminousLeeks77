@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Friend = require('../../db/models/friends.js');
+const Profile = require('../../db/models/profiles_host.js');
 const dbUtils = require('../../db/lib/utils.js');
 
 describe('Profile_host model tests', function () {
@@ -25,19 +25,6 @@ describe('Profile_host model tests', function () {
         done(err);
       });
   });
-
-  // it('Should verify that all usernames are unique', function (done) {
-  //   // Insert a user with a username that's already in existence
-  //   Profile_host.forge({ username: 'TestUser1', password: 'abc' }).save()
-  //     .then(function (result) {
-  //       done(new Error('was not supposed to succeed'))
-  //     })
-  //     .catch(function (err) {
-  //       expect(err).to.be.an('error');
-  //       expect(err).to.match(/duplicate key value violates unique constraint/);
-  //       done();
-  //     });
-  // });
 
   it('Should be able to update an already existing record', function (done) {
     Profile_host.where({ id: 1 }).fetch()
