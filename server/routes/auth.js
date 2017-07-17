@@ -8,9 +8,19 @@ router.route('/')
     res.render('index.ejs');
   });
 
+router.route('/host')
+  .get(middleware.auth.verify, (req, res) => {
+    res.render('index.ejs');
+  });
+
 router.route('/login')
   .get((req, res) => {
     res.render('login.ejs', { message: req.flash('loginMessage') });
+  });
+
+router.route('/host/login')
+  .get((req, res) => {
+    res.render('hostlogin.ejs', { message: req.flash('loginMessage') });
   });
 
 router.route('/signup')
@@ -35,12 +45,20 @@ router.get('/auth/google', middleware.passport.authenticate('google', {
   scope: ['email', 'profile']
 }));
 
+router.get('/auth/host/google', middleware.passport.authenticate('google', {
+  scope: ['email', 'profile']
+}));
+
 router.get('/auth/google/callback', middleware.passport.authenticate('google', {
   successRedirect: '/profile',
   failureRedirect: '/login'
 }));
 
 router.get('/auth/facebook', middleware.passport.authenticate('facebook', {
+  scope: ['public_profile', 'email']
+}));
+
+router.get('/auth/host/facebook', middleware.passport.authenticate('facebook', {
   scope: ['public_profile', 'email']
 }));
 

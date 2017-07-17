@@ -6,7 +6,8 @@ module.exports.verify = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  res.redirect('/login');
+  console.log(req);
+  req.originalUrl === '/host' ? res.redirect('/host/login') : res.redirect('/login');
 };
 
 module.exports.session = session({
