@@ -32,7 +32,6 @@ const Auth = db.Model.extend({
       });
   }
 });
-
 const Auth_host = db.Model.extend({
   tableName: 'auths_host',
   profile_host: function() {
@@ -63,7 +62,6 @@ const Auth_host = db.Model.extend({
       });
   }
 });
-
 
 module.exports = db.model('Auth', Auth);
 module.exports = db.model('Auth_host', Auth_host);
