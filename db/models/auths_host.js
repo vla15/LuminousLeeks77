@@ -2,10 +2,10 @@ const db = require('../');
 const Promise = require('bluebird');
 const bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'));
 
-const Auth = db.Model.extend({
-  tableName: 'auths',
-  profile: function() {
-    return this.belongsTo('Profile');
+const Auth_host = db.Model.extend({
+  tableName: 'auths_host',
+  profile_host: function() {
+    return this.belongsTo('Profile_host');
   },
 
   initialize: function() {
@@ -33,5 +33,4 @@ const Auth = db.Model.extend({
   }
 });
 
-module.exports = db.model('Auth', Auth);
-
+module.exports = db.model('Auth_host', Auth_host);
