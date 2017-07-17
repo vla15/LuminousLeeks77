@@ -112,7 +112,15 @@ passport.use('google', new GoogleStrategy({
   clientSecret: config.Google.clientSecret,
   callbackURL: config.Google.callbackURL
 },
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
+  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, false, done))
+);
+
+passport.use('googlehost', new GoogleStrategy({
+  clientID: config.GoogleHost.clientID,
+  clientSecret: config.GoogleHost.clientSecret,
+  callbackURL: config.GoogleHost.callbackURL
+},
+  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, true, done))
 );
 
 passport.use('facebook', new FacebookStrategy({
@@ -121,10 +129,19 @@ passport.use('facebook', new FacebookStrategy({
   callbackURL: config.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
+  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, false, done))
 );
 
-const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
+passport.use('facebookhost', new FacebookStrategy({
+  clientID: config.FacebookHost.clientID,
+  clientSecret: config.FacebookHost.clientSecret,
+  callbackURL: config.FacebookHost.callbackURL,
+  profileFields: ['id', 'emails', 'name']
+},
+  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, true, done))
+);
+
+const getOrCreateOAuthProfile = (type, oauthProfile, host, done) => {
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
