@@ -1,14 +1,20 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { test } from '../actions/testActions.js';
 
-import {test} from '../actions/testActions.js';
+import { Navigation } from '../components/Navigation.jsx';
+import { Message } from '../components/Message.jsx';
+import { QueueInfo } from '../components/QueueInfo.jsx';
+import { EnqueueForm } from '../components/EnqueueForm.jsx';
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello World from React</h1>
-        <button onClick={this.props.test}>Test</button>
+        <Navigation />
+        <Message/>
+        <QueueInfo/>
+        <EnqueueForm/>
       </div>
     );
   }

@@ -1,24 +1,25 @@
 import React from 'react';
+import { Grid, Row, Col } from 'react-bootstrap';
 
-export const queueInfo = (props) => {
+export const QueueInfo = (props) => {
   return (
-    <div className="row">
-      <div className="row">
-        <div className="col-xs-6">
+    <Grid>
+      <Row className="show-grid">
+        <Col xs={6}>
           <h6>Party Count</h6>
-          <div>{props.queue.partyCount}</div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-xs-6">
+          <div>4</div>
+        </Col>
+      </Row>
+      <Row className="show-grid">
+        <Col xs={6}>
           <h6>Wait Duration</h6>
-          <div>{props.queue.waitDuration}</div>
-        </div>
-        <div className="col-xs-6">
+          <div>20</div>
+        </Col>
+        <Col xs={6}>
           <h6>Wait Time</h6>
-          <div>{props.queue.waitTime}</div>
-        </div>
-      </div>
-    </div>
+          <div>9:25pm</div>
+        </Col>
+      </Row>
+    </Grid>
   );
 };

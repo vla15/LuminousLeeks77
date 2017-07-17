@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const queueInfo = (props) => {
+export const PartyInfo = (props) => {
   return (
     <div className="row">
       <div className="row">

@@ -1,29 +1,32 @@
 import React from 'react';
+import { Navbar, Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 
-export const enqueueForm = (props) => {
+export const EnqueueForm = (props) => {
   return (
-    <div className="row">
-      <div className="row">
-        <div className="col-xs-12">
-          <h6>Party size</h6>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-xs-2">
-          <button>+</button>
-        </div>
-        <div className="col-xs-8">
-          1
-        </div>
-        <div className="col-xs-2">
-          <button>-</button>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-xs-12">
-          <button>Enqueue</button>
-        </div>
-      </div>
-    </div>
+    <Navbar fixedBottom={true}>
+      <Grid>
+        <Row>
+          <Col xs={12} className="center">
+            <h6>Party size</h6>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={2}>
+            <Button>-</Button>
+          </Col>
+          <Col xs={8} className="center">
+            <div className="number">1</div>
+          </Col>
+          <Col xs={2}>
+            <Button>+</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Button block={true}>Enqueue</Button>
+          </Col>
+        </Row>
+      </Grid>
+    </Navbar>
   );
 };

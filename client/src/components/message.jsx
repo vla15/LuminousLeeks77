@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const message = (props) => {
+export const Message = (props) => {
   return (
     <div className="row">
       <div className="col-xs-12">
