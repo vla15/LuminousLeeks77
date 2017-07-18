@@ -1,7 +1,7 @@
 // var app = require('express').createServer();
 // var io = require('socket.io')(app);
 
-
+/*
 var connectionCount = function connectionCount(customers, hosts) {
   var res = {
     customer: Object.keys(customers).length,
@@ -9,6 +9,7 @@ var connectionCount = function connectionCount(customers, hosts) {
   };
   return res;
 };
+*/
 
 module.exports = server => {
   const io = require('socket.io')(server, { cookie: true });
