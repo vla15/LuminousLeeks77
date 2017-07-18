@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import io from 'socket.io-client';
+import View from './components/view';
 
 import Customer from './containers/Customer.jsx';
 import customerStore from './customerStore.js';

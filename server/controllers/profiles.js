@@ -3,6 +3,7 @@ const models = require('../../db/models');
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
     .then(profiles => {
+      console.log('profiles', profiles);
       res.status(200).send(profiles);
     })
     .catch(err => {
@@ -51,6 +52,25 @@ module.exports.update = (req, res) => {
     })
     .then(() => {
       res.sendStatus(201);
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(() => {
+      res.sendStatus(404);
+    });
+};
+
+module.exports.updatePhone = (req, res) => {
+  models.Profile.where({ id: req.user.id }).fetch()
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      return profile.save(req.body, { method: 'update' });
+    })
+    .then(() => {
+      res.redirect('/profile');
     })
     .error(err => {
       res.status(500).send(err);

@@ -2,7 +2,9 @@
 
     <div class="page-header text-center">
         <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <% if (user.phone) { %>
         <a href="/" class="btn btn-default btn-sm">Home page</a>
+        <% } %>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
@@ -13,16 +15,30 @@
             <div class="well">
                 <h3><span class="fa fa-user"></span> Local</h3>
 
-                <% if (user.email) { %>
+                <% if (user.email && user.phone) { %>
                 <p>
                     <strong>display name</strong>: <%= user.display %><br>
                     <strong>id</strong>: <%= user.id %><br>
-                    <strong>email</strong>: <%= user.email %>
+                    <strong>email</strong>: <%= user.email %><br>
+                    <strong>phone</strong>: 
+                    <form action="/phone" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="phone" value="<%= user.phone %>">
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-lg">Update</button>
+                    </form>
                 </p>
-
-                <a href="/unlink/local" class="btn btn-default">Unlink</a>
                 <% } else { %>
-                <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                    <strong>display name</strong>: <%= user.display %><br>
+                    <strong>id</strong>: <%= user.id %><br>
+                    <strong>email</strong>: <%= user.email %><br>
+                    <strong>You must provide a phone number <br>
+                    <form action="/phone" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="phone">
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-lg">Enter</button>
+                    </form>
                 <% } %>
 
             </div>
