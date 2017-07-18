@@ -6,15 +6,12 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
-//passport uses this to place a user object in to a session
-//you might not wanna put the whole user in the user object, 
-// just the user.id will be good, so you are only using user id in the session, 
-// so when the user comes back, you go to the database and pull that id out
-passport.serializeUser((profile, done) => { //(passport-3)
+
+passport.serializeUser((profile, done) => { 
   done(null, profile.id);
 });
-//passport pulls user out of a session
-passport.deserializeUser((id, done) => { //(passport-4)
+
+passport.deserializeUser((id, done) => { 
   return models.Profile.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -109,16 +106,12 @@ passport.use('local-login', new LocalStrategy({
       done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
     });
 }));
-//client id and secret are tokens that we set up over the development console to let google who we are as an application
-//these id and secret will identigy application itself that will allow a user to authenticate against
-//callback Url is what google is sending the user back to, once they are done authenticating
-passport.use('google', new GoogleStrategy({ //(passport-5)
+
+passport.use('google', new GoogleStrategy({ 
   clientID: config.Google.clientID,
   clientSecret: config.Google.clientSecret,
   callbackURL: config.Google.callbackURL
 },
-// //the startegy is sending user out to google and once that user is back from google with the profile information, it's going to call this function
-//in this function, the entire user profile is attached to the session so that the routes can have access to that
 (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done)) 
 );
 
