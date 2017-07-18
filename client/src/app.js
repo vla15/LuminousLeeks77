@@ -11,21 +11,18 @@ import hostStore from './hostStore.js';
 
 import {Provider} from 'react-redux';
 
+import axios from 'axios';
 
-if (true) {
-  ReactDOM.render(
-    <Provider store={customerStore}>
-      <Customer />
-    </Provider>,
-    document.getElementById('root')
-  );
-}
-
-if (false) {
-  ReactDOM.render(
-    <Provider store={hostStore}>
-      <Host />
-    </Provider>,
-    document.getElementById('root')
-  );
-}
+axios.get('/userInfo')
+.then(result => {
+  if (result.data.admin === null) {
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.getElementById('root')
+    );
+  } else {
+    console.log('monkey')
+  }
+})
