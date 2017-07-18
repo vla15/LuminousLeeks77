@@ -9,6 +9,11 @@ router.route('/')
     res.render('index.ejs');
   });
 
+router.route('/userInfo')
+  .get((req, res) => {
+    res.send(req.user);
+  });
+
 router.route('/host')
   .get(middleware.auth.verify, (req, res) => {
     res.render('index.ejs');
@@ -61,11 +66,11 @@ router.route('/logout')
     res.redirect('/');
   });
 
-router.get('/auth/google', middleware.passport.authenticate('google', { 
+router.get('/auth/google', middleware.passport.authenticate('google', {
   scope: ['email', 'profile']
 }));
 
-router.get('/auth/google/callback', middleware.passport.authenticate('google', { 
+router.get('/auth/google/callback', middleware.passport.authenticate('google', {
   successRedirect: '/profile',
   failureRedirect: '/login'
 }));
