@@ -107,12 +107,12 @@ passport.use('local-login', new LocalStrategy({
     });
 }));
 
-passport.use('google', new GoogleStrategy({ 
-  clientID: config.Google.clientID,
-  clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
+passport.use('google', new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENTID || config.Google.clientID,
+  clientSecret: process.env.GOOGLE_CLIENTSECRET || config.Google.clientSecret,
+  callbackURL: process.env.GOOGLE_URL || config.Google.callbackURL,
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done)) 
+(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
 passport.use('facebook', new FacebookStrategy({
