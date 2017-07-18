@@ -7,11 +7,11 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
-passport.serializeUser((profile, done) => {
+passport.serializeUser((profile, done) => { 
   done(null, profile.id);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((id, done) => { 
   return models.Profile.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -73,56 +73,56 @@ passport.use('local-login', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 },
-  (req, email, password, done) => {
-    // fetch any profiles that have a local auth account with this email address
-    return models.Profile.where({ email }).fetch({
-      withRelated: [{
-        auths: query => query.where({ type: 'local' })
-      }]
-    })
-      .then(profile => {
-        // if there is no profile with that email or if there is no local auth account with profile
-        if (!profile || !profile.related('auths').at(0)) {
-          throw profile;
-        }
+(req, email, password, done) => {
+  // fetch any profiles that have a local auth account with this email address
+  return models.Profile.where({ email }).fetch({
+    withRelated: [{
+      auths: query => query.where({ type: 'local' })
+    }]
+  })
+    .then(profile => {
+      // if there is no profile with that email or if there is no local auth account with profile
+      if (!profile || !profile.related('auths').at(0)) {
+        throw profile;
+      }
 
-        // check password and pass through account
-        return Promise.all([profile, profile.related('auths').at(0).comparePassword(password)]);
-      })
-      .then(([profile, match]) => {
-        if (!match) {
-          throw profile;
-        }
-        // if the password matches, pass on the profile
-        return profile;
-      })
-      .then(profile => {
-        // call done with serialized profile to include in session
-        done(null, profile.serialize());
-      })
-      .error(err => {
-        done(err, null);
-      })
-      .catch(() => {
-        done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
-      });
-  }));
+      // check password and pass through account
+      return Promise.all([profile, profile.related('auths').at(0).comparePassword(password)]);
+    })
+    .then(([profile, match]) => {
+      if (!match) {
+        throw profile;
+      }
+      // if the password matches, pass on the profile
+      return profile;
+    })
+    .then(profile => {
+      // call done with serialized profile to include in session
+      done(null, profile.serialize());
+    })
+    .error(err => {
+      done(err, null);
+    })
+    .catch(() => {
+      done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
+    });
+}));
 
 passport.use('google', new GoogleStrategy({
-  clientID: config.Google.clientID,
-  clientSecret: config.Google.clientSecret,
-  callbackURL: config.Google.callbackURL
+  clientID: process.env.GOOGLE_CLIENTID || config.Google.clientID,
+  clientSecret: process.env.GOOGLE_CLIENTSECRET || config.Google.clientSecret,
+  callbackURL: process.env.GOOGLE_URL || config.Google.callbackURL,
 },
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
+(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
 passport.use('facebook', new FacebookStrategy({
-  clientID: config.Facebook.clientID,
-  clientSecret: config.Facebook.clientSecret,
-  callbackURL: config.Facebook.callbackURL,
+  clientID: process.env.FACEBOOK_CLIENTID || config.Facebook.clientID,
+  clientSecret: process.env.FACEBOOK_CLIENTSECRET || config.Facebook.clientSecret,
+  callbackURL: process.env.FACEBOOK_URL || config.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
+(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
 );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {

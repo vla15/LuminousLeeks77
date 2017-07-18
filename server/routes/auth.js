@@ -48,7 +48,6 @@ router.route('/phone')
   //  }
   });
 
-
 router.route('/profile')
   .get(middleware.auth.verify, (req, res) => {
     res.render('profile.ejs', {
@@ -62,11 +61,11 @@ router.route('/logout')
     res.redirect('/');
   });
 
-router.get('/auth/google', middleware.passport.authenticate('google', {
+router.get('/auth/google', middleware.passport.authenticate('google', { 
   scope: ['email', 'profile']
 }));
 
-router.get('/auth/google/callback', middleware.passport.authenticate('google', {
+router.get('/auth/google/callback', middleware.passport.authenticate('google', { 
   successRedirect: '/profile',
   failureRedirect: '/login'
 }));
