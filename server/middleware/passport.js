@@ -7,11 +7,11 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
-passport.serializeUser((profile, done) => {
+passport.serializeUser((profile, done) => { 
   done(null, profile.id);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((id, done) => { 
   return models.Profile.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -107,12 +107,12 @@ passport.use('local-login', new LocalStrategy({
     });
 }));
 
-passport.use('google', new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENTID || config.Google.clientID,
-  clientSecret: process.env.GOOGLE_CLIENTSECRET || config.Google.clientSecret,
-  callbackURL: process.env.GOOGLE_URL || config.Google.callbackURL
+passport.use('google', new GoogleStrategy({ 
+  clientID: config.Google.clientID,
+  clientSecret: config.Google.clientSecret,
+  callbackURL: config.Google.callbackURL
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
+(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done)) 
 );
 
 passport.use('facebook', new FacebookStrategy({
@@ -124,7 +124,9 @@ passport.use('facebook', new FacebookStrategy({
 (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
 );
 
-// // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
+
+// REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
+
 // passport.use('twitter', new TwitterStrategy({
 //   consumerKey: config.Twitter.consumerKey,
 //   consumerSecret: config.Twitter.consumerSecret,
