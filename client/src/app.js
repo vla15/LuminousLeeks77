@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import io from 'socket.io-client';
 import View from './components/view';
 import Header from './components/header';
 
-// const io = require('socket.io-client');
-// const socket = io();
+const socket = io();
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +12,9 @@ class App extends React.Component {
     this.state = {
     };
   }
-
+  componentDidMount() {
+    // this.socket() 
+  }
   render() {
     return (
       <div>
