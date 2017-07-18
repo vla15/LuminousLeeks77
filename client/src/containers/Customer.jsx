@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { test } from '../actions/testActions.js';
 
-import { Header } from '../components/Header.jsx';
-import { Message } from '../components/Message.jsx';
-import { Info } from '../components/Info.jsx';
-import { Footer } from '../components/Footer.jsx';
+import { Header } from '../parts/Header.jsx';
+import { Message } from '../parts/Message.jsx';
+import { Info } from '../parts/Info.jsx';
+import { Footer } from '../parts/Footer.jsx';
 
 class Customer extends React.Component {
   render() {

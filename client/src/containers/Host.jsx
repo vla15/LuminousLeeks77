@@ -2,19 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { test } from '../actions/testActions.js';
 
-import { Navigation } from '../components/Navigation.jsx';
-import { Message } from '../components/Message.jsx';
-import { QueueInfo } from '../components/QueueInfo.jsx';
-import { EnqueueForm } from '../components/EnqueueForm.jsx';
+import { Header } from '../parts/Header.jsx';
+import { Message } from '../parts/Message.jsx';
+import { Info } from '../parts/Info.jsx';
+import { Footer } from '../parts/Footer.jsx';
 
-class Host extends React.Component {
+class Customer extends React.Component {
   render() {
     return (
       <div>
-        <Navigation />
-        <Message/>
-        <QueueInfo/>
-        <EnqueueForm/>
+        <Header />
+        <QueueSummary />
+        <Queue />
+        <Footer />
       </div>
     );
   }
@@ -34,4 +34,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Host);
+export default connect(mapStateToProps, mapDispatchToProps)(Customer);
