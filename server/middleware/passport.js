@@ -34,7 +34,6 @@ passport.use('local-signup', new LocalStrategy({
 },
   (req, email, password, done) => {
     // check to see if there is any account with this email address
-
     return models.Profile.where({ email }).fetch()
       .then(profile => {
         // create a new profile if a profile does not exist
@@ -50,6 +49,7 @@ passport.use('local-signup', new LocalStrategy({
       })
       .tap(profile => {
         // create a new local auth account with the user's profile id
+        console.log(profile);
         return models.Auth.forge({
           password,
           type: 'local',
@@ -74,7 +74,6 @@ passport.use('local-login', new LocalStrategy({
   passReqToCallback: true
 },
   (req, email, password, done) => {
-    console.log(req);
     // fetch any profiles that have a local auth account with this email address
     return models.Profile.where({ email }).fetch({
       withRelated: [{
@@ -114,7 +113,7 @@ passport.use('google', new GoogleStrategy({
   clientSecret: config.Google.clientSecret,
   callbackURL: config.Google.callbackURL
 },
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, null, done))
+  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
 );
 
 passport.use('facebook', new FacebookStrategy({
@@ -123,7 +122,7 @@ passport.use('facebook', new FacebookStrategy({
   callbackURL: config.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
-  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, null, done))
+  (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
 );
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {

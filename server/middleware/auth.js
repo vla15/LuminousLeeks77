@@ -6,7 +6,6 @@ module.exports.verify = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  console.log(req);
   req.originalUrl === '/host' ? res.redirect('/host/login') : res.redirect('/login');
 };
 

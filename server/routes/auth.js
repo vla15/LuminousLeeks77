@@ -1,7 +1,8 @@
 const express = require('express');
 const middleware = require('../middleware');
-
+const ProfileController = require('../controllers').Profiles;
 const router = express.Router();
+const validator = require('validator');
 
 router.route('/')
   .get(middleware.auth.verify, (req, res) => {
@@ -37,6 +38,16 @@ router.route('/signup')
     failureRedirect: '/signup',
     failureFlash: true
   }));
+
+router.route('/phone')
+  .post((req, res) => {
+    //if (validator.isMobilePhone(req.body.phone, 'en-US')) {
+    ProfileController.updatePhone(req, res);
+   // } else {
+     // res.render('profile.ejs', {message: req.flash('signupMessage') });
+  //  }
+  });
+
 
 router.route('/profile')
   .get(middleware.auth.verify, (req, res) => {
