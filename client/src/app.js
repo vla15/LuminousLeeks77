@@ -3,24 +3,14 @@ import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 import View from './components/view';
 
-const socket = io();
+import App from './containers/App.jsx';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-  componentDidMount() {
-    // this.socket() 
-  }
-  render() {
-    return (
-      <div>
-        <View />
-      </div>
-    );
-  }
-}
+import {Provider} from 'react-redux';
+import store from './store.js';
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);

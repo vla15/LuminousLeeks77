@@ -7,7 +7,7 @@ router.route('/')
   .get(middleware.auth.verify, (req, res) => {
     res.render('index.ejs');
   });
-
+  
 router.route('/login')
   .get((req, res) => {
     res.render('login.ejs', { message: req.flash('loginMessage') });
@@ -60,11 +60,11 @@ router.get('/auth/facebook/callback', middleware.passport.authenticate('facebook
   failureFlash: true
 }));
 
-router.get('/auth/twitter', middleware.passport.authenticate('twitter'));
+// router.get('/auth/twitter', middleware.passport.authenticate('twitter'));
 
-router.get('/auth/twitter/callback', middleware.passport.authenticate('twitter', {
-  successRedirect: '/profile',
-  failureRedirect: '/login'
-}));
+// router.get('/auth/twitter/callback', middleware.passport.authenticate('twitter', {
+//   successRedirect: '/profile',
+//   failureRedirect: '/login'
+// }));
 
 module.exports = router;

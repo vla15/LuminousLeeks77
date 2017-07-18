@@ -123,15 +123,17 @@ passport.use('google', new GoogleStrategy({ //(passport-5)
 );
 
 passport.use('facebook', new FacebookStrategy({
-  clientID: config.Facebook.clientID,
-  clientSecret: config.Facebook.clientSecret,
-  callbackURL: config.Facebook.callbackURL,
+  clientID: process.env.FACEBOOK_CLIENTID || config.Facebook.clientID,
+  clientSecret: process.env.FACEBOOK_CLIENTSECRET || config.Facebook.clientSecret,
+  callbackURL: process.env.FACEBOOK_URL || config.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
 (accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
 );
 
+
 // REQUIRES PERMISSIONS FROM TWITTER TO OBTAIN USER EMAIL ADDRESSES
+
 // passport.use('twitter', new TwitterStrategy({
 //   consumerKey: config.Twitter.consumerKey,
 //   consumerSecret: config.Twitter.consumerSecret,
