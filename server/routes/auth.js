@@ -21,12 +21,22 @@ router.route('/login')
 router.route('/host/login')
   .get((req, res) => {
     res.render('hostlogin.ejs', { message: req.flash('loginMessage') });
-  });
+  })
+  .post(middleware.passport.authenticate('local-login', {
+    successRedirect: '/profile',
+    failureRedirect: '/host/login',
+    failureFlash: true
+  }));
 
 router.route('/signup')
   .get((req, res) => {
     res.render('signup.ejs', { message: req.flash('signupMessage') });
-  });
+  })
+  .post(middleware.passport.authenticate('local-signup', {
+    successRedirect: '/profile',
+    failureRedirect: '/signup',
+    failureFlash: true
+  }));
 
 router.route('/profile')
   .get(middleware.auth.verify, (req, res) => {
@@ -45,20 +55,12 @@ router.get('/auth/google', middleware.passport.authenticate('google', {
   scope: ['email', 'profile']
 }));
 
-router.get('/auth/host/google', middleware.passport.authenticate('google', {
-  scope: ['email', 'profile']
-}));
-
 router.get('/auth/google/callback', middleware.passport.authenticate('google', {
   successRedirect: '/profile',
   failureRedirect: '/login'
 }));
 
 router.get('/auth/facebook', middleware.passport.authenticate('facebook', {
-  scope: ['public_profile', 'email']
-}));
-
-router.get('/auth/host/facebook', middleware.passport.authenticate('facebook', {
   scope: ['public_profile', 'email']
 }));
 
