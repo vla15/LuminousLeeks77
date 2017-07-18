@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar } from 'react-bootstrap';
 
-export const Navigation = (props) => {
+export const Header = (props) => {
   return (
     <Navbar fixedTop={true}>
       <Navbar.Header>

@@ -1,15 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './containers/App.jsx';
+import Customer from './containers/Customer.jsx';
+import customerStore from './customerStore.js';
+
+import Host from './containers/Host.jsx';
+import hostStore from './hostStore.js';
 
 import {Provider} from 'react-redux';
-import store from './store.js';
 
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+if (true) {
+  ReactDOM.render(
+    <Provider store={customerStore}>
+      <Customer />
+    </Provider>,
+    document.getElementById('root')
+  );
+}
+
+if (false) {
+  ReactDOM.render(
+    <Provider store={hostStore}>
+      <Host />
+    </Provider>,
+    document.getElementById('root')
+  );
+}
