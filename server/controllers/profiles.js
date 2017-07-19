@@ -61,6 +61,25 @@ module.exports.update = (req, res) => {
     });
 };
 
+module.exports.updatePhone = (req, res) => {
+  models.Profile.where({ id: req.user.id }).fetch()
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      return profile.save(req.body, { method: 'update' });
+    })
+    .then(() => {
+      res.redirect('/profile');
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(() => {
+      res.sendStatus(404);
+    });
+};
+
 // module.exports.deleteOne = (req, res) => {
 //   models.Profile.where({ id: req.params.id }).fetch()
 //     .then(profile => {
