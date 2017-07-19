@@ -1,14 +1,6 @@
-const userReducer = (state = {
-  userId: 0,
-  userType: '',
-  firstName: '',
-  lastName: '',
-  phone: '',
-  email: '',
-  organization: ''
-}, action) => {
+const userReducer = (state = null, action) => {
   switch (action.type) {
-  case 'GET_USER_INFO':
+  case 'SET_USER_INFO':
     state = action.payload;
     break;
   }

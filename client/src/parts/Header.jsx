@@ -1,14 +1,16 @@
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
 
 export const Header = (props) => {
   return (
     <Navbar fixedTop={true}>
-      <Navbar.Header>
+      <Nav>
         <Navbar.Brand>
           <a href="#">Q</a>
         </Navbar.Brand>
-      </Navbar.Header>
+        <Navbar.Text pullRight>
+        </Navbar.Text>
+      </Nav>
     </Navbar>
   );
 };

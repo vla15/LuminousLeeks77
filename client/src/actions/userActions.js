@@ -1,15 +1,8 @@
-import axios from 'axios';
+const setUserInfo = userInfo => {
+  return {
+    type: 'SET_USER_INFO',
+    payload: userInfo
+  }
+}
 
-const getUserInfo = (store) => {
-  return (dispatch) => {
-    axios.get('/userInfo', { params: { store: store } })
-      .then((result) => {
-        dispatch({
-          type: 'GET_USER_INFO',
-          payload: result.data
-        });
-      });
-  };
-};
-
-export { getUserInfo };
+export { setUserInfo };
