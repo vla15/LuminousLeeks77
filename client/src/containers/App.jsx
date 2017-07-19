@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { connect } from 'react-redux';
 
 import { setUserInfo } from '../actions/userActions.js';
-import { getUserInfo } from '../actions/queueActions.js';
+import { getQueueInfo } from '../actions/queueActions.js';
 
 import { Loading } from '../views/Loading.jsx';
 import { Host } from '../views/Host.jsx';
@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setUserInfo: () => { dispatch(setUserInfo()) },
-    getQueueInfo: store => { dispatch(getUserInfo(store)) }
+    getQueueInfo: store => { dispatch(getQueueInfo(store)) }
   };
 };
 
