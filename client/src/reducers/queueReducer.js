@@ -1,9 +1,4 @@
-const queueReducer = (state = {
-  queueId: 0,
-  partyCount: null,
-  nextWaitDuration: null,
-  nextWaitTime: null,
-}, action) => {
+const queueReducer = (state = null, action) => {
   switch (action.type) {
   case 'GET_QUEUE_INFO':
     state = action.payload;

@@ -1,21 +1,15 @@
-const getQueueInfo = (store) => {
-  return (dispatch) => {
-    axios.get('/');
-  };
+import axios from 'axios';
+
+const getQueueInfo = store => {
+  // return dispatch => {
+  //   axios.get('/api/queueInfo', { params: { queueId: 1, userId: store.user.id } })
+  //   .then(result => {
+  //     dispatch({
+  //       type: "GET_QUEUE_INFO",
+  //       payload: result.data
+  //     })
+  //   })
+  // }:
 };
 
-const openQueue = () => {
-  return {
-    type: 'OPEN_QUEUE',
-    payload: 1
-  };
-};
-
-const closeQueue = () => {
-  return {
-    type: 'OPEN_QUEUE',
-    payload: 1
-  };
-};
-
-export {getQueueInfo, openQueue, closeQueue};
+export { getQueueInfo };

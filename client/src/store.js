@@ -1,5 +1,16 @@
-import {createStore, applyMiddleware} from 'redux';
-import testReducer from './reducers/testReducer.js';
-import logger from 'redux-logger';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 
-export default createStore(testReducer, applyMiddleware(logger));
+import userReducer from './reducers/userReducer.js';
+import queueReducer from './reducers/queueReducer.js';
+
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+
+export default createStore(
+  combineReducers({
+    user: userReducer,
+    queue: queueReducer
+
+  }),
+  applyMiddleware(logger, thunk)
+);
