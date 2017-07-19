@@ -4,7 +4,9 @@ const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
 
+
 const app = express();
+const server = require('http').Server(app);
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
@@ -18,10 +20,13 @@ app.use(middleware.passport.initialize());
 app.use(middleware.passport.session()); 
 app.use(middleware.flash());
 
+
+
 app.use(express.static(path.join(__dirname, '../public')));
 
+middleware.socketIO(server);
 app.use('/', routes.auth); 
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
 
-module.exports = app;
+module.exports = server;
