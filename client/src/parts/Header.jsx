@@ -1,7 +1,7 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
+import { Grid, Navbar, Nav } from 'react-bootstrap';
 
-export const Header = (props) => {
+export const Header = props => {
   return (
     <Navbar fixedTop={true}>
       <Nav>

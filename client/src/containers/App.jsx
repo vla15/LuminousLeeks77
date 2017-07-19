@@ -7,14 +7,15 @@ import { connect } from 'react-redux';
 import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
 
-import { Loading } from '../views/Loading.jsx';
-import { Host } from '../views/Host.jsx';
-import { Customer } from '../views/Customer.jsx';
+import { Header } from '../parts/Header.jsx';
+import { Loading } from '../users/Loading.jsx';
+import { Host } from '../users/Host.jsx';
+import { Customer } from '../users/Customer.jsx';
 
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    store: state
   };
 };
 
@@ -29,11 +30,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.props.user === null
+        <Header store={this.props.store} />
+        { this.props.store.user === null
         ? <Loading />
-        : this.props.user.admin
-        ? <Host />
-        : <Customer />}
+        : this.props.store.user.admin
+        ? <Host store={this.props.store} />
+        : <Customer store={this.props.store} /> }
       </div>
     );
   }

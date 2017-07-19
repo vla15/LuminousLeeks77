@@ -1,9 +1,8 @@
 import React from 'react';
 
-export const Loading = props => {
+export const EmptyComp = props => {
   return (
     <div>
-      Loading...
     </div>
   )
 }

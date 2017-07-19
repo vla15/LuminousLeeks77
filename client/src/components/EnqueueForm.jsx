@@ -1,9 +1,8 @@
 import React from 'react';
-import { Navbar, Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 export const EnqueueForm = (props) => {
   return (
-    <Navbar fixedBottom={true}>
       <Grid>
         <Row>
           <Col xs={12} className="center">
@@ -27,6 +26,5 @@ export const EnqueueForm = (props) => {
           </Col>
         </Row>
       </Grid>
-    </Navbar>
   );
 };
