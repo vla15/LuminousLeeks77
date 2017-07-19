@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { setUserInfo } from '../actions/userActions.js';
+import { getUserInfo } from '../actions/queueActions.js';
 
 import { Loading } from '../views/Loading.jsx';
 import { Host } from '../views/Host.jsx';
@@ -18,7 +19,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUserInfo: userInfo => { dispatch(setUserInfo(userInfo)) }
+    setUserInfo: () => { dispatch(setUserInfo()) },
+    getQueueInfo: store => { dispatch(getUserInfo(store)) }
   };
 };
 
@@ -36,8 +38,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/userInfo')
-    .then(result => { this.props.setUserInfo(result.data) })
+    this.props.setUserInfo();
   }
 }
 
