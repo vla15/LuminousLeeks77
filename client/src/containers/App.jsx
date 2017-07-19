@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
 
 import { connect } from 'react-redux';
 
@@ -39,6 +40,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.setUserInfo();
+
+    this.socket = io();
+    this.socket.on('connected', function(data) {
+      console.log('testing socket.on data flow from server to client', data);
+    });
+    this.socket.emit('my other event', {hey: 'love'});
   }
 }
 
