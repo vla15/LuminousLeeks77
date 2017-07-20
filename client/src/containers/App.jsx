@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
+import { getPartyInfo } from '../actions/partyActions.js';
 
 import { Host } from '../users/Host.jsx';
 import { Customer } from '../users/Customer.jsx';
@@ -22,8 +23,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUserInfo: () => { dispatch(setUserInfo()) },
-    getQueueInfo: store => { dispatch(getQueueInfo(store)) }
+    setUserInfo: () => { dispatch(setUserInfo()); },
+    getQueueInfo: store => { dispatch(getQueueInfo(store)); },
+    getPartyInfo: store => { dispatch(getPartyInfo(store)); },
   };
 };
 
