@@ -1,5 +1,8 @@
 import React from 'react';
-import { Grid, Row, Col, Button } from 'react-bootstrap';
+
+import { QueueList } from '../components/QueueList.jsx';
+
+import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
 
 export const QueueOpen = props => {
     return (
@@ -14,6 +17,19 @@ export const QueueOpen = props => {
             <h1>20 min</h1>
           </Col>
         </Row>
+        <QueueList />
+        <Navbar fixedBottom={true}>
+          <Row>
+            <Col xs={12}>
+              <Button
+                block={true}
+                onClick={() => { console.log('Close Queue!') }}
+              >
+                Close Queue
+              </Button>
+            </Col>
+          </Row>
+        </Navbar>
       </Grid>
     )
 };
