@@ -5,12 +5,13 @@ import { QueueInfo } from '../customerViews/QueueInfo.jsx';
 import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 
 export const Customer = props => {
+    {console.log('customer props', props)}
     return (
       <div>
-        { props.store.queue === null
+        { props.redux.store.queue === null
         ? <QueueClosed />
-        : props.store.party === null
-        ? <QueueInfo />
+        : props.redux.store.party === null
+        ? <QueueInfo redux={props.redux} />
         : <PartyInfo /> }
       </div>
     )
