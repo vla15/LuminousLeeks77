@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const PartyController = require('../controllers').Party;
 
-// router.route('/test')
+// router.route('/test/:partyid')
 //   .get(PartyController.getOne);
 
 router.route('/add/:queueid/:userid/:partysize')
