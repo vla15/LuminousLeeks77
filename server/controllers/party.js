@@ -2,17 +2,17 @@ const models = require('../../db/models');
 const moment = require('moment');
 
 // module.exports.getOne = (req, res) => {
-//   models.Party.fetchAll({
+//   return models.Party.where({id: req.params.partyid,
 //     withRelated: [{
 //     'queue': (qb) => {
-//       qb.select('id', 'next_wait_time').from('queues')
+//       qb.column('id', 'next_wait_time');
 //     }  
-//   }]})
+//   }],
+//     columns: ['id', 'queue_id', 'time_to_sit', 'time_sat', 'profile_id', 'party_size']})
 //   .then(result => {
 //     res.send(result);
 //   })
 // }
-
 
 module.exports.enqueue = (req, res) => {
   if (req.isAuthenticated()) {
@@ -52,7 +52,3 @@ module.exports.dequeue = (req, res) => {
     res.send('you aint authenticated on a dequeue');
   }
 };
-
-
-
-

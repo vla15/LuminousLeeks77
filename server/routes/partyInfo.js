@@ -4,7 +4,7 @@ const router = express.Router();
 const PartyController = require('../controllers').Party;
 
 // router.route('/test')
-//   .get(PartyController.getOne)
+//   .get(PartyController.getOne);
 
 router.route('/add/:queueid/:userid/:partysize')
   .put(PartyController.enqueue);
