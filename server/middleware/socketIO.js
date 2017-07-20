@@ -20,7 +20,7 @@ module.exports = server => {
       // }
 
       let user = {
-        admin: 2,
+        admin: null,
         id: 9,
         firstName: 'Sheyda',
         lastName: 'Rezaei',
@@ -62,12 +62,14 @@ module.exports = server => {
             ]
           }});
       } else {
+        
         socket.emit('action', {type: 'UPDATE_QUEUE_INFO_CUSTOMER', 
           payload: {
             partyCount: 6,
             waitDuration: '38min',
             waitTime: '8:49pm'
           }});
+
 
         socket.emit('action', {type: 'UPDATE_PARTY_INFO_CUSTOMER', 
           payload: {

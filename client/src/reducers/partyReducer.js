@@ -1,4 +1,4 @@
-const partyReducer = (state = null, action) => {
+const partyReducer = (state = {}, action) => {
   switch (action.type) {
   case 'GET_PARTY_INFO':
     state = action.payload;
