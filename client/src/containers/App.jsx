@@ -8,16 +8,16 @@ import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
 import { getPartyInfo } from '../actions/partyActions.js';
 
-import { Loading } from '../views/Loading.jsx';
-import { Host } from '../views/Host.jsx';
-import { Customer } from '../views/Customer.jsx';
+import { Host } from '../users/Host.jsx';
+import { Customer } from '../users/Customer.jsx';
+
+import { Header } from '../components/Header.jsx';
+import { Loading } from '../components/Loading.jsx';
 
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    queue: state.queue,
-    party: state.party
+    store: state
   };
 };
 
@@ -33,18 +33,18 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        {this.props.user === null
-          ? <Loading />
-          : this.props.user.admin
-            ? <Host />
-            : <Customer />}
+        <Header store={this.props.store} />
+        { this.props.store.user === null
+        ? <Loading />
+        : this.props.store.user.admin
+        ? <Host store={this.props.store} />
+        : <Customer store={this.props.store} /> }
       </div>
     );
   }
 
   componentDidMount() {
     this.props.setUserInfo();
-
     this.socket = io();
     this.socket.on('connected', function(data) {
       console.log('testing socket.on data flow from server to client', data);
@@ -54,28 +54,3 @@ class App extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-/*
-var customerState = {
-  userInfo: {
-    userId: 1,
-    userType: 'customer',
-    firstName: 'Shyan',
-    lastName: 'Kashani',
-    phone: '+15166591055',
-    email: 'shyan.kashani@gmail.com',
-  },
-  queueInfo: {
-    queueId: 1,
-    partyCount: 5,
-    nextWaitDuration: 20,
-    nextWaitTime: {},
-  },
-  partyInfo: {
-    partyId: 6,
-    partyIndex: 4,
-    myWaitDuration: 15,
-    myWaitTime: {}
-  }
-  */
