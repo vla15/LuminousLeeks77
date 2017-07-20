@@ -28,5 +28,7 @@ middleware.socketIO(server);
 app.use('/', routes.auth); 
 app.use('/api', routes.api);
 app.use('/api/profiles', routes.profiles);
+app.use('/api/queueinfo', routes.queueInfo);
+app.use('/api/partyinfo', routes.partyInfo);
 
 module.exports = server;

@@ -36,10 +36,10 @@ class App extends React.Component {
       <div>
         <Header store={this.props.store} />
         { this.props.store.user === null
-        ? <Loading />
-        : this.props.store.user.admin
-        ? <Host store={this.props.store} />
-        : <Customer store={this.props.store} /> }
+          ? <Loading />
+          : this.props.store.user.admin
+            ? <Host store={this.props.store} />
+            : <Customer store={this.props.store} /> }
       </div>
     );
   }
