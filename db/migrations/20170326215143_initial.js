@@ -17,7 +17,7 @@ exports.up = function (knex, Promise) {
       table.string('oauth_id', 30).nullable();
       table.string('password', 100).nullable();
       table.string('salt', 100).nullable();
-      table.incrementsteger('profile_id').references('profiles.id').onDelete('CASCADE');
+      table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('queues', function(table) {
       table.increments('id').unsigned().primary();
