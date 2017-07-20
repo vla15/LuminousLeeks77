@@ -1,10 +1,9 @@
 import React from 'react';
-import { Navbar, Grid, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+import { Navbar, Row, Col, Button } from 'react-bootstrap';
 
 export const EnqueueForm = (props) => {
   return (
-    <Navbar fixedBottom={true}>
-      <Grid>
+      <Navbar fixedBottom={true}>
         <Row>
           <Col xs={12} className="center">
             <h6>Party size</h6>
@@ -23,10 +22,14 @@ export const EnqueueForm = (props) => {
         </Row>
         <Row>
           <Col xs={12}>
-            <Button block={true}>Enqueue</Button>
+            <Button
+              block={true}
+              onClick={() => { console.log('Enqueue!') }}
+            >
+              Enqueue
+            </Button>
           </Col>
         </Row>
-      </Grid>
-    </Navbar>
+      </Navbar>
   );
 };
