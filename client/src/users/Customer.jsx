@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { QueueClosed } from '../views/QueueClosed.jsx';
-import { QueueInfo } from '../views/QueueInfo.jsx';
-import { PartyInfo } from '../views/PartyInfo.jsx';
+import { QueueClosed } from '../customerViews/QueueClosed.jsx';
+import { QueueInfo } from '../customerViews/QueueInfo.jsx';
+import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 
 export const Customer = props => {
     return (
       <div>
-        { props.store.queue !== null
+        { props.store.queue === null
         ? <QueueClosed />
         : props.store.party === null
         ? <QueueInfo />

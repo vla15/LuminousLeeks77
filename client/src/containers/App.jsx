@@ -7,10 +7,11 @@ import { connect } from 'react-redux';
 import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
 
-import { Header } from '../parts/Header.jsx';
-import { Loading } from '../users/Loading.jsx';
 import { Host } from '../users/Host.jsx';
 import { Customer } from '../users/Customer.jsx';
+
+import { Header } from '../components/Header.jsx';
+import { Loading } from '../components/Loading.jsx';
 
 
 const mapStateToProps = state => {
@@ -42,7 +43,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.setUserInfo();
-
     this.socket = io();
     this.socket.on('connected', function(data) {
       console.log('testing socket.on data flow from server to client', data);
