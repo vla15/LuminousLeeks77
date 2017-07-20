@@ -1,12 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import io from 'socket.io-client';
 
 import { connect } from 'react-redux';
 
 import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
 import { getPartyInfo } from '../actions/partyActions.js';
+import { testSocketConnect } from '../actions/testSocketActions.js';
 
 import { Loading } from '../views/Loading.jsx';
 import { Host } from '../views/Host.jsx';
@@ -17,7 +17,8 @@ const mapStateToProps = state => {
   return {
     user: state.user,
     queue: state.queue,
-    party: state.party
+    party: state.party,
+    // socketInfoFromServer: state.socket
   };
 };
 
@@ -26,6 +27,7 @@ const mapDispatchToProps = dispatch => {
     setUserInfo: () => { dispatch(setUserInfo()); },
     getQueueInfo: store => { dispatch(getQueueInfo(store)); },
     getPartyInfo: store => { dispatch(getPartyInfo(store)); },
+    testSocketConnect: () => { dispatch(testSocketConnect()); },
   };
 };
 
@@ -44,38 +46,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.setUserInfo();
-
-    this.socket = io();
-    this.socket.on('connected', function(data) {
-      console.log('testing socket.on data flow from server to client', data);
-    });
-    this.socket.emit('my other event', {hey: 'love'});
+    this.props.testSocketConnect();
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-/*
-var customerState = {
-  userInfo: {
-    userId: 1,
-    userType: 'customer',
-    firstName: 'Shyan',
-    lastName: 'Kashani',
-    phone: '+15166591055',
-    email: 'shyan.kashani@gmail.com',
-  },
-  queueInfo: {
-    queueId: 1,
-    partyCount: 5,
-    nextWaitDuration: 20,
-    nextWaitTime: {},
-  },
-  partyInfo: {
-    partyId: 6,
-    partyIndex: 4,
-    myWaitDuration: 15,
-    myWaitTime: {}
-  }
-  */
