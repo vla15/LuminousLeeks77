@@ -6,6 +6,9 @@ const Party = db.Model.extend({
   tableName: 'parties',
   queue: function() {
     return this.belongsTo('Queue');
+  },
+  profile: function() {
+    return this.belongsTo('Profile');
   }
 });
 

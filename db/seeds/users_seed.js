@@ -13,7 +13,7 @@ exports.seed = function (knex, Promise) {
         last: 'Admin',
         display: 'Administrator',
         email: 'admin@domain.com',
-        admin: 'queue_id: 1'
+        admin: 1
       }).save();
     })
     .error(err => {

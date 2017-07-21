@@ -3,8 +3,11 @@ const express = require('express');
 const router = express.Router();
 const PartyController = require('../controllers').Party;
 
-// router.route('/test/:partyid')
-//   .get(PartyController.getOne);
+router.route('/:partyid')
+  .get(PartyController.getOne);
+
+router.route('/test/:partyid/:userid')
+  .get(PartyController.getAll);
 
 router.route('/add/:queueid/:userid/:partysize')
   .put(PartyController.enqueue);
