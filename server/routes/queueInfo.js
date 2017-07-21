@@ -4,10 +4,13 @@ const router = express.Router();
 const QueueController = require('../controllers').Queues;
 
 
-router.route('/:queueid/:userid')
-  //req.params.queueid
-  //req.params.userid
-  //need to get all queue info
-  .get(QueueController.getOne);
+router.route('/host/:queueid')
+  .get(QueueController.getPartyInfoOfQueue);
+
+router.route('/togglequeue/:queueid')
+  .put(QueueController.toggleQueue);
+
+router.route('/:queueid/:userid') 
+  .get(QueueController.getQueueByUser);
 
 module.exports = router;
