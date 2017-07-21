@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GET_PARTY_INFO } from './actionTypes';
+import { DEQUEUE } from './actionTypes';
 
 const getPartyInfo = store => {
   // return dispatch => {
@@ -13,4 +14,17 @@ const getPartyInfo = store => {
   // };
 };
 
+const dequeueParty = partyid => {
+  return dispatch => {
+    axios.delete('/api/partyinfo/rm/1', { params: { partyid: 1} })
+      .then(result => {
+        dispatch({
+          type: DEQUEUE,
+          payload: null
+        });
+      });
+  };
+};
+
+export { dequeueParty };
 export { getPartyInfo };
