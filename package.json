@@ -71,5 +71,8 @@
     "plugins": [
       "transform-es2015-modules-commonjs"
     ]
+  },
+  "devDependencies": {
+    "faker": "^4.1.0"
   }
 }

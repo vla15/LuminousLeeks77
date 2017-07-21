@@ -17,6 +17,13 @@ module.exports.getOne = (req, res) => {
     });
 };
 
+module.exports.getAll = (req, res) => {
+  models.Queue.fetchAll()
+    .then(result => {
+      console.log(result);
+    });
+};
+
 //no rows defaults to catch
 
 

@@ -10,4 +10,7 @@ router.route('/:queueid/:userid')
   //need to get all queue info
   .get(QueueController.getOne);
 
+
+router.route('/all')
+  .get(QueueController.getAll);
 module.exports = router;
