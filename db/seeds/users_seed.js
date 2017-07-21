@@ -54,7 +54,7 @@ const faker = require('faker');
 
       //inserts a bunch of fake users
     
-let createRecord = (knex, id) => {
+let createProfileRecord = (knex, id) => {
   return knex('profiles').insert({
     first: faker.name.firstName(),
     last: faker.name.lastName(),
@@ -71,7 +71,7 @@ exports.seed = (knex, Promise) => {
       let records = [];
 
       for (let i = 1; i < 10; i++) {
-        records.push(createRecord(knex, i));
+        records.push(createProfileRecord(knex, i));
       }
 
       return Promise.all(records);
@@ -84,5 +84,17 @@ exports.seed = (knex, Promise) => {
         email: 'admin@domain.com',
         admin: 1
       }).save();
+    })
+    .then(() => {
+      return knex('queues').del();
+    })
+    .then(()=> {
+      return knex('queues').insert({
+        queue_size: 0,
+        profile_id: 10,
+        organization_id: 1,
+        next_wait_time: 10,
+        is_open: false
+      });
     });
 };
