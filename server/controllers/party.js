@@ -37,7 +37,9 @@ module.exports.getAll = (req, res) => {
         customer.set({partiesBehind: length - (index + 1)});
         return customer;
       });
-      //fix tomorrow, need to filter by partyid
+      test = test.filter(party => {
+        return party.get('id') === Number(req.params.partyid);
+      });
       res.send(test);
     })
     .error(err => {
