@@ -4,7 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import { setUserInfo } from '../actions/userActions.js';
-import { getQueueInfo, toggleQueue } from '../actions/queueActions.js';
+import { getQueueInfo, toggleQueue, enqueue } from '../actions/queueActions.js';
 import { getPartyInfo } from '../actions/partyActions.js';
 import { testSocketConnect } from '../actions/testSocketActions.js';
 
@@ -33,6 +33,7 @@ const mapDispatchToProps = dispatch => {
       setUserInfo: () => { dispatch(setUserInfo()); },
       getQueueInfo: () => { dispatch(getQueueInfo()); },
       getPartyInfo: () => { dispatch(getPartyInfo()); },
+      enqueue: (userId, queueId, partySize, firstName, phoneNumber) => { dispatch(enqueue(userId, queueId, partySize, firstName, phoneNumber)); },
       changePartySize: partySize => { dispatch(changePartySize(partySize)); },
       changeFirstName: firstName => { dispatch(changeFirstName(firstName)); },
       changePhoneNumber: phoneNumber => { dispatch(changePhoneNumber(phoneNumber)); },
