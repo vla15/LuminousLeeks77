@@ -1,7 +1,10 @@
 import axios from 'axios';
-import { GET_QUEUE_INFO, CHANGE_PARTY_SIZE } from './actionTypes';
+import {
+  GET_QUEUE_INFO,
+  TOGGLE_QUEUE
+} from './actionTypes';
 
-const getQueueInfo = (userId, queueId, partySize) => {
+const getQueueInfo = () => {
   return dispatch => {
     axios.get('/api/queueInfo/1/1')
     .then(result => {
@@ -12,5 +15,17 @@ const getQueueInfo = (userId, queueId, partySize) => {
     })
   };
 };
+
+const toggleQueue = () => {
+  return dispatch => {
+    axios.get('/api/toggleQueue/1/1')
+    .then(result => {
+      dispatch({
+        type: TOGGLE_QUEUE,
+        payload: null
+      })
+    })
+  }
+}
 
 export { getQueueInfo };
