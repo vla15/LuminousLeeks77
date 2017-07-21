@@ -3,16 +3,16 @@ const express = require('express');
 const router = express.Router();
 const PartyController = require('../controllers').Party;
 
-router.route('/:partyid')
-  .get(PartyController.getOne);
+// router.route('/:partyid')
+//   .get(PartyController.getOne);
 
-router.route('/test/:queueid/:partyid')
-  .get(PartyController.getAll);
+router.route('/:queueid/:partyid')
+  .get(PartyController.getPartyInfo);
 
 router.route('/add/:queueid/:userid/:partysize')
   .put(PartyController.enqueue);
 
-router.route('/rm/:partyid')
+router.route('/rm/:queueid/:partyid')
   .delete(PartyController.dequeue);
 
 module.exports = router;
