@@ -7,11 +7,11 @@ import { QueueClosedFull } from '../hostViews/QueueClosedFull.jsx';
 export const Host = props => {
   return (
     <div>
-      { props.store.queue.isOpen
-      ? <QueueOpen />
-      : props.store.queue.isEmpty
-      ? <QueueClosedEmpty />
-      : <QueueClosedFull />}
+      { props.redux.store.queue.isOpen
+      ? <QueueOpen redux={props.redux} />
+      : props.redux.store.queue.isEmpty
+      ? <QueueClosedEmpty redux={props.redux} />
+      : <QueueClosedFull redux={props.redux} />}
     </div>
   )
 }

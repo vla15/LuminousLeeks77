@@ -13,5 +13,4 @@ const getPartyInfo = store => {
   // };
 };
 
-
 export { getPartyInfo };

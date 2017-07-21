@@ -1,28 +1,59 @@
 const models = require('../../db/models');
 const moment = require('moment');
 
-// module.exports.getOne = (req, res) => {
-//   return models.Party.where({id: req.params.partyid,
-//     withRelated: [{
-//     'queue': (qb) => {
-//       qb.column('id', 'next_wait_time');
-//     }  
-//   }],
-//     columns: ['id', 'queue_id', 'time_to_sit', 'time_sat', 'profile_id', 'party_size']})
-//   .then(result => {
-//     res.send(result);
-//   })
-// }
+module.exports.getOne = (req, res) => {
+  models.Party.where({id: req.params.partyid})
+    .fetch({
+      withRelated: ['queue', 'profile'],
+      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size']
+    })
+    .then(result => {
+      res.send(result);
+    })
+    .error(err => {
+      res.send(err);
+    });
+};
+
+//gets all parties for the host;
+//passing in queue Id and partyId
+module.exports.getAll = (req, res) => {
+  var queue = [];
+  return models.Party.where({queue_id: req.params.queueid})
+    .query((qb) => {
+      qb.orderBy('wait_time', 'DESC');
+    })
+    .fetchAll({
+      withRelated: ['queue', 'profile'],
+      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size']
+    })
+    .then(result => {
+      //use req.params.partyid
+      var length = result.length;
+      var test = result.map((customer, index) => {
+        //your place is index + 1
+        console.log(customer);
+        customer.set({partiesAhead: index});
+        customer.set({partiesBehind: length - (index + 1)});
+        return customer;
+      });
+      //fix tomorrow, need to filter by partyid
+      res.send(test);
+    })
+    .error(err => {
+      res.send(err);
+    });
+};
 
 module.exports.enqueue = (req, res) => {
-  if (req.isAuthenticated()) {
+  if (!req.isAuthenticated()) {
     models.Queue.where({id: req.params.queueid})
       .fetch({columns: ['next_wait_time']})
       .then(result => {
         console.log(result.get('next_wait_time'));
         models.Party.forge({
           queue_id: req.params.queueid,
-          time_to_sit: moment(new Date()).add(result.get('next_wait_time'), 'm'),
+          wait_time: moment(new Date()).add(result.get('next_wait_time'), 'm'),
           profile_id: req.params.userid,
           party_size: req.params.partysize
         }).save();

@@ -17,7 +17,7 @@ export const QueueOpen = props => {
             <h1>20 min</h1>
           </Col>
         </Row>
-        <QueueList />
+        <QueueList redux={props.redux} />
         <Navbar fixedBottom={true}>
           <Row>
             <Col xs={12}>
