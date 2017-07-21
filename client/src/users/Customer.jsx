@@ -7,10 +7,10 @@ import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 export const Customer = props => {
     return (
       <div>
-        { props.store.queue === null
+        { props.redux.store.queue === null
         ? <QueueClosed />
-        : props.store.party === null
-        ? <QueueInfo />
+        : props.redux.store.party === null
+        ? <QueueInfo redux={props.redux} />
         : <PartyInfo /> }
       </div>
     )
