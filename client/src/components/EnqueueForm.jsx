@@ -12,7 +12,7 @@ export const EnqueueForm = props => {
           <Row>
             <Col xs={2}>
               <Button
-                onClick={() => { props.redux.changePartySize(props.redux.store.newParty.partySize - 1) }}
+                onClick={() => { props.redux.dispatch.changePartySize(props.redux.store.newParty.partySize - 1) }}
               >
                 -
               </Button>
@@ -22,7 +22,7 @@ export const EnqueueForm = props => {
             </Col>
             <Col xs={2}>
               <Button
-                onClick={() => { props.redux.changePartySize(props.redux.store.newParty.partySize + 1) }}
+                onClick={() => { props.redux.dispatch.changePartySize(props.redux.store.newParty.partySize + 1) }}
               >
                 +
               </Button>

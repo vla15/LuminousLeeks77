@@ -10,7 +10,20 @@ export const QueueListItemEnqueue = props => {
     <Row>
       <Col xs={2}>
         <h6>
-          Monkey
+          <input
+            id="firstName"
+            name="firstName"
+            placeholder="First name"
+            value={props.redux.store.newParty.firstName}
+            onChange={() => {
+              props.redux.dispatch.changeFirstName(document.getElementById("firstName").value)
+            }}
+          >
+          </input>
+        </h6>
+      </Col>
+      <Col xs={2}>
+        <h6>
         </h6>
       </Col>
       <Col xs={2}>
@@ -19,7 +32,8 @@ export const QueueListItemEnqueue = props => {
             id="partySize"
             name="partySize"
             value={props.redux.store.newParty.partySize}
-            onChange={() => { props.redux.changePartySize(document.getElementById("partySize").value) }}
+            onChange={() => { props.redux.dispatch.changePartySize(document.getElementById("partySize").value)
+            }}
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -32,21 +46,26 @@ export const QueueListItemEnqueue = props => {
           </select>
         </h6>
       </Col>
-      <Col xs={2}>
-        <h6>
-          4min
-        </h6>
-      </Col>
+
       <Col xs={4}>
         <h6>
-          5555555555
+          <input
+            id="phoneNumber"
+            name="phoneNumber"
+            placeholder="Phone number"
+            value={props.redux.store.newParty.phoneNumber}
+            onChange={() => {
+              props.redux.dispatch.changePhoneNumber(document.getElementById("phoneNumber").value)
+            }}
+          >
+          </input>
         </h6>
       </Col>
       <Col xs={1}>
         <h6>
           <FontAwesome
-            name="times"
-            onClick={() => {console.log('Dequeue!')}}
+            name="plus"
+            onClick={() => {console.log('Enqueue!')}}
           />
         </h6>
       </Col>

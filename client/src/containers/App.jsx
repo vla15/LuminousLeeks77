@@ -7,10 +7,15 @@ import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
 import { getPartyInfo } from '../actions/partyActions.js';
 import { testSocketConnect } from '../actions/testSocketActions.js';
-import { changePartySize } from '../actions/newPartyActions.js';
+
+import {
+  changePartySize,
+  changeFirstName,
+  changePhoneNumber
+} from '../actions/newPartyActions.js';
 
 import { Host } from '../users/Host.jsx';
-import { Customer } from '../users/Customer.jsx';
+import Customer from '../users/Customer.jsx';
 
 import { Header } from '../components/Header.jsx';
 import { Loading } from '../components/Loading.jsx';
@@ -24,11 +29,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUserInfo: () => { dispatch(setUserInfo()); },
-    getQueueInfo: () => { dispatch(getQueueInfo()); },
-    getPartyInfo: store => { dispatch(getPartyInfo(store)); },
-    testSocketConnect: () => { dispatch(testSocketConnect()); },
-    changePartySize: partySize => { dispatch(changePartySize(partySize)); },
+    dispatch: {
+      setUserInfo: () => { dispatch(setUserInfo()); },
+      getQueueInfo: () => { dispatch(getQueueInfo()); },
+      getPartyInfo: () => { dispatch(getPartyInfo()); },
+      testSocketConnect: () => { dispatch(testSocketConnect()); },
+      changePartySize: partySize => { dispatch(changePartySize(partySize)); },
+      changeFirstName: firstName => { dispatch(changeFirstName(firstName)); },
+      changePhoneNumber: phoneNumber => { dispatch(changePhoneNumber(phoneNumber)); }
+    }
   };
 };
 
@@ -47,9 +56,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.setUserInfo();
-    this.props.testSocketConnect();
-    this.props.getQueueInfo();
+    this.props.dispatch.setUserInfo();
+    this.props.dispatch.testSocketConnect();
   }
 }
 

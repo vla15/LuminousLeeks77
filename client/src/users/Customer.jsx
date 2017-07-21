@@ -1,17 +1,25 @@
 import React from 'react';
 
 import { QueueClosed } from '../customerViews/QueueClosed.jsx';
-import { QueueInfo } from '../customerViews/QueueInfo.jsx';
+import QueueInfo from '../customerViews/QueueInfo.jsx';
 import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 
-export const Customer = props => {
+class Customer extends React.Component {
+  render() {
     return (
       <div>
-        { props.redux.store.queue === null
-        ? <QueueClosed />
-        : props.redux.store.party === null
-        ? <QueueInfo redux={props.redux} />
+        { this.props.redux.store.queue === null
+          ? <QueueClosed />
+        : this.props.redux.store.party === null
+        ? <QueueInfo redux={this.props.redux} />
         : <PartyInfo /> }
       </div>
-    )
+    );
+  }
+
+  componentDidMount() {
+    this.props.redux.dispatch.getQueueInfo();
+  }
 }
+
+export default Customer;

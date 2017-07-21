@@ -15,12 +15,12 @@ export const QueueListItem = props => {
       </Col>
       <Col xs={2}>
         <h6>
-          6ppl
+          4min
         </h6>
       </Col>
       <Col xs={2}>
         <h6>
-          4min
+          6ppl
         </h6>
       </Col>
       <Col xs={4}>
