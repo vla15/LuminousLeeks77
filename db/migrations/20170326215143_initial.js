@@ -33,8 +33,10 @@ exports.up = function (knex, Promise) {
       table.integer('queue_id').references('queues.id').onDelete('CASCADE');
       table.dateTime('time_to_sit').nullable();
       table.dateTime('time_sat').nullable();
-      table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
+      table.integer('profile_id').nullable().references('profiles.id').onDelete('CASCADE');
       table.integer('party_size').nullable();
+      table.string('first_name', 100).nullable();
+      table.string('phone', 100).nullable();
     }),
     knex.schema.createTableIfNotExists('party_size', function(table) {
       table.increments('id').unsigned().primary();
@@ -47,10 +49,10 @@ exports.up = function (knex, Promise) {
 exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTableIfExists('auths'),
-    knex.schema.dropTableIfExists('profiles'),
-    knex.schema.dropTableIfExists('queues'),
     knex.schema.dropTableIfExists('parties'),
-    knex.schema.dropTableIfExists('party_size')
+    knex.schema.dropTableIfExists('party_size'),
+    knex.schema.dropTableIfExists('queues'),
+    knex.schema.dropTableIfExists('profiles')
   ]);
 };
 
