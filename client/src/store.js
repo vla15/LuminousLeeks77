@@ -5,7 +5,9 @@ import io from 'socket.io-client';
 import userReducer from './reducers/userReducer.js';
 import queueReducer from './reducers/queueReducer.js';
 import partyReducer from './reducers/partyReducer.js';
+import newPartyReducer from './reducers/newPartyReducer.js';
 import testSocketReducer from './reducers/testSocketReducer.js';
+import { reducer as formReducer } from 'redux-form';
 
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
@@ -18,7 +20,9 @@ let store = createStore(
     user: userReducer,
     queue: queueReducer,
     party: partyReducer,
-    socket: testSocketReducer
+    newParty: newPartyReducer,
+    socket: testSocketReducer,
+    form: formReducer
   }),
   applyMiddleware(logger, thunk, socketIoMiddleware)
 );

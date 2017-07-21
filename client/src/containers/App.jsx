@@ -7,6 +7,7 @@ import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
 import { getPartyInfo } from '../actions/partyActions.js';
 import { testSocketConnect } from '../actions/testSocketActions.js';
+import { changePartySize } from '../actions/newPartyActions.js';
 
 import { Host } from '../users/Host.jsx';
 import { Customer } from '../users/Customer.jsx';
@@ -24,9 +25,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setUserInfo: () => { dispatch(setUserInfo()); },
-    getQueueInfo: store => { dispatch(getQueueInfo(store)); },
+    getQueueInfo: () => { dispatch(getQueueInfo()); },
     getPartyInfo: store => { dispatch(getPartyInfo(store)); },
     testSocketConnect: () => { dispatch(testSocketConnect()); },
+    changePartySize: partySize => { dispatch(changePartySize(partySize)); },
   };
 };
 
@@ -34,12 +36,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header store={this.props.store} />
+        <Header redux={this.props} />
         { this.props.store.user === null
-          ? <Loading />
-          : this.props.store.user.admin
-            ? <Host store={this.props.store} />
-            : <Customer store={this.props.store} /> }
+        ? <Loading />
+        : this.props.store.user.admin
+        ? <Host redux={this.props} />
+        : <Customer redux={this.props} /> }
       </div>
     );
   }
@@ -47,6 +49,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.setUserInfo();
     this.props.testSocketConnect();
+    this.props.getQueueInfo();
   }
 }
 

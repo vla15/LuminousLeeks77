@@ -1,7 +1,7 @@
 <% include head.ejs%>
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <h1><span class="fa fa-rocket"></span> Profile Page</h1>
         <% if (user.phone) { %>
         <a href="/" class="btn btn-default btn-sm">Home page</a>
         <% } %>
@@ -20,7 +20,7 @@
                     <strong>display name</strong>: <%= user.display %><br>
                     <strong>id</strong>: <%= user.id %><br>
                     <strong>email</strong>: <%= user.email %><br>
-                    <strong>phone</strong>: 
+                    <strong>phone</strong>:
                     <form action="/phone" method="post">
                         <div class="form-group">
                             <input type="text" class="form-control" name="phone" value="<%= user.phone %>">

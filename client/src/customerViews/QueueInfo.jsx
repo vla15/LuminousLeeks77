@@ -27,7 +27,7 @@ export const QueueInfo = props => {
           <h1>9:25pm</h1>
         </Col>
       </Row>
-      <EnqueueForm />
+      <EnqueueForm redux={props.redux} />
     </Grid>
   );
 };

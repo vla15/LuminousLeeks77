@@ -2,6 +2,9 @@ import React from 'react';
 
 import { Row, Col } from 'react-bootstrap';
 
+import FontAwesome from 'react-fontawesome';
+
+
 export const QueueListItem = props => {
   return (
     <Row>
@@ -27,7 +30,10 @@ export const QueueListItem = props => {
       </Col>
       <Col xs={1}>
         <h6>
-          x
+          <FontAwesome
+            name="times"
+            onClick={() => {console.log('Dequeue!')}}
+          />
         </h6>
       </Col>
     </Row>
