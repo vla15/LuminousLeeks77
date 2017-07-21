@@ -6,6 +6,7 @@ import FontAwesome from 'react-fontawesome';
 
 
 export const QueueListItemEnqueue = props => {
+  console.log()
   return (
     <Row>
       <Col xs={2}>
@@ -46,7 +47,7 @@ export const QueueListItemEnqueue = props => {
         <h6>
           <FontAwesome
             name="times"
-            onClick={() => {console.log('Dequeue!')}}
+            onClick={() => { props.redux.dequeueParty(2); }}
           />
         </h6>
       </Col>

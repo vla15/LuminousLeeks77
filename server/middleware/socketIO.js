@@ -20,7 +20,7 @@ module.exports = server => {
       // }
 
       let user = {
-        admin: null,
+        admin: 1,
         id: 9,
         firstName: 'Sheyda',
         lastName: 'Rezaei',
@@ -29,7 +29,7 @@ module.exports = server => {
       };
 
       if (user.admin) {
-        socket.emit('action', {type: 'UPDATE_QUEUE_INFO_HOST', 
+        socket.emit('action', {type: 'UPDATE_QUEUE_INFO', 
           payload: {
             partyCount: 6,
             waitDuration: '38min-host',
@@ -43,6 +43,7 @@ module.exports = server => {
                   email: 'skysurfer@gmail.com',
                   phone: '415-316-6314'
                 },
+                partyId: 2,
                 partyCount: 3,
                 waitDuration: '22min',
                 waitTime: '8:25pm'
@@ -55,6 +56,7 @@ module.exports = server => {
                   email: 'fariba@gmail.com',
                   phone: '415-756-7465'
                 },
+                partyId: 3,
                 partyCount: 3,
                 waitDuration: '22min',
                 waitTime: '8:25pm'
@@ -63,7 +65,7 @@ module.exports = server => {
           }});
       } else {
         
-        socket.emit('action', {type: 'UPDATE_QUEUE_INFO_CUSTOMER', 
+        socket.emit('action', {type: 'UPDATE_QUEUE_INFO', 
           payload: {
             partyCount: 6,
             waitDuration: '38min',
@@ -71,7 +73,7 @@ module.exports = server => {
           }});
 
 
-        socket.emit('action', {type: 'UPDATE_PARTY_INFO_CUSTOMER', 
+        socket.emit('action', {type: 'UPDATE_PARTY_INFO', 
           payload: {
             partyId: 8,
             partiesAhead: 8,
