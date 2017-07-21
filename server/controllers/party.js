@@ -17,11 +17,11 @@ module.exports.getOne = (req, res) => {
 
 //gets all parties for the host;
 //passing in queue Id and partyId
-module.exports.getAll = (req, res) => {
+module.exports.getPartyInfo = (req, res) => {
   var queue = [];
   return models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
-      qb.orderBy('wait_time', 'DESC');
+      qb.orderBy('wait_time', 'ASC');
     })
     .fetchAll({
       withRelated: ['queue', 'profile'],
@@ -30,17 +30,17 @@ module.exports.getAll = (req, res) => {
     .then(result => {
       //use req.params.partyid
       var length = result.length;
-      var test = result.map((customer, index) => {
+      var targetCustomer = result.map((customer, index) => {
         //your place is index + 1
         console.log(customer);
-        customer.set({partiesAhead: index});
-        customer.set({partiesBehind: length - (index + 1)});
+        customer.set({parties_ahead: index});
+        customer.set({parties_behind: length - (index + 1)});
         return customer;
       });
-      test = test.filter(party => {
+      targetCustomer = targetCustomer.filter(party => {
         return party.get('id') === Number(req.params.partyid);
       });
-      res.send(test);
+      res.send(targetCustomer[0]);
     })
     .error(err => {
       res.send(err);
