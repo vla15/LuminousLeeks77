@@ -7,7 +7,7 @@ import { QueueClosedFull } from '../hostViews/QueueClosedFull.jsx';
 export const Host = props => {
   return (
     <div>
-      { props.redux.store.queue.isOpen
+      { props.redux.store.queue.is_open
       ? <QueueOpen redux={props.redux} />
       : props.redux.store.queue.isEmpty
       ? <QueueClosedEmpty redux={props.redux} />

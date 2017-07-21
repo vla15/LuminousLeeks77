@@ -1,4 +1,9 @@
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const GET_QUEUE_INFO = 'GET_QUEUE_INFO';
+export const ENQUEUE = 'ENQUEUE';
+export const DEQUEUE = 'DEQUEUE';
+export const TOGGLE_QUEUE = 'TOGGLE_QUEUE';
 export const GET_PARTY_INFO = 'GET_PARTY_INFO';
 export const CHANGE_PARTY_SIZE = 'CHANGE_PARTY_SIZE';
+export const CHANGE_FIRST_NAME = 'CHANGE_FIRST_NAME';
+export const CHANGE_PHONE_NUMBER = 'CHANGE_PHONE_NUMBER';
