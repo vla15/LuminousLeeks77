@@ -31,7 +31,7 @@ exports.up = function (knex, Promise) {
       table.increments('id').unsigned().primary();
       table.integer('queue_id').references('queues.id').onDelete('CASCADE');
       table.dateTime('wait_time').nullable();
-      table.integer('profile_id').nullable().references('profiles.id').onDelete('CASCADE');
+      table.integer('profile_id').nullable().unique().references('profiles.id').onDelete('CASCADE');
       table.integer('party_size').nullable();
       table.string('first_name', 100).nullable();
       table.string('phone', 100).nullable();
