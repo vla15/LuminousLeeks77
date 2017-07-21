@@ -8,10 +8,10 @@ export const Host = props => {
   return (
     <div>
       { props.redux.store.queue.isOpen
-      ? <QueueOpen redux={props.redux} />
-      : props.redux.store.queue.isEmpty
-      ? <QueueClosedEmpty redux={props.redux} />
-      : <QueueClosedFull redux={props.redux} />}
+        ? <QueueOpen redux={props.redux} />
+        : props.redux.store.queue.isEmpty
+          ? <QueueClosedEmpty redux={props.redux} />
+          : <QueueClosedFull redux={props.redux} />}
     </div>
-  )
-}
+  );
+};

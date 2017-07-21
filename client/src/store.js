@@ -19,7 +19,7 @@ let store = createStore(
   combineReducers({
     user: userReducer,
     queue: queueReducer,
-    currentParty: partyReducer,
+    party: partyReducer,
     newParty: newPartyReducer,
     socket: testSocketReducer,
     form: formReducer
