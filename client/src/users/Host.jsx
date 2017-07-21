@@ -13,5 +13,5 @@ export const Host = props => {
       ? <QueueClosedEmpty redux={props.redux} />
       : <QueueClosedFull redux={props.redux} />}
     </div>
-  )
-}
+  );
+};

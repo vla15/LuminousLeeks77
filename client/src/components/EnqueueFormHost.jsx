@@ -29,7 +29,7 @@ export const EnqueueFormHost = props => {
             id="partySize"
             name="partySize"
             value={props.redux.store.newParty.partySize}
-            onChange={() => { props.redux.dispatch.changePartySize(document.getElementById("partySize").value)
+            onChange={() => {props.redux.dispatch.changePartySize(document.getElementById("partySize").value);
             }}
           >
             <option value={1}>1</option>
@@ -52,7 +52,7 @@ export const EnqueueFormHost = props => {
             placeholder="Phone number"
             value={props.redux.store.newParty.phoneNumber}
             onChange={() => {
-              props.redux.dispatch.changePhoneNumber(document.getElementById("phoneNumber").value)
+              props.redux.dispatch.changePhoneNumber(document.getElementById("phoneNumber").value);
             }}
           >
           </input>
@@ -62,7 +62,7 @@ export const EnqueueFormHost = props => {
         <h6>
           <FontAwesome
             name="plus"
-            onClick={() => {console.log('Enqueue!')}}
+            onClick={() => {console.log('Enqueue!'); }}
           />
         </h6>
       </Col>

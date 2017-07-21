@@ -7,13 +7,12 @@ import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo, toggleQueue, enqueue } from '../actions/queueActions.js';
 import { getPartyInfo } from '../actions/partyActions.js';
 import { testSocketConnect } from '../actions/testSocketActions.js';
-
+import { dequeueParty } from '../actions/partyActions.js';
 import {
   changePartySize,
   changeFirstName,
   changePhoneNumber
 } from '../actions/newPartyActions.js';
-
 import { Host } from '../users/Host.jsx';
 import { Customer } from '../users/Customer.jsx';
 
@@ -37,7 +36,9 @@ const mapDispatchToProps = dispatch => {
       changePartySize: partySize => { dispatch(changePartySize(partySize)); },
       changeFirstName: firstName => { dispatch(changeFirstName(firstName)); },
       changePhoneNumber: phoneNumber => { dispatch(changePhoneNumber(phoneNumber)); },
-      toggleQueue: (userId, queueId) => { dispatch(toggleQueue(userId, queueId)); }
+      toggleQueue: (userId, queueId) => { dispatch(toggleQueue(userId, queueId)); },
+      testSocketConnect: () => { dispatch(testSocketConnect()); },
+      dequeueParty: (partyId) => { dispatch(dequeueParty(partyId)); }
     }
   };
 };
@@ -48,10 +49,10 @@ class App extends React.Component {
       <div>
         <Header redux={this.props} />
         { this.props.store.user === null
-        ? <Loading />
-        : this.props.store.user.admin
-        ? <Host redux={this.props} />
-        : <Customer redux={this.props} /> }
+          ? <Loading />
+          : this.props.store.user.admin
+            ? <Host redux={this.props} />
+            : <Customer redux={this.props} /> }
       </div>
     );
   }
