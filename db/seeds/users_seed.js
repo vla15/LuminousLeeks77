@@ -44,7 +44,7 @@ exports.seed = (knex, Promise) => {
         profile_id: 10,
         organization_id: 1,
         next_wait_time: 10,
-        is_open: false
+        is_open: true
       });
     });
 };
