@@ -5,7 +5,6 @@ import { QueueInfo } from '../customerViews/QueueInfo.jsx';
 import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 
 export const Customer = props => {
-    {console.log('customer props', props)}
     return (
       <div>
         { props.redux.store.queue === null

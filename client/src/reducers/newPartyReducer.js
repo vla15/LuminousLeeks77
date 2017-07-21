@@ -1,13 +1,8 @@
 const newPartyReducer = (state = { partySize: 1 }, action) => {
   switch (action.type) {
-  case 'INCREMENT_PARTY_SIZE':
-    if (state.partySize < 8) {
-      return { partySize: state.partySize + 1 }
-    }
-    break;
-  case 'DECREMENT_PARTY_SIZE':
-    if (state.partySize > 1) {
-      return { partySize: state.partySize - 1 }
+  case 'CHANGE_PARTY_SIZE':
+    if (0 < action.payload && action.payload < 9) {
+      return { partySize: action.payload }
     }
     break;
   }

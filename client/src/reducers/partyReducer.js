@@ -3,7 +3,7 @@ const partyReducer = (state = null, action) => {
   case 'GET_PARTY_INFO':
     state = action.payload;
   case 'UPDATE_PARTY_INFO_CUSTOMER':
-    state = action.payload;
+    // state = action.payload;
     break;
   }
   return state;

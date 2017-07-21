@@ -1,19 +1,11 @@
 import axios from 'axios';
-import { INCREMENT_PARTY_SIZE, DECREMENT_PARTY_SIZE } from './actionTypes';
+import { CHANGE_PARTY_SIZE } from './actionTypes';
 
-const incrementPartySize = () => {
+const changePartySize = newPartySize => {
   return {
-    type: INCREMENT_PARTY_SIZE,
-    paylod: null
+    type: CHANGE_PARTY_SIZE,
+    payload: newPartySize
   }
 }
 
-const decrementPartySize = () => {
-  return {
-    type: DECREMENT_PARTY_SIZE,
-    payload: null
-  }
-}
-
-
-export { incrementPartySize, decrementPartySize };
+export { changePartySize };

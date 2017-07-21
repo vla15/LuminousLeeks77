@@ -7,8 +7,7 @@ import { setUserInfo } from '../actions/userActions.js';
 import { getQueueInfo } from '../actions/queueActions.js';
 import { getPartyInfo } from '../actions/partyActions.js';
 import { testSocketConnect } from '../actions/testSocketActions.js';
-import { incrementPartySize } from '../actions/newPartyActions.js';
-import { decrementPartySize } from '../actions/newPartyActions.js';
+import { changePartySize } from '../actions/newPartyActions.js';
 
 import { Host } from '../users/Host.jsx';
 import { Customer } from '../users/Customer.jsx';
@@ -26,11 +25,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setUserInfo: () => { dispatch(setUserInfo()); },
-    getQueueInfo: store => { dispatch(getQueueInfo(store)); },
+    getQueueInfo: () => { dispatch(getQueueInfo()); },
     getPartyInfo: store => { dispatch(getPartyInfo(store)); },
     testSocketConnect: () => { dispatch(testSocketConnect()); },
-    incrementPartySize: () => { dispatch(incrementPartySize()); },
-    decrementPartySize: () => { dispatch(decrementPartySize()); }
+    changePartySize: partySize => { dispatch(changePartySize(partySize)); },
   };
 };
 
@@ -51,6 +49,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.setUserInfo();
     this.props.testSocketConnect();
+    this.props.getQueueInfo();
   }
 }
 

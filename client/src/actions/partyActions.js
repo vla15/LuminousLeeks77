@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_PARTY_INFO, INCREMENT_PARTY_SIZE, DECREMENT_PARTY_SIZE } from './actionTypes';
+import { GET_PARTY_INFO } from './actionTypes';
 
 const getPartyInfo = store => {
   // return dispatch => {
@@ -13,12 +13,4 @@ const getPartyInfo = store => {
   // };
 };
 
-const incrementPartySize = () => {
-  return {
-    type: INCREMENT_PARTY_SIZE,
-    payload: 1
-  }
-}
-
-
-export { getPartyInfo, incrementPartySize };
+export { getPartyInfo };
