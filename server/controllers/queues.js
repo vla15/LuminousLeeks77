@@ -1,6 +1,25 @@
 const models = require('../../db/models');
 
 //get all of queue
+
+module.exports.toggleQueue = (req, res) => {
+  models.Queue.where({id: req.params.queueid})
+    .fetch({
+      columns: ['is_open']
+    })
+    .then(open => {
+      models.Queue.where({id: req.params.queueid})
+        .save({is_open: !(open.get('is_open'))}, {patch: true});
+      res.status(200).send('updated');
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(err => {
+      res.status(404).send(err);
+    });
+};
+
 module.exports.getQueueByUser = (req, res) => {
   models.Queue.where({id: req.params.queueid}).fetch()
     .then(queue => {
@@ -19,7 +38,6 @@ module.exports.getQueueByUser = (req, res) => {
 };
 
 module.exports.getPartyInfoOfQueue = (req, res) => {
-  console.log('hi');
   models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -27,7 +45,7 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
     .fetchAll({
       withRelated: ['queue', {
         'profile': (qb) => {
-          qb.select('id', 'first', 'last', 'email', 'phone')
+          qb.select('id', 'first', 'last', 'email', 'phone');
         }}],
       columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone']
     })

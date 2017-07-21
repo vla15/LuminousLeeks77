@@ -12,7 +12,7 @@ router.route('/:queueid/:partyid')
 router.route('/add/:queueid/:userid/:partysize')
   .put(PartyController.enqueue);
 
-router.route('/rm/:partyid')
+router.route('/rm/:queueid/:partyid')
   .delete(PartyController.dequeue);
 
 module.exports = router;
