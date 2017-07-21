@@ -1,18 +1,45 @@
 const models = require('../../db/models');
 const moment = require('moment');
 
-// module.exports.getOne = (req, res) => {
-//   return models.Party.where({id: req.params.partyid,
-//     withRelated: [{
-//     'queue': (qb) => {
-//       qb.column('id', 'next_wait_time');
-//     }  
-//   }],
-//     columns: ['id', 'queue_id', 'time_to_sit', 'time_sat', 'profile_id', 'party_size']})
-//   .then(result => {
-//     res.send(result);
-//   })
-// }
+module.exports.getOne = (req, res) => {
+  models.Party.where({id: req.params.partyid})
+    .fetch({
+      withRelated: ['queue', 'profile'],
+      columns: ['id', 'queue_id', 'time_to_sit', 'time_sat', 'profile_id', 'party_size']
+    })
+    .then(result => {
+      res.send(result);
+    })
+    .error(err => {
+      res.send(err);
+    });
+};
+
+//gets all parties for the host;
+module.exports.getAll = (req, res) => {
+  var queue = [];
+  models.Party.where({id: req.params.partyid})
+    .query((qb) => {
+      qb.orderBy('time_to_sit', 'DESC');
+    })
+    .fetch({columns: ['queue_id']})
+    .then(queue => {
+      return models.Party.where({queue_id: queue.get('queue_id')})
+        .fetchAll({
+          withRelated: ['queue', 'profile'],
+          columns: ['id', 'queue_id', 'time_to_sit', 'time_sat', 'profile_id', 'party_size']
+        });
+    })
+    .then(result => {
+      var test = result.map(customer => {
+        return customer;
+      });
+      res.send(test);
+    })
+    .error(err => {
+      res.send(err);
+    });
+};
 
 module.exports.enqueue = (req, res) => {
   if (req.isAuthenticated()) {

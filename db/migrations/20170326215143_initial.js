@@ -21,18 +21,16 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('queues', function(table) {
       table.increments('id').unsigned().primary();
-      table.integer('queueSize').nullable();
+      table.integer('queue_size').nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
-      table.string('organization', 100).nullable();
-      table.integer('next_wait_time').nullable();
-      table.integer('avg_turn_rate').nullable();
-      table.string('status', 30).nullable();
+      table.string('organization_id', 100).nullable(); 
+      table.integer('next_wait_time').nullable(); 
+      table.boolean('is_open', 30).nullable(); 
     }),
     knex.schema.createTableIfNotExists('parties', function(table) {
       table.increments('id').unsigned().primary();
       table.integer('queue_id').references('queues.id').onDelete('CASCADE');
-      table.dateTime('time_to_sit').nullable();
-      table.dateTime('time_sat').nullable();
+      table.dateTime('wait_time').nullable();
       table.integer('profile_id').nullable().references('profiles.id').onDelete('CASCADE');
       table.integer('party_size').nullable();
       table.string('first_name', 100).nullable();
@@ -42,7 +40,7 @@ exports.up = function (knex, Promise) {
       table.increments('id').unsigned().primary();
       table.integer('queue_id').nullable();
       table.integer('party_id').nullable();
-    }),
+    })
   ]);
 };
 
