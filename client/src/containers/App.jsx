@@ -15,7 +15,7 @@ import {
 } from '../actions/newPartyActions.js';
 
 import { Host } from '../users/Host.jsx';
-import Customer from '../users/Customer.jsx';
+import { Customer } from '../users/Customer.jsx';
 
 import { Header } from '../components/Header.jsx';
 import { Loading } from '../components/Loading.jsx';
@@ -58,6 +58,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.dispatch.setUserInfo();
     this.props.dispatch.testSocketConnect();
+    this.props.dispatch.getQueueInfo();
   }
 }
 

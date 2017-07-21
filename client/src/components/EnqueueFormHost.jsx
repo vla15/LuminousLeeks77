@@ -1,11 +1,8 @@
 import React from 'react';
-
 import { Row, Col } from 'react-bootstrap';
-
 import FontAwesome from 'react-fontawesome';
 
-
-export const QueueListItemEnqueue = props => {
+export const EnqueueFormHost = props => {
   return (
     <Row>
       <Col xs={2}>

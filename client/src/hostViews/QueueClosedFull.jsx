@@ -8,13 +8,13 @@ export const QueueClosedFull = props => {
     return (
       <Grid>
         <Row>
-          <Col xs={5}>
-            <h6>Party Count</h6>
-            <h1>4</h1>
+          <Col xs={4}>
+            <h6>Queue Size</h6>
+            <h1>{props.redux.store.queue.queue_size}</h1>
           </Col>
           <Col xs={6}>
-            <h6>Wait Duration</h6>
-            <h1>20 min</h1>
+            <h6>Next Wait Time</h6>
+            <h1>{props.redux.store.queue.next_wait_time} min</h1>
           </Col>
         </Row>
         <QueueList redux={props.redux} />
