@@ -29,19 +29,17 @@ exports.seed = function (knex, Promise) {
     })
     .then ((auth) => {
       return models.Queue.forge({
-        queueSize: 1,
+        queue_size: 1,
         profile_id: auth.get('profile_id'),
-        organization: 'Hack Reactor',
+        organization_id: 1,
         next_wait_time: 10,
-        avg_turn_rate: 10,
-        status: 'open'
+        is_open: true
       }).save();
     })
     .then ((queue) => {
       return models.Party.forge({
         queue_id: queue.get('id'),
-        time_to_sit: moment(new Date()).add(30, 'm'),
-        time_sat: moment(new Date()).add(31, 'm'),
+        wait_time: moment(new Date()).add(30, 'm'),
         profile_id: queue.get('profile_id'),
         party_size: 2
       }).save();

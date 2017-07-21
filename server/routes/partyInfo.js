@@ -6,7 +6,7 @@ const PartyController = require('../controllers').Party;
 router.route('/:partyid')
   .get(PartyController.getOne);
 
-router.route('/test/:partyid/:userid')
+router.route('/test/:queueid/:partyid')
   .get(PartyController.getAll);
 
 router.route('/add/:queueid/:userid/:partysize')
