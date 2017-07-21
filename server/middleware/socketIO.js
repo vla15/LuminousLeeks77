@@ -20,7 +20,7 @@ module.exports = server => {
       // }
 
       let user = {
-        admin: null,
+        admin: 1,
         id: 9,
         firstName: 'Sheyda',
         lastName: 'Rezaei',
@@ -43,6 +43,7 @@ module.exports = server => {
                   email: 'skysurfer@gmail.com',
                   phone: '415-316-6314'
                 },
+                partyId: 2,
                 partyCount: 3,
                 waitDuration: '22min',
                 waitTime: '8:25pm'
@@ -55,6 +56,7 @@ module.exports = server => {
                   email: 'fariba@gmail.com',
                   phone: '415-756-7465'
                 },
+                partyId: 3,
                 partyCount: 3,
                 waitDuration: '22min',
                 waitTime: '8:25pm'
