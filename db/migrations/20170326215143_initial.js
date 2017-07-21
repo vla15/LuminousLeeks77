@@ -23,9 +23,9 @@ exports.up = function (knex, Promise) {
       table.increments('id').unsigned().primary();
       table.integer('queue_size').nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
-      table.string('organization_id', 100).nullable(); 
+      table.integer('organization_id').nullable(); 
       table.integer('next_wait_time').nullable(); 
-      table.boolean('is_open', 30).nullable(); 
+      table.boolean('is_open').nullable(); 
     }),
     knex.schema.createTableIfNotExists('parties', function(table) {
       table.increments('id').unsigned().primary();
