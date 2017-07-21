@@ -2,7 +2,7 @@ const partyReducer = (state = null, action) => {
   switch (action.type) {
   case 'GET_PARTY_INFO':
     return action.payload;
-  case 'UPDATE_PARTY_INFO_CUSTOMER':
+  case 'UPDATE_PARTY_INFO':
     state = action.payload;
   case 'DEQUEUE':
     return action.payload;

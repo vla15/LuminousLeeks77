@@ -29,7 +29,7 @@ module.exports = server => {
       };
 
       if (user.admin) {
-        socket.emit('action', {type: 'UPDATE_QUEUE_INFO_HOST', 
+        socket.emit('action', {type: 'UPDATE_QUEUE_INFO', 
           payload: {
             partyCount: 6,
             waitDuration: '38min-host',
@@ -63,7 +63,7 @@ module.exports = server => {
           }});
       } else {
         
-        socket.emit('action', {type: 'UPDATE_QUEUE_INFO_CUSTOMER', 
+        socket.emit('action', {type: 'UPDATE_QUEUE_INFO', 
           payload: {
             partyCount: 6,
             waitDuration: '38min',
@@ -71,7 +71,7 @@ module.exports = server => {
           }});
 
 
-        socket.emit('action', {type: 'UPDATE_PARTY_INFO_CUSTOMER', 
+        socket.emit('action', {type: 'UPDATE_PARTY_INFO', 
           payload: {
             partyId: 8,
             partiesAhead: 8,
