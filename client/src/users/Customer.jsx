@@ -8,10 +8,10 @@ export const Customer = props => {
   return (
     <div>
       { props.redux.store.queue === null
-        ? <QueueClosed redux={props.redux} />
+      ? <QueueClosed redux={props.redux} />
       : props.redux.store.party === null
       ? <QueueInfo redux={props.redux} />
       : <PartyInfo redux={props.redux}/> }
     </div>
   );
-}
+};

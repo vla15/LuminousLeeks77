@@ -16,6 +16,18 @@ const getPartyInfo = store => {
   // };
 };
 
+const dequeueParty = partyid => {
+  return dispatch => {
+    axios.delete('/api/partyinfo/rm/1', { params: { partyid: 1} })
+      .then(result => {
+        dispatch({
+          type: DEQUEUE,
+          payload: null
+        });
+      });
+  };
+};
+
 const enqueue = (userId, queueId, partySize, firstName, phoneNumber) => {
   return dispatch => {
     axios.post('/api/enqueue/1/1/1/')
@@ -23,9 +35,9 @@ const enqueue = (userId, queueId, partySize, firstName, phoneNumber) => {
       dispatch({
         type: ENQUEUE,
         payload: result.data
-      })
-    })
-  }
-}
+      });
+    });
+  };
+};
 
-export { getPartyInfo, enqueue };
+export { getPartyInfo, enqueue, dequeueParty };
