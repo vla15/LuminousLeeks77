@@ -13,8 +13,4 @@ router.route('/togglequeue/:queueid')
 router.route('/:queueid/:userid') 
   .get(QueueController.getQueueByUser);
 
-
-
-router.route('/all')
-  .get(QueueController.getAll);
 module.exports = router;
