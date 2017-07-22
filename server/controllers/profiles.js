@@ -80,6 +80,21 @@ module.exports.updatePhone = (req, res) => {
     });
 };
 
+module.exports.updateSocketId = (userId, socketId) => {
+  console.log('IN update SocketId');
+  models.Profile.where({ id: userId }).fetch()
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      //profile.set('socket_id', socketId);
+      return profile.save('socket_id', socketId, { method: 'update' });
+    })
+    .catch(err => {
+      console.log('no profile found');
+    });
+};
+
 // module.exports.deleteOne = (req, res) => {
 //   models.Profile.where({ id: req.params.id }).fetch()
 //     .then(profile => {
