@@ -5,7 +5,7 @@ const queueReducer = (state = initial, action) => {
   switch (action.type) {
 
     case 'GET_QUEUE_INFO':
-      return action.payload[0].queue;
+      return action.payload;
 
     case 'UPDATE_QUEUE_INFO':
       return action.payload;

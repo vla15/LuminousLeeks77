@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_USER_INFO } from './actionTypes';
+import { SET_USER_INFO, SEND_USER_INFO } from './actionTypes';
 
 const setUserInfo = () => {
   return dispatch => {
@@ -10,7 +10,7 @@ const setUserInfo = () => {
           payload: result.data
         });
         dispatch({
-          type: 'server/SEND_USER_ID',
+          type: 'SEND_USER_ID',
           payload: result.data.id
         });
       });
