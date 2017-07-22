@@ -104,7 +104,7 @@ module.exports.enqueue = (req, res, next) => {
           .then(parties => {
             parties.each((party, i) => {
               //get the socketID for each user
-              console.log('party', i);
+              console.log('party', party);
             });
           });
         //getAllPartiesInQueue(req.params.queueId);
