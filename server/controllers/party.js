@@ -82,8 +82,8 @@ module.exports.enqueue = (req, res) => {
     res.send('you aint authenticated');
   }
 };
-
-module.exports.dequeue = (req, res) => {
+// http://localhost:3000/api/partyinfo/rm/1/5
+module.exports.dequeue = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return models.Party.where({id: req.params.partyid})
       .destroy()
@@ -97,8 +97,9 @@ module.exports.dequeue = (req, res) => {
         return models.Queue.where({id: req.params.queueid})
           .save({queue_size: count}, {patch: true});
       })
-      .then(success => {
-        res.send('it has been destroyed');   
+      .then(result => {
+        // return redirect('/:queueid/:userid');  
+        return next(); 
       })
       .error(err => {
         res.status(305).send(err);

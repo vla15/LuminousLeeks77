@@ -36,8 +36,10 @@ module.exports.getQueueByUser = (req, res) => {
       res.status(404).send(err);
     });
 };
-
+//grabs all parties info, for example: http://localhost:3000/api/queueinfo/host/1
+//add parties: http://localhost:3000/api/partyinfo/add/1/1/4
 module.exports.getPartyInfoOfQueue = (req, res) => {
+  console.log('are you working? --------->')
   models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
