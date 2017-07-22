@@ -1,9 +1,5 @@
 import axios from 'axios';
-import {
-  GET_PARTY_INFO,
-  ENQUEUE, 
-  DEQUEUE
-} from './actionTypes';
+import { ENQUEUE, DEQUEUE, GET_PARTY_INFO, UPDATE_PARTY_SIZE, UPDATE_FIRST_NAME, UPDATE_PHONE_NUMBER } from './actionTypes.js';
 
 const getPartyInfo = store => {
   // return dispatch => {
@@ -17,7 +13,7 @@ const getPartyInfo = store => {
   // };
 };
 
-const dequeueParty = (partyid, queueId) => {
+const dequeue = (partyid, queueId) => {
   return dispatch => {
     axios.delete('/api/partyinfo//rm/1/8')
       .then(result => {
@@ -29,10 +25,11 @@ const dequeueParty = (partyid, queueId) => {
   };
 };
 
-const enqueue = (userId, queueId, partySize, firstName, phoneNumber) => {
+const enqueue = (user_id, queue_id, party_size, first_name, phone_number) => {
   return dispatch => {
-    axios.post('/api/enqueue/1/1/1/')
+    axios.put(`/api/partyInfo/add/${queue_id}/${user_id}/${party_size}/${first_name}/${phone_number}`)
     .then(result => {
+      console.log('result', result);
       dispatch({
         type: ENQUEUE,
         payload: result.data
@@ -41,4 +38,28 @@ const enqueue = (userId, queueId, partySize, firstName, phoneNumber) => {
   };
 };
 
-export { getPartyInfo, enqueue, dequeueParty };
+
+const updatePartySize = partySize => {
+  if (0 < partySize && partySize < 9) {
+    return {
+      type: UPDATE_PARTY_SIZE,
+      payload: partySize
+    }
+  }
+}
+
+const updateFirstName = firstName => {
+  return {
+    type: UPDATE_FIRST_NAME,
+    payload: firstName
+  }
+}
+
+const updatePhoneNumber = phoneNumber => {
+  return {
+    type: UPDATE_PHONE_NUMBER,
+    payload: phoneNumber
+  }
+}
+
+export { enqueue, dequeue, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber };
