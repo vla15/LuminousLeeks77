@@ -20,7 +20,7 @@ module.exports = server => {
       // }
 
       let user = {
-        admin: 1,
+        admin: null,
         id: 9,
         firstName: 'Sheyda',
         lastName: 'Rezaei',

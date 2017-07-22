@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
   GET_PARTY_INFO,
-  ENQUEUE
+  ENQUEUE, 
+  DEQUEUE
 } from './actionTypes';
 
 const getPartyInfo = store => {
@@ -18,7 +19,7 @@ const getPartyInfo = store => {
 
 const dequeueParty = partyid => {
   return dispatch => {
-    axios.delete('/api/partyinfo/rm/1', { params: { partyid: 1} })
+    axios.delete('/api/partyinfo//rm/1/8')
       .then(result => {
         dispatch({
           type: DEQUEUE,
