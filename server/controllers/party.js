@@ -1,6 +1,5 @@
 const models = require('../../db/models');
 const moment = require('moment');
-
 module.exports.getOne = (req, res) => {
   models.Party.where({id: req.params.partyid})
     .fetch({
@@ -14,7 +13,6 @@ module.exports.getOne = (req, res) => {
       res.send(err);
     });
 };
-
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfo = (req, res) => {
@@ -46,10 +44,27 @@ module.exports.getPartyInfo = (req, res) => {
 
 //remove not operator when launching
 module.exports.enqueue = (req, res) => {
-  if (!req.isAuthenticated()) {
-    models.Queue.where({id: req.params.queueid})
-      .fetch({columns: ['next_wait_time', 'is_open']})
-      .then(result => {
+  if (req.isAuthenticated()) {
+    models.Profile.where({id: req.params.userid})
+      .fetch()
+    .then(user => {
+      if (user && user.get('admin') !== '1') {
+        throw user;
+      } else {
+        return models.Profile.forge({
+          phone: req.params.phonenumber,
+          first: req.params.firstname
+        }).save()
+        .then(user => {
+          req.params.userid = user.get('id');
+          throw user;
+        })
+      }
+    })
+    .catch(user => {
+      return models.Queue.where({id: req.params.queueid})
+        .fetch({columns: ['next_wait_time', 'is_open']})
+        .then(result => {
         if (!result.get('is_open')) {
           throw result;
         } else {
@@ -57,11 +72,16 @@ module.exports.enqueue = (req, res) => {
             queue_id: req.params.queueid,
             wait_time: moment(new Date()).add(result.get('next_wait_time'), 'm'),
             profile_id: req.params.userid,
-            party_size: req.params.partysize
-          }).save();         
+            party_size: req.params.partysize,
+            first_name: user.get('first'),
+            phone_number: user.get('phone')
+            }).save()
+            .error(err => {
+              res.send(err);
+            })
         }
       })
-      .then(party => {
+      .then((party) => {
         return models.Party.where({queue_id: req.params.queueid})
           .count('id');
       })
@@ -73,32 +93,29 @@ module.exports.enqueue = (req, res) => {
         res.status(200).send('successful');
       })
       .error(err => {
-        res.status(500).send(err);
+        res.send(404);
       })
-      .catch(err => {
-        res.status(404).send(err);
-      });
+    })
   } else {
     res.send('you aint authenticated');
   }
 };
 
+
 module.exports.dequeue = (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     return models.Party.where({id: req.params.partyid})
       .destroy()
       .then(result => {
-        console.log('inside result');
         return models.Party.where({queue_id: req.params.queueid})
           .count('id');
       })
       .then(count => {
-        console.log('inside count');
         return models.Queue.where({id: req.params.queueid})
           .save({queue_size: count}, {patch: true});
       })
       .then(success => {
-        res.send('it has been destroyed');   
+        res.send('it has been destroyed');
       })
       .error(err => {
         res.status(305).send(err);

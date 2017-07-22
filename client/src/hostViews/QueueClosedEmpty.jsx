@@ -16,7 +16,7 @@ export const QueueClosedEmpty = props => {
             <Col xs={12}>
               <Button
                 block={true}
-                onClick={() => { console.log('Open Queue!') }}
+                onClick={() => { props.redux.dispatch.toggleQueue(1) }}
               >
                 Open Queue
               </Button>

@@ -6,11 +6,9 @@ import { Grid, Row } from 'react-bootstrap';
 export const QueueList = props => {
   return (
     <div>
-      <QueueListItem redux={props.redux} partyId={1} />
-      <QueueListItem redux={props.redux} partyId={2} />
-      <QueueListItem redux={props.redux} partyId={3} />
-      <QueueListItem redux={props.redux} partyId={4} />
-      <QueueListItem redux={props.redux} partyId={5} />
+      {props.redux.store.queue.parties.map(party => {
+        return <QueueListItem key={party.id} party={party} />
+      })}
     </div>
   );
 };

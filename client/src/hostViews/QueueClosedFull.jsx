@@ -21,7 +21,12 @@ export const QueueClosedFull = props => {
         <Navbar fixedBottom={true}>
           <Row>
             <Col xs={12} className="center">
-              The queue is closed.
+              <Button
+                block={true}
+                onClick={() => { props.redux.dispatch.toggleQueue(1) }}
+              >
+                Open Queue
+              </Button>
             </Col>
           </Row>
         </Navbar>

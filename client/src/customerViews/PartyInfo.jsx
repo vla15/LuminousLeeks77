@@ -1,8 +1,6 @@
 import React from 'react';
 import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
 
-import { EnqueueForm } from '../components/EnqueueForm.jsx';
-
 export const PartyInfo = props => {
   return (
     <Grid>
