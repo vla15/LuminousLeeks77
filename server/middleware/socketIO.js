@@ -3,7 +3,11 @@ module.exports = server => {
   const io = require('socket.io')(server);
 
   io.on('connection', socket => {
-    // console.log( 'Socket connected: ' + socket.id);
+    console.log( 'Socket connected: ' + socket.id);
+    io.to(socket.id).emit('action', {type: 'testSocket_ServerToClient', data: `For your eyes only! ${socket.id}`});
+    //io.sockets.sockets[socket.id].join(socket.id)
+    //socket.to(socket.id).emit('action', {type: 'testSocket_ServerToClient', data: 'For your eyes only!'});
+    socket.emit('action', {type: 'testSocket_ServerToClient', data: 'For errybody!!!!!!!!!!!'});
     socket.on('action', (action) => {
       if (action.type === 'server/testSocket_ClientToServer') {
         console.log('data: ', action.data);
@@ -13,12 +17,17 @@ module.exports = server => {
     });
 
     socket.on('action', (action) => {
+      if (action.type === 'server/SEND_USER_ID') {
+        console.log('SOCKET: USER ID RECEIVED: ', action.payload, ' --- SOCKET ID: ', socket.id);
+      }
+    });
+
+    socket.on('action', (action) => {
       // if (action.type === 'server/testSocket_ClientToServer') {
       //   console.log('data: ', action.data);
 
       //   socket.emit('action', {type: 'testSocket_ServerToClient', data: 'Socket data flow from server to client confirmed'});
       // }
-
       let user = {
         admin: 1,
         id: 9,
@@ -71,7 +80,6 @@ module.exports = server => {
             waitDuration: '38min',
             waitTime: '8:49pm'
           }});
-
 
         socket.emit('action', {type: 'UPDATE_PARTY_INFO', 
           payload: {

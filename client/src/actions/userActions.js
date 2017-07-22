@@ -9,8 +9,12 @@ const setUserInfo = () => {
           type: SET_USER_INFO,
           payload: result.data
         });
+        dispatch({
+          type: 'server/SEND_USER_ID',
+          payload: result.data.id
+        });
       });
   };
 };
 
-export { setUserInfo };
+export { setUserInfo};

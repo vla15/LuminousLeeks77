@@ -18,7 +18,7 @@ const getQueueInfo = (queue_id) => {
 
 const toggleQueue = (queue_id) => {
   return dispatch => {
-    axios.get('/api/toggleQueue/1/1')
+    axios.get(`/api/toggleQueue/${}`)
     .then(result => {
       dispatch({
         type: TOGGLE_QUEUE,

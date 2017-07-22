@@ -13,9 +13,9 @@ const getPartyInfo = store => {
   // };
 };
 
-const dequeue = partyid => {
+const dequeue = (partyid, queueId) => {
   return dispatch => {
-    axios.delete('/api/partyInfo/rm/1', { params: { partyid: 1} })
+    axios.delete('/api/partyinfo//rm/1/8')
       .then(result => {
         dispatch({
           type: DEQUEUE,

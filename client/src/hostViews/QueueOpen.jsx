@@ -17,7 +17,7 @@ export const QueueOpen = props => {
             <Col xs={12}>
               <Button
                 block={true}
-                onClick={() => { console.log('Close Queue!') }}
+                onClick={() => { console.log('Close Queue!'); }}
               >
                 Close Queue
               </Button>
