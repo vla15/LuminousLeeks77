@@ -9,9 +9,10 @@ module.exports.toggleQueue = (req, res) => {
     })
     .then(open => {
       models.Queue.where({id: req.params.queueid})
-        .save({is_open: !(open.get('is_open'))}, {patch: true});
-      res.status(200).send('updated!');
-    })
+        .save({is_open: !(open.get('is_open'))}, {patch: true})
+    }).then(result => { models.Queue.where({id: req.params.queueid}).fetch({
+      columns: ['is_open']
+    }).then(result => { res.send(result) }) })
     .error(err => {
       res.status(500).send(err);
     })
@@ -64,5 +65,22 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
       res.status(404).send(err);
     });
 };
+
+module.exports.getQueueInfoCustomer = (req, res) => {
+  models.Queue.where({ id: req.params.queueid }).fetch()
+    .then(queue => {
+      res.send(queue);
+    });
+}
+
+
+module.exports.getQueueInfoHost = (req, res) => {
+  models.Queue.where({ id: req.params.queueid }).fetch({
+    withRelated: ['parties']
+  })
+    .then(queue => {
+      res.send(queue);
+    });
+}
 
 //no rows defaults to catch

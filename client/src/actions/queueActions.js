@@ -1,20 +1,33 @@
 import axios from 'axios';
 import {
-  GET_QUEUE_INFO,
-  TOGGLE_QUEUE
+  GET_QUEUE_INFO_HOST,
+  TOGGLE_QUEUE,
+  GET_QUEUE_INFO_CUSTOMER
 } from './actionTypes';
 
-const getQueueInfo = (queue_id) => {
+const getQueueInfoCustomer = queue_id => {
   return dispatch => {
-    axios.get(`/api/queueInfo/host/${queue_id}`)
+    axios.get(`/api/queueInfo/getQueueInfoCustomer/${queue_id}`)
     .then(result => {
       dispatch({
-        type: GET_QUEUE_INFO,
+        type: GET_QUEUE_INFO_CUSTOMER,
         payload: result.data
       })
     })
-  };
-};
+  }
+}
+
+const getQueueInfoHost = queue_id => {
+  return dispatch => {
+    axios.get(`/api/queueInfo/getQueueInfoHost/${queue_id}`)
+    .then(result => {
+      dispatch({
+        type: GET_QUEUE_INFO_HOST,
+        payload: result.data
+      })
+    })
+  }
+}
 
 const toggleQueue = (queue_id) => {
   return dispatch => {
@@ -29,4 +42,4 @@ const toggleQueue = (queue_id) => {
   }
 }
 
-export { getQueueInfo, toggleQueue };
+export { getQueueInfoHost, toggleQueue, getQueueInfoCustomer };

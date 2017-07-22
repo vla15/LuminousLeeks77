@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { enqueue, dequeue, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber } from '../actions/partyActions.js';
 
 import { setUserInfo, sendUserId } from '../actions/userActions.js';
-import { getQueueInfo, toggleQueue } from '../actions/queueActions.js';
+import { getQueueInfoHost, toggleQueue, getQueueInfoCustomer } from '../actions/queueActions.js';
 
 
 import { Header } from '../components/Header.jsx';
-import { Host } from '../users/Host.jsx';
-import { Customer } from '../users/Customer.jsx';
+import Host from '../users/Host.jsx';
+import Customer from '../users/Customer.jsx';
 import { Loading } from '../components/Loading.jsx';
 
 
@@ -25,7 +25,11 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch: {
       setUserInfo: () => { dispatch(setUserInfo()); },
-      getQueueInfo: queue_id => { dispatch(getQueueInfo(queue_id)); },
+
+
+      getQueueInfoCustomer: queue_id => { dispatch(getQueueInfoCustomer(queue_id)); },
+      getQueueInfoHost: queue_id => { dispatch(getQueueInfoHost(queue_id)); },
+
       getPartyInfo: () => { dispatch(getPartyInfo()); },
       enqueue: (user_id, queue_id, party_size, first_name, phone_number) => { dispatch(enqueue(user_id, queue_id, party_size, first_name, phone_number)); },
       updatePartySize: partySize => { dispatch(updatePartySize(partySize)); },
@@ -54,7 +58,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.dispatch.setUserInfo();
-    this.props.dispatch.getQueueInfo(1);
   }
 }
 
