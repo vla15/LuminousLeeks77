@@ -13,6 +13,12 @@ module.exports = server => {
     });
 
     socket.on('action', (action) => {
+      if (action.type === 'server/SEND_USER_ID') {
+        console.log('SOCKET: USER ID RECEIVED: ', action.payload, ' --- SOCKET ID: ', socket.id);
+      }
+    });
+
+    socket.on('action', (action) => {
       // if (action.type === 'server/testSocket_ClientToServer') {
       //   console.log('data: ', action.data);
 
