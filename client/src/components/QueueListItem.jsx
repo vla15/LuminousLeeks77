@@ -32,7 +32,9 @@ export const QueueListItem = props => {
         <h6>
           <FontAwesome
             name="times"
-            onClick={() => {console.log('Dequeue!')}}
+            onClick={() => { 
+              props.redux.dispatch.dequeueParty(props.partyId); 
+            }}
           />
         </h6>
       </Col>
