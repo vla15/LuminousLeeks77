@@ -44,7 +44,7 @@ module.exports.getPartyInfo = (req, res) => {
 
 //remove not operator when launching
 module.exports.enqueue = (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     models.Profile.where({id: req.params.userid})
       .fetch()
     .then(user => {
@@ -103,7 +103,7 @@ module.exports.enqueue = (req, res) => {
 
 
 module.exports.dequeue = (req, res) => {
-  if (!req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     return models.Party.where({id: req.params.partyid})
       .destroy()
       .then(result => {
