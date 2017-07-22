@@ -10,7 +10,7 @@ module.exports.toggleQueue = (req, res) => {
     .then(open => {
       models.Queue.where({id: req.params.queueid})
         .save({is_open: !(open.get('is_open'))}, {patch: true});
-      res.status(200).send('updated');
+      res.status(200).send('updated!');
     })
     .error(err => {
       res.status(500).send(err);

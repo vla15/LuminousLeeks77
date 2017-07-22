@@ -1,13 +1,19 @@
-const queueReducer = (state = { is_open: false }, action) => {
+let initial = { is_open: false };
+
+const queueReducer = (state = initial, action) => {
+
   switch (action.type) {
-  case 'GET_QUEUE_INFO':
-    return action.payload[0].queue;
-  case 'UPDATE_QUEUE_INFO':
-    return action.payload;
-  case 'TOGGLE_QUEUE':
-    return action.payload;
-    break;
-  }
+
+    case 'GET_QUEUE_INFO':
+      return action.payload[0].queue;
+
+    case 'UPDATE_QUEUE_INFO':
+      return action.payload;
+
+    case 'TOGGLE_QUEUE':
+      return { ...state, is_open: !state.is_open };
+  };
+
   return state;
 };
 

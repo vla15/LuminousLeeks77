@@ -18,14 +18,15 @@ const getQueueInfo = (queue_id) => {
 
 const toggleQueue = (queue_id) => {
   return dispatch => {
-    axios.get(`/api/toggleQueue/${}`)
+    axios.put(`/api/queueInfo/toggleQueue/${queue_id}`)
     .then(result => {
+      console.log(result);
       dispatch({
         type: TOGGLE_QUEUE,
-        payload: null
+        payload: result.data
       })
     })
   }
 }
 
-export { getQueueInfo };
+export { getQueueInfo, toggleQueue };

@@ -33,9 +33,9 @@ const mapDispatchToProps = dispatch => {
       updatePartySize: partySize => { dispatch(updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(updateFirstName(firstName)); },
       updatePhoneNumber: phoneNumber => { dispatch(updatePhoneNumber(phoneNumber)); },
-      toggleQueue: (userId, queueId) => { dispatch(toggleQueue(userId, queueId)); },
+      toggleQueue: queue_id => { dispatch(toggleQueue(queue_id)); },
       testSocketConnect: () => { dispatch(testSocketConnect()); },
-      dequeue: (partyId) => { dispatch(dequeue(partyId)); }
+      dequeue: (partyId) => { dispatch(dequeue(partyId)); },
       sendUserId: (userId) => { dispatch(sendUserId(userId)); }
     }
   };
@@ -47,10 +47,10 @@ class App extends React.Component {
       <div>
         <Header redux={this.props} />
         { this.props.store.user === null
-          ? <Loading />
-          : this.props.store.user.admin
-            ? <Host redux={this.props} />
-            : <Customer redux={this.props} /> }
+        ? <Loading />
+        : this.props.store.user.admin
+        ? <Host redux={this.props} />
+        : <Customer redux={this.props} /> }
       </div>
     );
   }
