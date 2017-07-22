@@ -10,22 +10,22 @@ export const QueueListItem = props => {
     <Row>
       <Col xs={2}>
         <h6>
-          Diana
+          {props.party.first_name}
         </h6>
       </Col>
       <Col xs={2}>
         <h6>
-          4min
+          10min
         </h6>
       </Col>
       <Col xs={2}>
         <h6>
-          6ppl
+          {props.party.party_size}ppl
         </h6>
       </Col>
       <Col xs={4}>
         <h6>
-          5555555555
+          {props.party.phone_number}
         </h6>
       </Col>
       <Col xs={1}>
@@ -33,7 +33,7 @@ export const QueueListItem = props => {
           <FontAwesome
             name="times"
             onClick={() => {
-              props.redux.dispatch.dequeue(props.partyId); 
+              props.redux.dispatch.dequeue(props.party.id);
             }}
           />
         </h6>
