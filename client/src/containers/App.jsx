@@ -6,6 +6,7 @@ import { enqueue, dequeue, getPartyInfo, updatePartySize, updateFirstName, updat
 
 import { setUserInfo, sendUserId } from '../actions/userActions.js';
 import { getQueueInfoHost, toggleQueue, getQueueInfoCustomer } from '../actions/queueActions.js';
+import { testSocketConnect } from '../actions/testSocketActions.js';
 
 
 import { Header } from '../components/Header.jsx';
@@ -37,6 +38,7 @@ const mapDispatchToProps = dispatch => {
       updatePhoneNumber: phoneNumber => { dispatch(updatePhoneNumber(phoneNumber)); },
       toggleQueue: queue_id => { dispatch(toggleQueue(queue_id)); },
       dequeue: (partyId) => { dispatch(dequeue(partyId)); },
+      testSocketConnect: () => { dispatch(testSocketConnect()); },
       sendUserId: (userId) => { dispatch(sendUserId(userId)); }
     }
   };
@@ -58,6 +60,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.dispatch.setUserInfo();
+    this.props.dispatch.testSocketConnect();
   }
 }
 
