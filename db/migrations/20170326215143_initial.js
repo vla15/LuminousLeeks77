@@ -1,4 +1,3 @@
-
 exports.up = function (knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('profiles', function (table) {
@@ -9,6 +8,7 @@ exports.up = function (knex, Promise) {
       table.string('email', 100).nullable().unique();
       table.string('phone', 100).nullable();
       table.string('admin', 100).nullable();
+      table.string('socket_id', 100).nullable();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('auths', function(table) {
@@ -43,7 +43,6 @@ exports.up = function (knex, Promise) {
     })
   ]);
 };
-
 exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTableIfExists('auths'),

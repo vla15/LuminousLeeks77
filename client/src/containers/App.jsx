@@ -27,9 +27,9 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch: {
       setUserInfo: () => { dispatch(setUserInfo()); },
-      getQueueInfo: () => { dispatch(getQueueInfo()); },
+      getQueueInfo: queue_id => { dispatch(getQueueInfo(queue_id)); },
       getPartyInfo: () => { dispatch(getPartyInfo()); },
-      enqueue: (userId, queueId, partySize, firstName, phoneNumber) => { dispatch(enqueue(userId, queueId, partySize, firstName, phoneNumber)); },
+      enqueue: (user_id, queue_id, party_size, first_name, phone_number) => { dispatch(enqueue(user_id, queue_id, party_size, first_name, phone_number)); },
       updatePartySize: partySize => { dispatch(updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(updateFirstName(firstName)); },
       updatePhoneNumber: phoneNumber => { dispatch(updatePhoneNumber(phoneNumber)); },
@@ -56,8 +56,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.dispatch.setUserInfo();
-    this.props.dispatch.getQueueInfo();
-    this.props.dispatch.testSocketConnect();
+    this.props.dispatch.getQueueInfo(1);
+    // this.props.dispatch.testSocketConnect();
   }
 }
 

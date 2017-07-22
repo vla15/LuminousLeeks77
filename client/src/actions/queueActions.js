@@ -4,9 +4,9 @@ import {
   TOGGLE_QUEUE
 } from './actionTypes';
 
-const getQueueInfo = () => {
+const getQueueInfo = (queue_id) => {
   return dispatch => {
-    axios.get('/api/queueInfo/1/1')
+    axios.get(`/api/queueInfo/host/${queue_id}`)
     .then(result => {
       dispatch({
         type: GET_QUEUE_INFO,
@@ -16,7 +16,7 @@ const getQueueInfo = () => {
   };
 };
 
-const toggleQueue = () => {
+const toggleQueue = (queue_id) => {
   return dispatch => {
     axios.get('/api/toggleQueue/1/1')
     .then(result => {

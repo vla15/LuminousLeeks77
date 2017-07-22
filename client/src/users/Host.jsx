@@ -9,7 +9,7 @@ export const Host = props => {
     <div>
       { props.redux.store.queue.is_open
       ? <QueueOpen redux={props.redux} />
-      : props.redux.store.queue.isEmpty
+      : props.redux.store.queue
       ? <QueueClosedEmpty redux={props.redux} />
       : <QueueClosedFull redux={props.redux} />}
     </div>

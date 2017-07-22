@@ -38,6 +38,7 @@ module.exports.getQueueByUser = (req, res) => {
 };
 
 module.exports.getPartyInfoOfQueue = (req, res) => {
+  console.log('MONKEY!!!!!!!!');
   models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -47,7 +48,7 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
         'profile': (qb) => {
           qb.select('id', 'first', 'last', 'email', 'phone');
         }}],
-      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone']
+      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
     })
     .then(queue => {
       if (!queue) {
@@ -65,5 +66,3 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
 };
 
 //no rows defaults to catch
-
-
