@@ -13,13 +13,13 @@ const getPartyInfo = store => {
   // };
 };
 
-const dequeue = (partyid, queueId) => {
+const dequeue = (queue_id, party_id) => {
   return dispatch => {
-    axios.delete('/api/partyinfo//rm/1/8')
+    axios.delete(`/api/partyInfo/rm/${queue_id}/${party_id}`)
       .then(result => {
         dispatch({
           type: DEQUEUE,
-          payload: null
+          payload: result.data
         });
       });
   };
@@ -32,7 +32,7 @@ const enqueue = (user_id, queue_id, party_size, first_name, phone_number) => {
       console.log('result', result);
       dispatch({
         type: ENQUEUE,
-        payload: result.data
+        payload: result.data[0]
       });
     });
   };

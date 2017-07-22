@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => {
       updateFirstName: firstName => { dispatch(updateFirstName(firstName)); },
       updatePhoneNumber: phoneNumber => { dispatch(updatePhoneNumber(phoneNumber)); },
       toggleQueue: queue_id => { dispatch(toggleQueue(queue_id)); },
-      dequeue: (partyId) => { dispatch(dequeue(partyId)); },
+      dequeue: (queue_id, party_id) => { dispatch(dequeue(queue_id, party_id)); },
       testSocketConnect: () => { dispatch(testSocketConnect()); },
       sendUserId: (userId) => { dispatch(sendUserId(userId)); }
     }

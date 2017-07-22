@@ -11,7 +11,6 @@ const userReducer = (state = null, action) => {
         email: action.payload.email,
         admin: action.payload.admin,
       };
-
     case 'SET_SOCKET_ID':
       return { ...state, socket_id: action.payload };
   }
