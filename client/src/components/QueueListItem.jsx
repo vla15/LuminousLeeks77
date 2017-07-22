@@ -6,6 +6,7 @@ import FontAwesome from 'react-fontawesome';
 
 
 export const QueueListItem = props => {
+  console.log('PROPS!!!!!!!!!!!!!!!!!!!!!!!!!', props);
   return (
     <Row>
       <Col xs={2}>
