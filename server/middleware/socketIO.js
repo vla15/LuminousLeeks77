@@ -24,9 +24,8 @@ module.exports = server => {
 
       //   socket.emit('action', {type: 'testSocket_ServerToClient', data: 'Socket data flow from server to client confirmed'});
       // }
-
       let user = {
-        admin: null,
+        admin: 1,
         id: 9,
         firstName: 'Sheyda',
         lastName: 'Rezaei',
@@ -77,7 +76,6 @@ module.exports = server => {
             waitDuration: '38min',
             waitTime: '8:49pm'
           }});
-
 
         socket.emit('action', {type: 'UPDATE_PARTY_INFO', 
           payload: {

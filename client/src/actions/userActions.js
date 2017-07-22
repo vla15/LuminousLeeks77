@@ -17,9 +17,4 @@ const setUserInfo = () => {
   };
 };
 
-// const sendUserId = (userId) => {
-//   return { type: 'server/SEND_USER_ID', payload: userId};
-// };
-
-
 export { setUserInfo};

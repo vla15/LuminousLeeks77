@@ -61,7 +61,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.dispatch.setUserInfo();
     this.props.dispatch.getQueueInfo();
-    this.props.dispatch.testSocketConnect();
+    // this.props.dispatch.testSocketConnect();
   }
 }
 
