@@ -5,10 +5,10 @@ const PartyController = require('../controllers').Party;
 const QueueController = require('../controllers').Queues;
 
 router.route('/:queueid/:partyid')
-  .get(PartyController.getPartyInfo);
+  .get(PartyController.getPartyInfoCustomer);
 
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
-  .put(PartyController.enqueue, QueueController.getPartyInfoCustomer);
+  .put(PartyController.enqueue, PartyController.getPartyInfoCustomer);
 
 router.route('/rm/:queueid/:partyid')
   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);
