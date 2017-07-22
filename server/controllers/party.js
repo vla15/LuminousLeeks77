@@ -18,9 +18,9 @@ module.exports.getOne = (req, res) => {
 
 //gets all parties for the host;
 //passing in queue Id and partyId
-module.exports.getPartyInfo = (req, res) => {
+module.exports.getPartyInfoCustomer = (req, res) => {
   var queue = [];
-  return models.Party.where({queue_id: req.params.queueid})
+  return models.Party.where({id: res.party_id})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
     })
@@ -36,9 +36,9 @@ module.exports.getPartyInfo = (req, res) => {
         return customer;
       });
       targetCustomer = targetCustomer.filter(party => {
-        return party.get('id') === Number(req.params.partyid);
+        return party.get('id') === Number(res.party_id);
       });
-      res.send(targetCustomer[0]);
+      res.send(targetCustomer);
     })
     .error(err => {
       res.send(err);
