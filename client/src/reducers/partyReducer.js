@@ -14,7 +14,7 @@ const partyReducer = (state = initial, action) => {
       return action.payload;
 
     case 'DEQUEUE':
-      return action.payload;
+      return { party_size: 1, first_name: '', phone_number: '' };
 
     case 'UPDATE_PARTY_SIZE':
       return { ...state, party_size: action.payload };

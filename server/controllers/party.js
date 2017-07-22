@@ -15,6 +15,7 @@ module.exports.getOne = (req, res) => {
       res.send(err);
     });
 };
+
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfo = (req, res) => {
@@ -45,7 +46,7 @@ module.exports.getPartyInfo = (req, res) => {
 };
 
 //remove not operator when launching
-module.exports.enqueue = (req, res) => {
+module.exports.enqueue = (req, res, next) => {
   if (req.isAuthenticated()) {
     models.Profile.where({id: req.params.userid})
       .fetch()
@@ -78,12 +79,14 @@ module.exports.enqueue = (req, res) => {
             first_name: user.get('first'),
             phone_number: user.get('phone')
             }).save()
+            .then(result => { res.party_id = result.get('id');})
             .error(err => {
               res.send(err);
             })
         }
       })
       .then((party) => {
+        console.log('party', party)
         return models.Party.where({queue_id: req.params.queueid})
           .count('id');
       })
@@ -92,6 +95,7 @@ module.exports.enqueue = (req, res) => {
           .save({queue_size: count}, {patch: true});
       })
       .then(success => {
+        return next();
         let queueSize = success.attributes.queue_size;
         console.log(success.get('queue_size'));
         // send new queue size to all the clients in the queue
@@ -116,20 +120,24 @@ module.exports.enqueue = (req, res) => {
 };
 
 
-module.exports.dequeue = (req, res) => {
-  if (req.isAuthenticated()) {
+// http://localhost:3000/api/partyinfo/rm/1/5
+module.exports.dequeue = (req, res, next) => {
+  if ( req.isAuthenticated()) {
     return models.Party.where({id: req.params.partyid})
       .destroy()
       .then(result => {
+        console.log('inside result');
         return models.Party.where({queue_id: req.params.queueid})
           .count('id');
       })
       .then(count => {
+        console.log('inside count');
         return models.Queue.where({id: req.params.queueid})
           .save({queue_size: count}, {patch: true});
       })
-      .then(success => {
-        res.send('it has been destroyed');
+      .then(result => {
+        // return redirect('/:queueid/:userid');  
+        return next(); 
       })
       .error(err => {
         res.status(305).send(err);

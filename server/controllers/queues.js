@@ -37,9 +37,9 @@ module.exports.getQueueByUser = (req, res) => {
       res.status(404).send(err);
     });
 };
-
+//grabs all parties info, for example: http://localhost:3000/api/queueinfo/host/1
+//add parties: http://localhost:3000/api/partyinfo/add/1/1/4
 module.exports.getPartyInfoOfQueue = (req, res) => {
-  console.log('MONKEY!!!!!!!!');
   models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -66,6 +66,32 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
     });
 };
 
+module.exports.getPartyInfoCustomer = (req, res) => {
+  models.Party.where({id: res.party_id})
+    .query((qb) => {
+      qb.orderBy('wait_time', 'ASC');
+    })
+    .fetchAll({
+      withRelated: ['queue', {
+        'profile': (qb) => {
+          qb.select('id', 'first', 'last', 'email', 'phone');
+        }}],
+      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
+    })
+    .then(queue => {
+      if (!queue) {
+        throw queue;
+      } else {
+        res.status(200).send(queue);
+      }
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(err => {
+      res.status(404).send(err);
+    });
+};
 module.exports.getQueueInfoCustomer = (req, res) => {
   models.Queue.where({ id: req.params.queueid }).fetch()
     .then(queue => {
