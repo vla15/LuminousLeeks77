@@ -1,3 +1,5 @@
+const Profiles = require('../controllers').Profiles;
+
 module.exports = server => {
 
   const io = require('socket.io')(server);
@@ -19,6 +21,8 @@ module.exports = server => {
     socket.on('action', (action) => {
       if (action.type === 'server/SEND_USER_ID') {
         console.log('SOCKET: USER ID RECEIVED: ', action.payload, ' --- SOCKET ID: ', socket.id);
+        Profiles.updateSocketId(action.payload, socket.id);
+        //save the socketId in db
       }
     });
 
