@@ -1,5 +1,6 @@
 const models = require('../../db/models');
 const moment = require('moment');
+const socket = require('../middleware').socketIO;
 
 module.exports.getOne = (req, res) => {
   models.Party.where({id: req.params.partyid})
@@ -70,6 +71,18 @@ module.exports.enqueue = (req, res) => {
           .save({queue_size: count}, {patch: true});
       })
       .then(success => {
+        let queueSize = success.attributes.queue_size;
+        console.log(success.get('queue_size'));
+        // send new queue size to all the clients in the queue
+        models.Party.where({queue_id: req.params.queueid})
+          .fetchAll()
+          .then(parties => {
+            parties.each((party, i) => {
+              //get the socketID for each user
+              console.log('party', i);
+            });
+          });
+        //getAllPartiesInQueue(req.params.queueId);
         res.status(200).send('successful');
       })
       .error(err => {

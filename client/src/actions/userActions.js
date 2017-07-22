@@ -10,7 +10,7 @@ const setUserInfo = () => {
           payload: result.data
         });
         dispatch({
-          type: 'SEND_USER_ID',
+          type: 'server/SEND_USER_ID',
           payload: result.data.id
         });
       });
