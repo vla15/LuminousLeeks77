@@ -7,7 +7,7 @@ export const QueueList = props => {
   return (
     <div>
       {props.redux.store.queue.parties.map(party => {
-        return <QueueListItem party={party} />
+        return <QueueListItem key={party.id} party={party} />
       })}
     </div>
   );

@@ -86,6 +86,7 @@ module.exports.enqueue = (req, res) => {
           .count('id');
       })
       .then(count => {
+        console.log(count);
         return models.Queue.where({id: req.params.queueid})
           .save({queue_size: count}, {patch: true});
       })
