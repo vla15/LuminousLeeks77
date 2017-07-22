@@ -47,7 +47,9 @@ export const QueueListItemEnqueue = props => {
         <h6>
           <FontAwesome
             name="times"
-            onClick={() => { props.redux.dequeueParty(2); }}
+            onClick={() => { 
+              props.redux.dispatch.dequeueParty(props.partyId); 
+            }}
           />
         </h6>
       </Col>

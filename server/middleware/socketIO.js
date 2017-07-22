@@ -17,12 +17,17 @@ module.exports = server => {
     });
 
     socket.on('action', (action) => {
+      if (action.type === 'server/SEND_USER_ID') {
+        console.log('SOCKET: USER ID RECEIVED: ', action.payload, ' --- SOCKET ID: ', socket.id);
+      }
+    });
+
+    socket.on('action', (action) => {
       // if (action.type === 'server/testSocket_ClientToServer') {
       //   console.log('data: ', action.data);
 
       //   socket.emit('action', {type: 'testSocket_ServerToClient', data: 'Socket data flow from server to client confirmed'});
       // }
-
       let user = {
         admin: 1,
         id: 9,
@@ -75,7 +80,6 @@ module.exports = server => {
             waitDuration: '38min',
             waitTime: '8:49pm'
           }});
-
 
         socket.emit('action', {type: 'UPDATE_PARTY_INFO', 
           payload: {
