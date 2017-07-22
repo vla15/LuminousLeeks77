@@ -4,6 +4,10 @@ module.exports = server => {
 
   io.on('connection', socket => {
     console.log( 'Socket connected: ' + socket.id);
+    io.to(socket.id).emit('action', {type: 'testSocket_ServerToClient', data: `For your eyes only! ${socket.id}`});
+    //io.sockets.sockets[socket.id].join(socket.id)
+    //socket.to(socket.id).emit('action', {type: 'testSocket_ServerToClient', data: 'For your eyes only!'});
+    socket.emit('action', {type: 'testSocket_ServerToClient', data: 'For errybody!!!!!!!!!!!'});
     socket.on('action', (action) => {
       if (action.type === 'server/testSocket_ClientToServer') {
         console.log('data: ', action.data);
