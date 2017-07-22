@@ -8,7 +8,7 @@ router.route('/:queueid/:partyid')
   .get(PartyController.getPartyInfo);
 
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
-  .put(PartyController.enqueue);
+  .put(PartyController.enqueue, QueueController.getPartyInfoCustomer);
 
 router.route('/rm/:queueid/:partyid')
   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);

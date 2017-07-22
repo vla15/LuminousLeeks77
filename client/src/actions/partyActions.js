@@ -32,7 +32,7 @@ const enqueue = (user_id, queue_id, party_size, first_name, phone_number) => {
       console.log('result', result);
       dispatch({
         type: ENQUEUE,
-        payload: result.data
+        payload: result.data[0]
       });
     });
   };

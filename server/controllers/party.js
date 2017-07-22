@@ -46,7 +46,7 @@ module.exports.getPartyInfo = (req, res) => {
 };
 
 //remove not operator when launching
-module.exports.enqueue = (req, res) => {
+module.exports.enqueue = (req, res, next) => {
   if (req.isAuthenticated()) {
     models.Profile.where({id: req.params.userid})
       .fetch()
@@ -79,12 +79,14 @@ module.exports.enqueue = (req, res) => {
             first_name: user.get('first'),
             phone_number: user.get('phone')
             }).save()
+            .then(result => { res.party_id = result.get('id');})
             .error(err => {
               res.send(err);
             })
         }
       })
       .then((party) => {
+        console.log('party', party)
         return models.Party.where({queue_id: req.params.queueid})
           .count('id');
       })
@@ -93,6 +95,7 @@ module.exports.enqueue = (req, res) => {
           .save({queue_size: count}, {patch: true});
       })
       .then(success => {
+        return next();
         let queueSize = success.attributes.queue_size;
         console.log(success.get('queue_size'));
         // send new queue size to all the clients in the queue
