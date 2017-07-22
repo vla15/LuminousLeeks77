@@ -3,7 +3,7 @@ const queueReducer = (state = { is_open: true, isEmpty: true }, action) => {
   case 'GET_QUEUE_INFO':
     return action.payload;
   case 'UPDATE_QUEUE_INFO':
-    state = action.payload;
+    return action.payload;
   case 'TOGGLE_QUEUE':
     return action.payload;
     break;

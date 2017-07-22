@@ -57,8 +57,10 @@ module.exports.enqueue = (req, res) => {
             queue_id: req.params.queueid,
             wait_time: moment(new Date()).add(result.get('next_wait_time'), 'm'),
             profile_id: req.params.userid,
-            party_size: req.params.partysize
-          }).save();         
+            party_size: req.params.partysize,
+            first_name: req.params.firstname,
+            phone_number: req.params.phonenumber
+          }).save();
         }
       })
       .then(party => {
@@ -98,7 +100,7 @@ module.exports.dequeue = (req, res) => {
           .save({queue_size: count}, {patch: true});
       })
       .then(success => {
-        res.send('it has been destroyed');   
+        res.send('it has been destroyed');
       })
       .error(err => {
         res.status(305).send(err);

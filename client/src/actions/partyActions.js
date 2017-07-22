@@ -1,8 +1,5 @@
 import axios from 'axios';
-import {
-  GET_PARTY_INFO,
-  ENQUEUE
-} from './actionTypes';
+import { ENQUEUE, DEQUEUE, GET_PARTY_INFO, UPDATE_PARTY_SIZE, UPDATE_FIRST_NAME, UPDATE_PHONE_NUMBER } from './actionTypes.js';
 
 const getPartyInfo = store => {
   // return dispatch => {
@@ -16,7 +13,7 @@ const getPartyInfo = store => {
   // };
 };
 
-const dequeueParty = partyid => {
+const dequeue = partyid => {
   return dispatch => {
     axios.delete('/api/partyinfo/rm/1', { params: { partyid: 1} })
       .then(result => {
@@ -40,4 +37,28 @@ const enqueue = (userId, queueId, partySize, firstName, phoneNumber) => {
   };
 };
 
-export { getPartyInfo, enqueue, dequeueParty };
+
+const updatePartySize = partySize => {
+  if (0 < partySize && partySize < 9) {
+    return {
+      type: UPDATE_PARTY_SIZE,
+      payload: partySize
+    }
+  }
+}
+
+const updateFirstName = firstName => {
+  return {
+    type: UPDATE_FIRST_NAME,
+    payload: firstName
+  }
+}
+
+const updatePhoneNumber = phoneNumber => {
+  return {
+    type: UPDATE_PHONE_NUMBER,
+    payload: phoneNumber
+  }
+}
+
+export { enqueue, dequeue, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber };
