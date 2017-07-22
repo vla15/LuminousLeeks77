@@ -44,7 +44,7 @@ module.exports.getPartyInfo = (req, res) => {
 
 //remove not operator when launching
 module.exports.enqueue = (req, res) => {
-  if (req.isAuthenticated()) {
+  if (!req.isAuthenticated()) {
     models.Profile.where({id: req.params.userid})
       .fetch()
     .then(user => {
@@ -68,7 +68,7 @@ module.exports.enqueue = (req, res) => {
         if (!result.get('is_open')) {
           throw result;
         } else {
-          models.Party.forge({
+          return models.Party.forge({
             queue_id: req.params.queueid,
             wait_time: moment(new Date()).add(result.get('next_wait_time'), 'm'),
             profile_id: req.params.userid,
@@ -81,12 +81,11 @@ module.exports.enqueue = (req, res) => {
             })
         }
       })
-      .then((party, err) => {
+      .then((party) => {
         return models.Party.where({queue_id: req.params.queueid})
           .count('id');
       })
       .then(count => {
-        console.log(count);
         return models.Queue.where({id: req.params.queueid})
           .save({queue_size: count}, {patch: true});
       })
