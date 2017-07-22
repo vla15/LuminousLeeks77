@@ -13,13 +13,13 @@ const getPartyInfo = store => {
   // };
 };
 
-const dequeue = (partyid, queueId) => {
+const dequeue = (queue_id, party_id) => {
   return dispatch => {
-    axios.delete('/api/partyinfo/rm/1/8')
+    axios.delete(`/api/partyInfo/rm/${queue_id}/${party_id}`)
       .then(result => {
         dispatch({
           type: DEQUEUE,
-          payload: null
+          payload: result.data
         });
       });
   };
