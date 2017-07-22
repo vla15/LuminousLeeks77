@@ -9,9 +9,10 @@ module.exports.toggleQueue = (req, res) => {
     })
     .then(open => {
       models.Queue.where({id: req.params.queueid})
-        .save({is_open: !(open.get('is_open'))}, {patch: true});
-      res.status(200).send('updated');
-    })
+        .save({is_open: !(open.get('is_open'))}, {patch: true})
+    }).then(result => { models.Queue.where({id: req.params.queueid}).fetch({
+      columns: ['is_open']
+    }).then(result => { res.send(result) }) })
     .error(err => {
       res.status(500).send(err);
     })
@@ -39,7 +40,6 @@ module.exports.getQueueByUser = (req, res) => {
 //grabs all parties info, for example: http://localhost:3000/api/queueinfo/host/1
 //add parties: http://localhost:3000/api/partyinfo/add/1/1/4
 module.exports.getPartyInfoOfQueue = (req, res) => {
-  console.log('are you working? --------->')
   models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -49,7 +49,7 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
         'profile': (qb) => {
           qb.select('id', 'first', 'last', 'email', 'phone');
         }}],
-      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone']
+      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
     })
     .then(queue => {
       if (!queue) {
@@ -66,6 +66,21 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
     });
 };
 
+module.exports.getQueueInfoCustomer = (req, res) => {
+  models.Queue.where({ id: req.params.queueid }).fetch()
+    .then(queue => {
+      res.send(queue);
+    });
+}
+
+
+module.exports.getQueueInfoHost = (req, res) => {
+  models.Queue.where({ id: req.params.queueid }).fetch({
+    withRelated: ['parties']
+  })
+    .then(queue => {
+      res.send(queue);
+    });
+}
+
 //no rows defaults to catch
-
-

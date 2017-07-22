@@ -11,9 +11,9 @@ export const EnqueueFormHost = props => {
             id="firstName"
             name="firstName"
             placeholder="First name"
-            value={props.redux.store.newParty.firstName}
+            value={props.redux.store.party.first_name}
             onChange={() => {
-              props.redux.dispatch.changeFirstName(document.getElementById("firstName").value)
+              props.redux.dispatch.updateFirstName(document.getElementById("firstName").value)
             }}
           >
           </input>
@@ -28,8 +28,8 @@ export const EnqueueFormHost = props => {
           <select
             id="partySize"
             name="partySize"
-            value={props.redux.store.newParty.partySize}
-            onChange={() => {props.redux.dispatch.changePartySize(document.getElementById("partySize").value);
+            value={props.redux.store.party.party_size}
+            onChange={() => {props.redux.dispatch.updatePartySize(document.getElementById("partySize").value);
             }}
           >
             <option value={1}>1</option>
@@ -50,9 +50,9 @@ export const EnqueueFormHost = props => {
             id="phoneNumber"
             name="phoneNumber"
             placeholder="Phone number"
-            value={props.redux.store.newParty.phoneNumber}
+            value={props.redux.store.party.phone_number}
             onChange={() => {
-              props.redux.dispatch.changePhoneNumber(document.getElementById("phoneNumber").value);
+              props.redux.dispatch.updatePhoneNumber(document.getElementById("phoneNumber").value);
             }}
           >
           </input>
@@ -62,7 +62,15 @@ export const EnqueueFormHost = props => {
         <h6>
           <FontAwesome
             name="plus"
-            onClick={() => {console.log('Enqueue!'); }}
+            onClick={() => {
+              props.redux.dispatch.enqueue(
+                props.redux.store.user.profile_id,
+                1,
+                props.redux.store.party.party_size,
+                props.redux.store.party.first_name,
+                props.redux.store.party.phone_number
+              )
+            }}
           />
         </h6>
       </Col>

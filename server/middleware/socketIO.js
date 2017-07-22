@@ -1,5 +1,5 @@
 module.exports = server => {
-  
+
   const io = require('socket.io')(server);
 
   io.on('connection', socket => {
@@ -39,7 +39,7 @@ module.exports = server => {
       };
 
       if (user.admin) {
-        socket.emit('action', {type: 'UPDATE_QUEUE_INFO', 
+        socket.emit('action', {type: 'UPDATE_QUEUE_INFO',
           payload: {
             partyCount: 6,
             waitDuration: '38min-host',
@@ -74,31 +74,27 @@ module.exports = server => {
             ]
           }});
       } else {
-        
-        socket.emit('action', {type: 'UPDATE_QUEUE_INFO', 
+
+        socket.emit('action', {type: 'UPDATE_QUEUE_INFO',
           payload: {
             partyCount: 6,
             waitDuration: '38min',
             waitTime: '8:49pm'
           }});
 
-        socket.emit('action', {type: 'UPDATE_PARTY_INFO', 
+        socket.emit('action', {type: 'UPDATE_PARTY_INFO',
           payload: {
             partyId: 8,
             partiesAhead: 8,
             partiesBehind: 10,
             myWaitDuration: '20min',
             myWaitTime: '8:35pm',
-            message: 'please head to the queue' 
+            message: 'please head to the queue'
           }});
 
       }
     });
-    
+
 
   });
 };
-
-
-
-

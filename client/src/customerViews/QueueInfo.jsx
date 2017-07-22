@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-import { EnqueueForm } from '../components/EnqueueForm.jsx';
+import { EnqueueFormCustomer } from '../components/EnqueueFormCustomer.jsx';
 import { QueueStats } from '../components/QueueStats.jsx';
 
 export const QueueInfo = props => {
@@ -13,7 +13,7 @@ export const QueueInfo = props => {
         </Col>
       </Row>
       <QueueStats redux={props.redux} />
-      <EnqueueForm redux={props.redux} />
+      <EnqueueFormCustomer redux={props.redux} />
     </Grid>
   );
 };
