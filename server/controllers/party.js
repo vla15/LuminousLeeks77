@@ -38,7 +38,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
       targetCustomer = targetCustomer.filter(party => {
         return party.get('id') === Number(res.party_id);
       });
-      console.log(targetCustomer);
+      console.log('targetCustomer: ', targetCustomer);
       res.send(targetCustomer);
     })
     .error(err => {
@@ -98,16 +98,17 @@ module.exports.enqueue = (req, res, next) => {
       .then(success => {
         return next();
         let queueSize = success.attributes.queue_size;
-        console.log(success.get('queue_size'));
-        // send new queue size to all the clients in the queue
-        models.Party.where({queue_id: req.params.queueid})
-          .fetchAll()
-          .then(parties => {
-            parties.each((party, i) => {
-              //get the socketID for each user
-              console.log('party', party);
-            });
-          });
+        // console.log(success.get('queue_size'));
+        // // send new queue size to all the clients in the queue
+        // models.Party.where({queue_id: req.params.queueid})
+        //   .fetchAll()
+        //   .then(parties => {
+        //     console.log('parties!!!!!!!!',parties);
+        //     parties.each((party, i) => {
+        //       //get the socketID for each user
+        //       console.log('party', party);
+        //     });
+        //   });
         //getAllPartiesInQueue(req.params.queueId);
         res.status(200).send('successful');
       })
@@ -120,6 +121,15 @@ module.exports.enqueue = (req, res, next) => {
   }
 };
 
+
+module.exports.sendSocketDataForParties = function (req, res, next) {
+  console.log('in send Sockets');
+  return models.Party.where({id: req.params.queueid}).fetchAll()
+    .then(parties => {
+      console.log(parties);
+    });
+  next();
+}
 
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
