@@ -1,6 +1,9 @@
 const models = require('../../db/models');
 const moment = require('moment');
-const socket = require('../middleware').socketIO;
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 module.exports.getOne = (req, res) => {
   models.Party.where({id: req.params.partyid})
@@ -124,11 +127,18 @@ module.exports.enqueue = (req, res, next) => {
 
 module.exports.sendSocketDataForParties = function (req, res, next) {
   console.log('in send Sockets');
-  return models.Party.where({id: req.params.queueid}).fetchAll()
+  return models.Party
+    .where({queue_id: req.params.queueid})
+    .fetchAll({ withRelated: ['profile'] })
     .then(parties => {
-      console.log(parties);
+      parties.forEach(party => {
+        let profile = party.related('profile');
+        console.log(profile.get('socket_id'));
+        //console.log('io', io);
+        //io.to(profile.get('socket_id')).emit('action', {type: 'SET_SOCKET_ID', data: `We got a message for ${profile.get('socket_id')}`});
+      });
+      next();
     });
-  next();
 }
 
 // http://localhost:3000/api/partyinfo/rm/1/5

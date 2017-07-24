@@ -1,15 +1,16 @@
 const Profiles = require('../controllers').Profiles;
 
-module.exports = server => {
+module.exports = io => {
 
-  const io = require('socket.io')(server);
+  //const io = require('socket.io')(server);
+  //module.exports.io = io;
 
   io.on('connection', socket => {
     console.log( 'Socket connected: ' + socket.id);
     io.to(socket.id).emit('action', {type: 'SET_SOCKET_ID', data: `${socket.id}`});
     //io.sockets.sockets[socket.id].join(socket.id)
-    //socket.to(socket.id).emit('action', {type: 'testSocket_ServerToClient', data: 'For your eyes only!'});
-    // socket.emit('action', {type: 'testSocket_ServerToClient', data: 'For errybody!!!!!!!!!!!'});
+    io.to(socket.id).emit('action', {type: 'server/testSocket_ServerToClient', data: 'For your eyes only!'});
+    socket.emit('action', {type: 'server/testSocket_ServerToClient', data: 'For errybody!!!!!!!!!!!'});
 
     // socket.on('action', (action) => {
     //   if (action.type === 'server/testSocket_ClientToServer') {
@@ -95,10 +96,9 @@ module.exports = server => {
             myWaitTime: '8:35pm',
             message: 'please head to the queue'
           }});
-
       }
     });
-
-
   });
 };
+
+
