@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
+import Moment from 'moment';
 
 export const PartyInfo = props => {
   return (

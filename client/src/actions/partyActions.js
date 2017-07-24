@@ -29,7 +29,6 @@ const enqueue = (user_id, queue_id, party_size, first_name, phone_number) => {
   return dispatch => {
     axios.put(`/api/partyInfo/add/${queue_id}/${user_id}/${party_size}/${first_name}/${phone_number}`)
       .then(result => {
-        console.log('result', result);
         dispatch({
           type: ENQUEUE,
           payload: result.data[0]
