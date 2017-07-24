@@ -4,7 +4,7 @@ const router = express.Router();
 const PartyController = require('../controllers').Party;
 const QueueController = require('../controllers').Queues;
 
-router.route('/:queueid/:partyid')
+router.route('/:queueid/:userid')
   .get(PartyController.getPartyInfoCustomer);
 
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
