@@ -18,6 +18,7 @@ module.exports.getOne = (req, res) => {
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
+  console.log('IN GET PARTY INFOR CUSTOMER');
   return models.Party.where({profile_id: req.params.userid})
     .fetch({require: true})
     .then(party => {
@@ -130,15 +131,43 @@ module.exports.sendSocketDataForParties = function (req, res, next) {
     .where({queue_id: req.params.queueid})
     .fetchAll({ withRelated: ['profile'] })
     .then(parties => {
+      res.parties = parties;
       parties.forEach(party => {
         let profile = party.related('profile');
         console.log(profile.get('socket_id'));
-        //console.log('io', io);
+        // sends socket to all connected customers
         io.to(profile.get('socket_id')).emit('action', {type: 'SET_SOCKET_ID', data: `We got a message for ${profile.get('socket_id')}`});
-      });
+      })
       next();
     });
 };
+
+module.exports.sendQueueInfoToHostWithSocket = function(req, res, next) {
+  console.log('SEND QUEUE INFO TO HOST WITH SOCKET');
+  return models.Queue
+    .where({ id: req.params.queueid })
+    .fetch({
+      withRelated: ['parties']
+    })
+    .then(queue => {
+      res.queue = queue;
+    })
+    .then(() => {
+      return models.Profile
+        .where({ admin: req.params.queueid })
+        .fetchAll({ withRelated: ['queue']})
+        .then(profiles => {
+          //console.log(profiles);
+           profiles.forEach(profile => {
+             console.log(profile.serialize());
+             emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', res.queue);
+           })
+        })
+        .then(()=> {
+          next();
+        })
+    });
+}
 
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
@@ -172,4 +201,5 @@ module.exports.dequeue = (req, res, next) => {
   // }
 };
 
+const emitSocketMessage = require('../app').emitSocketMessage;
 const io = require('../app').io;
