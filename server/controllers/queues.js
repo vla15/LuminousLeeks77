@@ -41,7 +41,7 @@ module.exports.getQueueByUser = (req, res) => {
 
 //grabs all parties info, for example: http://localhost:3000/api/queueinfo/host/1
 //add parties: http://localhost:3000/api/partyinfo/add/1/1/4
-module.exports.getPartyInfoOfQueue = (req, res) => {
+module.exports.getPartyInfoOfQueue = (req, res, next) => {
   models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -54,19 +54,35 @@ module.exports.getPartyInfoOfQueue = (req, res) => {
       columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
     })
     .then(queue => {
-      if (!queue) {
-        throw queue;
-      } else {
-        res.status(200).send(queue);
-      }
+
+      // if (!queue) {
+
+      //   throw queue;
+      // } else {
+        // console.log('queue list/parties------>', queue);
+
+        // res.status(200).send(queue);
+        res.queue = queue;
+        next();
+
+      // }
     })
     .error(err => {
       res.status(500).send(err);
     })
     .catch(err => {
+      // console.log('hiiiiiiiiiiiiiiii------')
       res.status(404).send(err);
     });
 };
+
+// module.exports.updatePartiesOnDequeue = (req, res, queues, io) => {
+//   console.log('hdgfhdfsgdhgfdhfghgfhgfdhgfdshgfdsh----->')
+//   // io.on('connection', socket => {
+//   //   console.log( 'Socket connected: ?????????' + socket.id);
+//   //   io.to(socket.id).emit('action', {type: 'SET_SOCKET_ID', data: queue});
+//   // });  
+// };
 
 module.exports.getPartyInfoCustomer = (req, res) => {
   models.Party.where({id: res.party_id})

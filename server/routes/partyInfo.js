@@ -10,7 +10,7 @@ router.route('/:queueid/:partyid')
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
   .put(PartyController.enqueue, PartyController.getPartyInfoCustomer);
 
-router.route('/rm/:queueid/:partyid')
-  .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);
+// router.route('/rm/:queueid/:partyid')
+//   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);
 
 module.exports = router;
