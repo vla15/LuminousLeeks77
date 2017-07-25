@@ -1,13 +1,24 @@
 'use strict';
 const express = require('express');
-const path = require('path');
-const middleware = require('./middleware');
-const routes = require('./routes');
-
 const app = express();
 const server = require('http').Server(app);
-
 const io = require('socket.io')(server);
+
+module.exports.io = io;
+
+module.exports.emitSocketMessage = (socketId, action, payload) => {
+  console.log(`***** socket: ${socketId}, action: ${action}, payload: ${payload}`);
+  io.to(socketId).emit('action', {
+    type: action,
+    payload: payload
+  });
+};
+
+
+const path = require('path');
+const middleware = require('./middleware');
+
+const routes = require('./routes');
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
@@ -31,6 +42,6 @@ app.use('/api/profiles', routes.profiles);
 app.use('/api/queueinfo', routes.queueInfo);
 app.use('/api/partyinfo', routes.partyInfo);
 
-global.socketio = io;
 module.exports.server = server;
-module.exports.io = io;
+
+
