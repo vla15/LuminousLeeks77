@@ -31,5 +31,6 @@ app.use('/api/profiles', routes.profiles);
 app.use('/api/queueinfo', routes.queueInfo);
 app.use('/api/partyinfo', routes.partyInfo);
 
+global.socketio = io;
 module.exports.server = server;
 module.exports.io = io;

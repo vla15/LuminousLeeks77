@@ -51,7 +51,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 
 //remove not operator when launching
 module.exports.enqueue = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  //if (req.isAuthenticated()) {
     models.Profile.where({id: req.params.userid})
       .fetch()
     .then(user => {
@@ -119,9 +119,9 @@ module.exports.enqueue = (req, res, next) => {
         res.send(404);
       })
     })
-  } else {
-    res.send('you aint authenticated');
-  }
+  // } else {
+  //   res.send('you aint authenticated');
+  // }
 };
 
 
@@ -135,7 +135,7 @@ module.exports.sendSocketDataForParties = function (req, res, next) {
         let profile = party.related('profile');
         console.log(profile.get('socket_id'));
         //console.log('io', io);
-        //io.to(profile.get('socket_id')).emit('action', {type: 'SET_SOCKET_ID', data: `We got a message for ${profile.get('socket_id')}`});
+        io.to(profile.get('socket_id')).emit('action', {type: 'SET_SOCKET_ID', data: `We got a message for ${profile.get('socket_id')}`});
       });
       next();
     });
