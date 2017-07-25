@@ -29,7 +29,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
         })
         .fetchAll({
           withRelated: ['queue', 'profile'],
-          columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size']
+          columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
         });
     })
     .then(result => {
@@ -51,7 +51,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 
 //remove not operator when launching
 module.exports.enqueue = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  // if ( req.isAuthenticated()) {
     models.Profile.where({id: req.params.userid})
       .fetch()
       .then(user => {
@@ -117,15 +117,17 @@ module.exports.enqueue = (req, res, next) => {
             res.send(404);
           });
       });
-  } else {
-    res.send('you aint authenticated');
-  }
+  // } else {
+  //   res.send('you aint authenticated');
+  // }
 };
 
 
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
-  if (req.isAuthenticated()) {
+
+  // console.log('testing dequeueeeee works------>')
+  // if ( req.isAuthenticated()) {
     return models.Party.where({id: req.params.partyid})
       .destroy()
       .then(result => {
@@ -148,7 +150,7 @@ module.exports.dequeue = (req, res, next) => {
       .catch(err => {
         res.status(415).send('error');
       });
-  } else {
-    res.send('you aint authenticated on a dequeue');
-  }
+  // } else {
+  //   res.send('you aint authenticated on a dequeue');
+  // }
 };
