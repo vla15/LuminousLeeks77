@@ -1,16 +1,24 @@
 'use strict';
 const express = require('express');
-const path = require('path');
-const middleware = require('./middleware');
-const controllers = require('./controllers');
-const routes = require('./routes');
-const PartyController = require('./controllers').Party;
-const QueueController = require('./controllers').Queues;
-
-
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+
+module.exports.io = io;
+
+module.exports.emitSocketMessage = (socketId, action, payload) => {
+  console.log(`***** socket: ${socketId}, action: ${action}, payload: ${payload}`);
+  io.to(socketId).emit('action', {
+    type: action,
+    payload: payload
+  });
+};
+
+
+const path = require('path');
+const middleware = require('./middleware');
+
+const routes = require('./routes');
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
@@ -24,12 +32,9 @@ app.use(middleware.passport.initialize());
 app.use(middleware.passport.session()); 
 app.use(middleware.flash());
 
-
-
 app.use(express.static(path.join(__dirname, '../public')));
 
 middleware.socketIO(io);
-// controllers.Queues.updatePartiesOnDequeue(io);
 
 app.use('/', routes.auth); 
 app.use('/api', routes.api);
@@ -37,20 +42,5 @@ app.use('/api/profiles', routes.profiles);
 app.use('/api/queueinfo', routes.queueInfo);
 app.use('/api/partyinfo', routes.partyInfo);
 
-const updatePartiesOnDequeue = (req, res) => {
-  let target = res.target.related('profile');
-  io.to(target.get('socket_id')).emit('action', {
-    type: 'UPDATE_PARTY_INFO',
-    payload: res.target
-  });
-  res.queue.forEach(party => {
-    let profile = party.related('profile');
-    io.to(profile.get('socket_id')).emit('action', {
-      type: 'UPDATE_PARTY_INFO',
-      payload: party
-    });
-  });
-};
-app.delete('/api/partyinfo/rm/:queueid/:partyid', PartyController.dequeue, QueueController.getPartyInfoOfQueue, updatePartiesOnDequeue);
 
-module.exports = server;
+module.exports.server = server;

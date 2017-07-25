@@ -3,16 +3,22 @@ const models = require('../../db/models');
 //get all of queue
 
 module.exports.toggleQueue = (req, res) => {
+  console.log('TOGGLE QUEUE');
   models.Queue.where({id: req.params.queueid})
     .fetch({
       columns: ['is_open']
     })
     .then(open => {
       models.Queue.where({id: req.params.queueid})
-        .save({is_open: !(open.get('is_open'))}, {patch: true})
-    }).then(result => { models.Queue.where({id: req.params.queueid}).fetch({
-      columns: ['is_open']
-    }).then(result => { res.send(result) }) })
+        .save({
+          is_open: !(open.get('is_open'))},
+        {patch: true});
+    })
+    .then(result => { 
+      models.Queue.where({id: req.params.queueid})
+        .fetch({columns: ['is_open']})
+        .then(result => { res.send(result); });
+    })
     .error(err => {
       res.status(500).send(err);
     })
@@ -22,6 +28,7 @@ module.exports.toggleQueue = (req, res) => {
 };
 
 module.exports.getQueueByUser = (req, res) => {
+  console.log('GET QUEUE BY USER');
   models.Queue.where({id: req.params.queueid}).fetch()
     .then(queue => {
       if (!queue) {
@@ -66,8 +73,8 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
         // console.log('queue list/parties------>', queue);
 
         // res.status(200).send(queue);
-        res.queue = queue;
-        next();
+      res.queue = queue;
+      next();
 
       // }
     })
@@ -115,13 +122,26 @@ module.exports.getPartyInfoCustomer = (req, res) => {
     });
 };
 
+module.exports.updatePartiesOnDequeue = (req, res) => {
+  console.log('res.queue ----->', res.queue);
+
+  res.queue.forEach(party => {
+    let profile = party.related('profile');
+    emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
+    // io.to(profile.get('socket_id')).emit('action', {
+    //   type: 'UPDATE_PARTY_INFO',
+    //   payload: party
+    // });
+  });
+  res.send(res.queue);
+};
 
 module.exports.getQueueInfoCustomer = (req, res) => {
   models.Queue.where({ id: req.params.queueid }).fetch()
     .then(queue => {
       res.send(queue);
     });
-}
+};
 
 
 module.exports.getQueueInfoHost = (req, res) => {
@@ -131,6 +151,7 @@ module.exports.getQueueInfoHost = (req, res) => {
     .then(queue => {
       res.send(queue);
     });
-}
+};
 
+const emitSocketMessage = require('../app').emitSocketMessage;
 //no rows defaults to catch
