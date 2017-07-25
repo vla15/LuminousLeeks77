@@ -44,7 +44,8 @@ exports.seed = (knex, Promise) => {
         profile_id: 10,
         organization_id: 1,
         next_wait_time: 10,
-        is_open: true
+        is_open: true,
+        location: knex.raw('Point (37.7836966, -122.4089664)')
       });
     });
 };
