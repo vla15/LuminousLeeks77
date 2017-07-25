@@ -42,10 +42,9 @@ const updatePartiesOnDequeue = (req, res) => {
 
   res.queue.forEach(party => {
     let profile = party.related('profile');
-    console.log('profile', profile)
     io.to(profile.get('socket_id')).emit('action', {
     	type: 'UPDATE_PARTY_INFO',
-    	payload: profile
+    	payload: party
     });
   });
 };

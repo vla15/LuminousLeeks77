@@ -10,8 +10,8 @@ const io = require('../app.js').io
 router.route('/getQueueInfoCustomer/:queueid')
   .get(QueueController.getQueueInfoCustomer);
 
-  router.route('/getQueueInfoHost/:queueid')
-    .get(QueueController.getQueueInfoHost);
+router.route('/getQueueInfoHost/:queueid')
+  .get(QueueController.getQueueInfoHost);
 
 router.route('/togglequeue/:queueid')
   .put(QueueController.toggleQueue);

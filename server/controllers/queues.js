@@ -47,14 +47,18 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
       qb.orderBy('wait_time', 'ASC');
     })
     .fetchAll({
-      withRelated: ['queue', {
-        'profile': (qb) => {
-          qb.select('id', 'first', 'last', 'email', 'phone', 'socket_id');
-        }}],
+      withRelated: ['queue', 'profile'],
       columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
     })
     .then(queue => {
 
+      var length = queue.length;
+
+      var targetCustomer = queue.map((customer, index) => {
+        customer.set({parties_ahead: index});
+        customer.set({parties_behind: length - (index + 1)});
+        return customer;
+      });
       // if (!queue) {
 
       //   throw queue;
