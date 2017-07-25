@@ -19,9 +19,9 @@ module.exports.toggleQueue = (req, res, next) => {
             .fetch({columns: ['is_open']})
             .then(result => { 
               console.log('result', result);
-              res.send(result) ;
-              // res.result = result;
-              // next();
+              // res.send(result) ;
+              res.result = result;
+              next();
             })
           })
     .error(err => {
@@ -32,10 +32,22 @@ module.exports.toggleQueue = (req, res, next) => {
     });
 };
 
-module.exports.updatePartiesOnToggle = (req, res) => {
+module.exports.updatePartiesOnToggleQueue = (req, res, next) => {
 
+  models.Profile.query(qb => {
+    qb.select('*').from('profiles').leftJoin(
+      'parties',
+      'profiles.id',
+      'parties.profile_id');
+    })
+    .fetchAll({
+      columns: ['socket_id', ]
+    })
+    .then(result => {
+      console.log('result', result);
+      res.send(result);
+    })
 
-  console.log('res.queue ----->', res.queue);
 
   // res.queue.forEach(party => {
   //   let profile = party.related('profile');
@@ -46,7 +58,6 @@ module.exports.updatePartiesOnToggle = (req, res) => {
   //   //   payload: party
   //   // });
   // });
-  res.send(res.queue);
 };
 
 module.exports.getQueueByUser = (req, res) => {
