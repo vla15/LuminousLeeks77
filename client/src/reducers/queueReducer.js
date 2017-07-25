@@ -7,6 +7,9 @@ const queueReducer = (state = initial, action) => {
     case 'ENQUEUE_HOST':
       return action.payload;
 
+    case 'DEQUEUE_HOST':
+      return action.payload;
+
     case 'GET_QUEUE_INFO_CUSTOMER':
       return action.payload;
 

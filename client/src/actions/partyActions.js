@@ -1,8 +1,7 @@
 import axios from 'axios';
 import {
   ENQUEUE_CUSTOMER,
-  ENQUEUE_HOST,
-  DEQUEUE,
+  DEQUEUE_CUSTOMER,
   GET_PARTY_INFO,
   UPDATE_PARTY_SIZE,
   UPDATE_FIRST_NAME,
@@ -22,12 +21,12 @@ const getPartyInfo = (queue_id, user_id) => {
   };
 };
 
-const dequeue = (queue_id, party_id) => {
+const dequeueCustomer = (queue_id, party_id) => {
   return dispatch => {
     axios.delete(`/api/partyInfo/rm/${queue_id}/${party_id}`)
       .then(result => {
         dispatch({
-          type: DEQUEUE,
+          type: DEQUEUE_CUSTOMER,
           payload: result.data
         });
       });
@@ -70,4 +69,4 @@ const updatePhoneNumber = phoneNumber => {
   };
 };
 
-export { enqueueCustomer, dequeue, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber };
+export { enqueueCustomer, dequeueCustomer, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber };
