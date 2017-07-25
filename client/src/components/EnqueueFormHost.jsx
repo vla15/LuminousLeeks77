@@ -63,7 +63,7 @@ export const EnqueueFormHost = props => {
           <FontAwesome
             name="plus"
             onClick={() => {
-              props.redux.dispatch.enqueue(
+              props.redux.dispatch.enqueueHost(
                 props.redux.store.user.profile_id,
                 1,
                 props.redux.store.party.party_size,
