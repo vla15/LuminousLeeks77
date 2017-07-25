@@ -2,10 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { enqueue, dequeue, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber } from '../actions/partyActions.js';
+import { enqueueCustomer, dequeue, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber } from '../actions/partyActions.js';
 
 import { setUserInfo, sendUserId } from '../actions/userActions.js';
-import { getQueueInfoHost, toggleQueue, getQueueInfoCustomer } from '../actions/queueActions.js';
+import { enqueueHost, getQueueInfoHost, toggleQueue, getQueueInfoCustomer } from '../actions/queueActions.js';
 import { testSocketConnect } from '../actions/testSocketActions.js';
 import { Header } from '../components/Header.jsx';
 import Host from '../users/Host.jsx';
@@ -30,7 +30,8 @@ const mapDispatchToProps = dispatch => {
       getQueueInfoHost: queue_id => { dispatch(getQueueInfoHost(queue_id)); },
 
       getPartyInfo: (queue_id, user_id) => { dispatch(getPartyInfo(queue_id, user_id)); },
-      enqueue: (user_id, queue_id, party_size, first_name, phone_number) => { dispatch(enqueue(user_id, queue_id, party_size, first_name, phone_number)); },
+      enqueueCustomer: (user_id, queue_id, party_size, first_name, phone_number) => { dispatch(enqueueCustomer(user_id, queue_id, party_size, first_name, phone_number)); },
+      enqueueHost: (user_id, queue_id, party_size, first_name, phone_number) => { dispatch(enqueueHost(user_id, queue_id, party_size, first_name, phone_number)); },
       updatePartySize: partySize => { dispatch(updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(updateFirstName(firstName)); },
       updatePhoneNumber: phoneNumber => { dispatch(updatePhoneNumber(phoneNumber)); },

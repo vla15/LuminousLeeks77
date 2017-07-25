@@ -1,6 +1,7 @@
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const GET_QUEUE_INFO_HOST = 'GET_QUEUE_INFO_HOST';
-export const ENQUEUE = 'ENQUEUE';
+export const ENQUEUE_CUSTOMER = 'ENQUEUE_CUSTOMER';
+export const ENQUEUE_HOST = 'ENQUEUE_HOST';
 export const DEQUEUE = 'DEQUEUE';
 export const TOGGLE_QUEUE = 'TOGGLE_QUEUE';
 export const GET_PARTY_INFO = 'GET_PARTY_INFO';

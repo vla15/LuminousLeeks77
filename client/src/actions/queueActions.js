@@ -2,7 +2,8 @@ import axios from 'axios';
 import {
   GET_QUEUE_INFO_HOST,
   TOGGLE_QUEUE,
-  GET_QUEUE_INFO_CUSTOMER
+  GET_QUEUE_INFO_CUSTOMER,
+  ENQUEUE_HOST
 } from './actionTypes';
 
 const getQueueInfoCustomer = queue_id => {
@@ -29,6 +30,21 @@ const getQueueInfoHost = queue_id => {
   }
 }
 
+const enqueueHost = (user_id, queue_id, party_size, first_name, phone_number) => {
+  return dispatch => {
+    axios.put(`/api/partyInfo/add/${queue_id}/${user_id}/${party_size}/${first_name}/${phone_number}`)
+    .then(() => {
+      axios.get(`/api/queueInfo/getQueueInfoHost/${queue_id}`)
+      .then(result => {
+        dispatch({
+          type: ENQUEUE_HOST,
+          payload: result.data
+        })
+      })
+    });
+  };
+};
+
 const toggleQueue = (queue_id) => {
   return dispatch => {
     axios.put(`/api/queueInfo/toggleQueue/${queue_id}`)
@@ -42,4 +58,4 @@ const toggleQueue = (queue_id) => {
   }
 }
 
-export { getQueueInfoHost, toggleQueue, getQueueInfoCustomer };
+export { getQueueInfoHost, toggleQueue, getQueueInfoCustomer, enqueueHost };
