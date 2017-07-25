@@ -45,7 +45,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
       res.send(targetCustomer);
     })
     .catch(err => {
-      res.sendStatus(404);
+      res.send([{party_size: 1, first_name: '', phone_number: ''}]);
     });
 };
 
