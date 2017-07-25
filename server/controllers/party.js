@@ -1,6 +1,5 @@
 const models = require('../../db/models');
 const moment = require('moment');
-const socket = require('../middleware').socketIO;
 
 module.exports.getOne = (req, res) => {
   models.Party.where({id: req.params.partyid})
@@ -42,6 +41,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
       targetCustomer = targetCustomer.filter(party => {
         return party.get('id') === Number(res.party_id);
       });
+      console.log('targetCustomer: ', targetCustomer);
       res.send(targetCustomer);
     })
     .catch(err => {
@@ -51,8 +51,8 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 
 //remove not operator when launching
 module.exports.enqueue = (req, res, next) => {
-  // if ( req.isAuthenticated()) {
-    models.Profile.where({id: req.params.userid})
+  //if (req.isAuthenticated()) {
+    models.Profile.where({ id: req.params.userid })
       .fetch()
       .then(user => {
         if (user && user.get('admin') !== '1') {
@@ -123,6 +123,22 @@ module.exports.enqueue = (req, res, next) => {
 };
 
 
+module.exports.sendSocketDataForParties = function (req, res, next) {
+  console.log('in send Sockets');
+  return models.Party
+    .where({queue_id: req.params.queueid})
+    .fetchAll({ withRelated: ['profile'] })
+    .then(parties => {
+      parties.forEach(party => {
+        let profile = party.related('profile');
+        console.log(profile.get('socket_id'));
+        //console.log('io', io);
+        io.to(profile.get('socket_id')).emit('action', {type: 'SET_SOCKET_ID', data: `We got a message for ${profile.get('socket_id')}`});
+      });
+      next();
+    });
+}
+
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
 
@@ -154,3 +170,5 @@ module.exports.dequeue = (req, res, next) => {
   //   res.send('you aint authenticated on a dequeue');
   // }
 };
+
+const io = require('../app').io;

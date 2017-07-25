@@ -2,10 +2,12 @@
 const express = require('express');
 const router = express.Router();
 const QueueController = require('../controllers').Queues;
-const io = require('../app.js').io
+
+
 
 // router.route('/host/:queueid')
 //   .get(QueueController.getPartyInfoOfQueue);
+
 
 router.route('/getQueueInfoCustomer/:queueid')
   .get(QueueController.getQueueInfoCustomer);
