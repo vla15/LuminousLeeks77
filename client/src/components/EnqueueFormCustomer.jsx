@@ -37,7 +37,7 @@ export const EnqueueFormCustomer = props => {
               <Button
                 block={true}
                 onClick={() => {
-                  props.redux.dispatch.enqueue(
+                  props.redux.dispatch.enqueueCustomer(
                     props.redux.store.user.profile_id,
                     1,
                     props.redux.store.party.party_size,
