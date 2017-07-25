@@ -17,6 +17,9 @@ router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
 // router.route('/rm/:queueid/:partyid')
 //   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);
 router.route('/rm/:queueid/:partyid')
-  .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue, QueueController.updatePartiesOnDequeue);
+  .delete(PartyController.dequeue, 
+    PartyController.sendQueueInfoToHostWithSocket, 
+    QueueController.getPartyInfoOfQueue,
+    QueueController.updatePartiesOnDequeue);
 
 module.exports = router;
