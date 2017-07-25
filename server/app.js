@@ -38,16 +38,20 @@ app.use('/api/queueinfo', routes.queueInfo);
 app.use('/api/partyinfo', routes.partyInfo);
 
 const updatePartiesOnDequeue = (req, res) => {
-  console.log('res.queue ----->', res.queue);
-
+  res.target.set({id: undefined});
+  let target = res.target.related('profile');
+  io.to(target.get('socket_id')).emit('action', {
+    type: 'UPDATE_PARTY_INFO',
+    payload: res.target
+  });
   res.queue.forEach(party => {
     let profile = party.related('profile');
     io.to(profile.get('socket_id')).emit('action', {
-    	type: 'UPDATE_PARTY_INFO',
-    	payload: party
+      type: 'UPDATE_PARTY_INFO',
+      payload: party
     });
   });
 };
 app.delete('/api/partyinfo/rm/:queueid/:partyid', PartyController.dequeue, QueueController.getPartyInfoOfQueue, updatePartiesOnDequeue);
 
-module.exports= server;
+module.exports = server;
