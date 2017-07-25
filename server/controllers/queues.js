@@ -124,15 +124,12 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 
 module.exports.updatePartiesOnDequeue = (req, res) => {
   console.log('res.queue ----->', res.queue);
-
-  res.queue.forEach(party => {
-    let profile = party.related('profile');
-    emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
-    // io.to(profile.get('socket_id')).emit('action', {
-    //   type: 'UPDATE_PARTY_INFO',
-    //   payload: party
-    // });
-  });
+  if (res.queue) {
+    res.queue.forEach(party => {
+      let profile = party.related('profile');
+      emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
+    });
+  }
   res.send(res.queue);
 };
 
