@@ -130,10 +130,9 @@ module.exports.dequeue = (req, res, next) => {
   // if ( req.isAuthenticated()) {a
   return models.Party.where({id: req.params.partyid})
     .fetch({
-      withRelated: ['profile']
+      withRelated: ['profile', 'queue']
     })
     .then(target => {
-      res.target = target;
       models.Party.where({id: req.params.partyid})
         .destroy()
         .then(result => {
@@ -141,7 +140,9 @@ module.exports.dequeue = (req, res, next) => {
             .count('id');
         })
         .then(count => {
-          console.log('inside count');
+          res.target = target;
+          target.related('queue').set({queue_size: count});
+          target.set({id: undefined, party_size: 1});
           return models.Queue.where({id: req.params.queueid})
             .save({queue_size: count}, {patch: true});
         })

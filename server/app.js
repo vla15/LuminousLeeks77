@@ -38,7 +38,6 @@ app.use('/api/queueinfo', routes.queueInfo);
 app.use('/api/partyinfo', routes.partyInfo);
 
 const updatePartiesOnDequeue = (req, res) => {
-  res.target.set({id: undefined});
   let target = res.target.related('profile');
   io.to(target.get('socket_id')).emit('action', {
     type: 'UPDATE_PARTY_INFO',
