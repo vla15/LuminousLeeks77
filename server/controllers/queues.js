@@ -10,15 +10,15 @@ module.exports.toggleQueue = (req, res) => {
     })
     .then(open => {
       models.Queue.where({id: req.params.queueid})
-        .save({
-          is_open: !(open.get('is_open'))},
-          {patch: true})
-        })
-        .then(result => { 
-          models.Queue.where({id: req.params.queueid})
-            .fetch({columns: ['is_open']})
-            .then(result => { res.send(result) })
-          })
+    .save({
+      is_open: !(open.get('is_open'))},
+      {patch: true});
+    })
+    .then(result => {
+      models.Queue.where({id: req.params.queueid})
+        .fetch({columns: ['is_open']})
+        .then(result => { res.send(result); });
+    })
     .error(err => {
       res.status(500).send(err);
     })
@@ -73,8 +73,8 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
         // console.log('queue list/parties------>', queue);
 
         // res.status(200).send(queue);
-        res.queue = queue;
-        next();
+      res.queue = queue;
+      next();
 
       // }
     })
@@ -92,7 +92,7 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
 //   // io.on('connection', socket => {
 //   //   console.log( 'Socket connected: ?????????' + socket.id);
 //   //   io.to(socket.id).emit('action', {type: 'SET_SOCKET_ID', data: queue});
-//   // });  
+//   // });
 // };
 
 module.exports.getPartyInfoCustomer = (req, res) => {
@@ -141,7 +141,7 @@ module.exports.getQueueInfoCustomer = (req, res) => {
     .then(queue => {
       res.send(queue);
     });
-}
+};
 
 
 module.exports.getQueueInfoHost = (req, res) => {
@@ -151,7 +151,7 @@ module.exports.getQueueInfoHost = (req, res) => {
     .then(queue => {
       res.send(queue);
     });
-}
+};
 
 const emitSocketMessage = require('../app').emitSocketMessage;
 //no rows defaults to catch

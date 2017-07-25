@@ -15,10 +15,10 @@ const getQueueInfoCustomer = queue_id => {
       dispatch({
         type: GET_QUEUE_INFO_CUSTOMER,
         payload: result.data
-      })
-    })
-  }
-}
+      });
+    });
+  };
+};
 
 const getQueueInfoHost = queue_id => {
   return dispatch => {
@@ -27,10 +27,10 @@ const getQueueInfoHost = queue_id => {
       dispatch({
         type: GET_QUEUE_INFO_HOST,
         payload: result.data
-      })
-    })
-  }
-}
+      });
+    });
+  };
+};
 
 const enqueueHost = (user_id, queue_id, party_size, first_name, phone_number) => {
   return dispatch => {
@@ -41,12 +41,12 @@ const enqueueHost = (user_id, queue_id, party_size, first_name, phone_number) =>
         dispatch({
           type: ENQUEUE_HOST,
           payload: result.data
-        })
+        });
         dispatch({
           type: CLEAR_PARTY,
           payload: result.data
-        })
-      })
+        });
+      });
     });
   };
 };
@@ -60,8 +60,8 @@ const dequeueHost = (queue_id, party_id) => {
           dispatch({
             type: DEQUEUE_HOST,
             payload: result.data
-          })
-        })
+          });
+        });
       });
   };
 };
@@ -74,9 +74,9 @@ const toggleQueue = (queue_id) => {
       dispatch({
         type: TOGGLE_QUEUE,
         payload: result.data
-      })
-    })
-  }
-}
+      });
+    });
+  };
+};
 
 export { getQueueInfoHost, toggleQueue, getQueueInfoCustomer, enqueueHost, dequeueHost };
