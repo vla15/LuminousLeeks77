@@ -18,6 +18,7 @@ module.exports.getOne = (req, res) => {
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
+  console.log('IN GET PARTY INFOR CUSTOMER');
   return models.Party.where({profile_id: req.params.userid})
     .fetch({require: true})
     .then(party => {
@@ -161,8 +162,10 @@ module.exports.sendQueueInfoToHostWithSocket = function(req, res, next) {
              emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', res.queue);
            })
         })
+        .then(()=> {
+          next();
+        })
     });
-  next();
 }
 
 // http://localhost:3000/api/partyinfo/rm/1/5
