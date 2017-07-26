@@ -18,7 +18,7 @@ module.exports.getOne = (req, res) => {
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
-  console.log('IN GET PARTY INFOR CUSTOMER');
+  console.log('IN GET PARTY INFO CUSTOMER');
   return models.Party.where({profile_id: req.params.userid})
     .fetch({require: true})
     .then(party => {
@@ -46,6 +46,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
       res.send(targetCustomer);
     })
     .catch(err => {
+      console.log('I had a problem');
       res.sendStatus(404);
     });
 };
@@ -127,17 +128,26 @@ module.exports.enqueue = (req, res, next) => {
 
 module.exports.sendSocketDataForParties = function (req, res, next) {
   console.log('in send Sockets');
-  return models.Party
-    .where({queue_id: req.params.queueid})
-    .fetchAll({ withRelated: ['profile'] })
-    .then(parties => {
-      res.parties = parties;
-      parties.forEach(party => {
-        let profile = party.related('profile');
-        console.log(profile.get('socket_id'));
-        // sends socket to all connected customers
-        io.to(profile.get('socket_id')).emit('action', {type: 'SET_SOCKET_ID', data: `We got a message for ${profile.get('socket_id')}`});
-      })
+  return models.Party.where({queue_id: req.params.queueid})
+    .query((qb) => {
+      qb.orderBy('wait_time', 'ASC');
+    })
+    .fetchAll({
+      withRelated: ['queue', 'profile'],
+      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
+    })
+    .then(result => {
+      console.log('result: ', result);
+      var length = result.length;
+      var targetCustomer = result.map((customer, index) => {
+        customer.set({parties_ahead: index});
+        customer.set({parties_behind: length - (index + 1)});
+        return customer;
+      });
+      targetCustomer.forEach(customer => {
+        console.log('customer: ', customer);
+        emitSocketMessage(customer.related('profile').get('socket_id'), 'UPDATE_PARTY_INFO', customer);
+      });
       next();
     });
 };
@@ -157,17 +167,16 @@ module.exports.sendQueueInfoToHostWithSocket = function(req, res, next) {
         .where({ admin: req.params.queueid })
         .fetchAll({ withRelated: ['queue']})
         .then(profiles => {
-          //console.log(profiles);
-           profiles.forEach(profile => {
-             console.log(profile.serialize());
-             emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', res.queue);
-           })
+          profiles.forEach(profile => {
+            console.log(profile.serialize());
+            emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', res.queue);
+          });
         })
         .then(()=> {
           next();
-        })
+        });
     });
-}
+};
 
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
