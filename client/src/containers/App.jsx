@@ -2,11 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { enqueueCustomer, dequeueCustomer, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber } from '../actions/partyActions.js';
+import partyActions from '../actions/partyActions.js';
+import queueActions from '../actions/queueActions.js';
+import userActions  from '../actions/userActions.js';
 
-import { setUserInfo, sendUserId, setUserLocation } from '../actions/userActions.js';
-import { enqueueHost, dequeueHost, getQueueInfoHost, toggleQueue, getQueueInfoCustomer } from '../actions/queueActions.js';
-import { testSocketConnect } from '../actions/testSocketActions.js';
+import testSocketActions from '../actions/testSocketActions.js';
+
 import { Header } from '../components/Header.jsx';
 import Host from '../users/Host.jsx';
 import Customer from '../users/Customer.jsx';
@@ -23,23 +24,24 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch: {
-      setUserInfo: () => { dispatch(setUserInfo()); },
-      setUserLocation: (profile_id, lat, lng) => { dispatch(setUserLocation(profile_id, lat, lng)); }, 
+      enqueueCustomer: (uid, qid, ps, fn, pn) => { dispatch(partyActions.enqueueCustomer(uid, qid, ps, fn, pn)); },
+      dequeueCustomer: (queue_id, party_id) => { dispatch(partyActions.dequeueCustomer(queue_id, party_id)); },
+      getPartyInfo: (queue_id, user_id) => { dispatch(partyActions.getPartyInfo(queue_id, user_id)); },
+      updatePhoneNumber: phoneNumber => { dispatch(partyActions.updatePhoneNumber(phoneNumber)); },
+      updatePartySize: partySize => { dispatch(partyActions.updatePartySize(partySize)); },
+      updateFirstName: firstName => { dispatch(partyActions.updateFirstName(firstName)); },
 
-      getQueueInfoCustomer: queue_id => { dispatch(getQueueInfoCustomer(queue_id)); },
-      getQueueInfoHost: queue_id => { dispatch(getQueueInfoHost(queue_id)); },
+      enqueueHost: (uid, qid, ps, fn, pn) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn)); },
+      dequeueHost: (queue_id, party_id) => { dispatch(queueActions.dequeueHost(queue_id, party_id)); },
+      getQueueInfoCustomer: queue_id => { dispatch(queueActions.getQueueInfoCustomer(queue_id)); },
+      getQueueInfoHost: queue_id => { dispatch(queueActions.getQueueInfoHost(queue_id)); },
+      toggleQueue: queue_id => { dispatch(queueActions.toggleQueue(queue_id)); },
 
-      getPartyInfo: (queue_id, user_id) => { dispatch(getPartyInfo(queue_id, user_id)); },
-      enqueueCustomer: (user_id, queue_id, party_size, first_name, phone_number) => { dispatch(enqueueCustomer(user_id, queue_id, party_size, first_name, phone_number)); },
-      enqueueHost: (user_id, queue_id, party_size, first_name, phone_number) => { dispatch(enqueueHost(user_id, queue_id, party_size, first_name, phone_number)); },
-      updatePartySize: partySize => { dispatch(updatePartySize(partySize)); },
-      updateFirstName: firstName => { dispatch(updateFirstName(firstName)); },
-      updatePhoneNumber: phoneNumber => { dispatch(updatePhoneNumber(phoneNumber)); },
-      toggleQueue: queue_id => { dispatch(toggleQueue(queue_id)); },
-      dequeueCustomer: (queue_id, party_id) => { dispatch(dequeueCustomer(queue_id, party_id)); },
-      dequeueHost: (queue_id, party_id) => { dispatch(dequeueHost(queue_id, party_id)); },
-      testSocketConnect: () => { dispatch(testSocketConnect()); },
-      sendUserId: (userId) => { dispatch(sendUserId(userId)); }
+      setUserLocation: (profile_id, lat, lng) => { dispatch(userActions.setUserLocation(profile_id, lat, lng)); },
+      sendUserId: (userId) => { dispatch(userActions.sendUserId(userId)); },
+      setUserInfo: () => { dispatch(userActions.setUserInfo()); },
+
+      testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
     }
   };
 };

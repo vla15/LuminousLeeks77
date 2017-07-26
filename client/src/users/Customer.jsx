@@ -25,13 +25,12 @@ class Customer extends React.Component {
   componentDidMount() {
     this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
     this.props.redux.dispatch.getQueueInfoCustomer(1);
-    navigator.geolocation.watchPosition(position => {
-      this.props.redux.dispatch.setUserLocation(
-        this.props.redux.store.user.profile_id,
-        position.coords.latitude,
-        position.coords.longitude
-      );
-    });
+    // navigator.geolocation.watchPosition(position => {
+    //   this.props.redux.dispatch.updatePartyLocation(
+    //     position.coords.latitude,
+    //     position.coords.longitude
+    //   );
+    // });
   }
 }
 

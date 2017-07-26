@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { SET_USER_INFO, SEND_USER_INFO, SET_USER_LOCATION } from './actionTypes';
+import actionTypes from './actionTypes';
+const userActions = {};
 
-const setUserInfo = () => {
+userActions.setUserInfo = () => {
   return dispatch => {
     axios.get('/userInfo')
       .then(result => {
         dispatch({
-          type: SET_USER_INFO,
+          type: actionTypes.SET_USER_INFO,
           payload: result.data
         });
         dispatch({
@@ -17,17 +18,17 @@ const setUserInfo = () => {
   };
 };
 
-const setUserLocation = (profile_id, lat, lng) => {
+userActions.setUserLocation = (profile_id, lat, lng) => {
   console.log('setUserLocation', profile_id, lat, lng);
   return dispatch => {
     axios.put(`/api/profiles/setUserLocation/${profile_id}/${lat}/${lng}`)
       .then(result => {
         dispatch({
-          type: SET_USER_LOCATION,
+          type: actionTypes.SET_USER_LOCATION,
           payload: { lat: lat, lng: lng }
         });
       });
   };
 };
 
-export { setUserInfo, setUserLocation };
+module.exports = userActions;
