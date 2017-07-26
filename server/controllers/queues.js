@@ -45,13 +45,13 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
      // res.send(result);
      result.forEach(party => {
         if (party.attributes.id === null && party.attributes.socket_id) {
-
-
-        models.Queue.where({ id: req.params.queueid }).fetch()
+          models.Queue.where({ id: req.params.queueid }).fetch({
+            withRelated: ['parties']
+          })
           .then(queue => {
             emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-          // res.send(queue);
-          })
+            // res.send(queue);
+          });
         }
      });
    })
