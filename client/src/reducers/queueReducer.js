@@ -18,6 +18,9 @@ const queueReducer = (state = initial, action) => {
 
   case 'TOGGLE_QUEUE':
     return action.payload;
+
+  case 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE':
+      return action.payload;
   }
 
   return state;
