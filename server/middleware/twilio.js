@@ -1,7 +1,5 @@
 const config = require('config')['twilio'];
-const client = require('twilio')(config.accountSid, config.authToken);
-const LookupsClient = require('twilio').LookupsClient;
-const lookupsClient = new LookupsClient(config.accountSid, config.authToken);
+const client = require('twilio')(config.accountSID, config.authToken);
 
 module.exports.sendSms = (to, message) => {
   return client.api.messages
@@ -17,8 +15,17 @@ module.exports.sendSms = (to, message) => {
     });
 };
 
-module.exports.phoneLookUp = (phoneNumber) => {
-  lookupsClient.phoneNumbers(phoneNumber).get((error, number) => {
-    return number.phone_number;
-  });
+module.exports.phoneLookup = (phoneNumber) => {
+  return client.lookups.v1
+    .phoneNumbers(phoneNumber)
+    .fetch()
+    .then(response => {
+      if (response) {
+        return response.phoneNumber;
+      }
+      throw new Error ('not cool');
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };

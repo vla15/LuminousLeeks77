@@ -4,7 +4,6 @@ const router = express.Router();
 const QueueController = require('../controllers').Queues;
 
 
-
 // router.route('/host/:queueid')
 //   .get(QueueController.getPartyInfoOfQueue);
 

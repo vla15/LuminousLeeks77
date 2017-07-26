@@ -2,6 +2,21 @@ const models = require('../../db/models');
 
 //get all of queue
 
+// module.exports.isOpenStatus = (req, res) => {
+//   models.Profile.query(qb => {
+//     qb.select('*').from('profiles').leftJoin(
+//       'parties',
+//       'profiles.id',
+//       'parties.profile_id')
+//   })
+//     .fetchAll({
+//       columns: ['socket_id', ]
+//     })
+//     .then(result => {
+//       res.send(result);
+//     })
+// }
+
 module.exports.toggleQueue = (req, res) => {
   console.log('TOGGLE QUEUE');
   models.Queue.where({id: req.params.queueid})
