@@ -3,7 +3,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import FontAwesome from 'react-fontawesome';
-
+import moment from 'moment';
 
 export const QueueListItem = props => {
   return (
@@ -15,7 +15,7 @@ export const QueueListItem = props => {
       </Col>
       <Col xs={2}>
         <h6>
-          10min
+          {Math.min(moment(moment(props.redux.store.party.wait_time).add(100, 'm') - (new Date())).format('m'), 0)} min
         </h6>
       </Col>
       <Col xs={2}>
