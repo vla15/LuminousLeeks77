@@ -10,10 +10,10 @@ const partyReducer = (state = initial, action) => {
     case 'UPDATE_PARTY_INFO':
       return action.payload;
 
-    case 'ENQUEUE':
+    case 'ENQUEUE_CUSTOMER':
       return action.payload;
 
-    case 'DEQUEUE':
+    case 'DEQUEUE_CUSTOMER':
       return { party_size: 1, first_name: '', phone_number: '' };
 
     case 'UPDATE_PARTY_SIZE':
@@ -24,6 +24,9 @@ const partyReducer = (state = initial, action) => {
 
     case 'UPDATE_PHONE_NUMBER':
       return { ...state, phone_number: action.payload };
+
+    case 'CLEAR_PARTY':
+      return { party_size: 1, first_name: '', phone_number: '' };
   };
 
   return state;

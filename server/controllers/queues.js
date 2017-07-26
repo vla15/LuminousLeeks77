@@ -103,8 +103,8 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
         // console.log('queue list/parties------>', queue);
 
         // res.status(200).send(queue);
-        res.queue = queue;
-        next();
+      res.queue = queue;
+      next();
 
       // }
     })
@@ -121,7 +121,7 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
 //   // io.on('connection', socket => {
 //   //   console.log( 'Socket connected: ?????????' + socket.id);
 //   //   io.to(socket.id).emit('action', {type: 'SET_SOCKET_ID', data: queue});
-//   // });  
+//   // });
 // };
 
 module.exports.getPartyInfoCustomer = (req, res) => {
@@ -153,15 +153,12 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 
 module.exports.updatePartiesOnDequeue = (req, res) => {
   console.log('res.queue ----->', res.queue);
-
-  res.queue.forEach(party => {
-    let profile = party.related('profile');
-    emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
-    // io.to(profile.get('socket_id')).emit('action', {
-    //   type: 'UPDATE_PARTY_INFO',
-    //   payload: party
-    // });
-  });
+  if (res.queue) {
+    res.queue.forEach(party => {
+      let profile = party.related('profile');
+      emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
+    });
+  }
   res.send(res.queue);
 };
 
@@ -170,7 +167,7 @@ module.exports.getQueueInfoCustomer = (req, res) => {
     .then(queue => {
       res.send(queue);
     });
-}
+};
 
 
 module.exports.getQueueInfoHost = (req, res) => {
@@ -180,7 +177,7 @@ module.exports.getQueueInfoHost = (req, res) => {
     .then(queue => {
       res.send(queue);
     });
-}
+};
 
 const emitSocketMessage = require('../app').emitSocketMessage;
 //no rows defaults to catch
