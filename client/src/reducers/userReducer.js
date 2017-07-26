@@ -11,8 +11,21 @@ const userReducer = (state = null, action) => {
         email: action.payload.email,
         admin: action.payload.admin,
       };
+
     case 'SET_SOCKET_ID':
-      return { ...state, socket_id: action.payload };
+      return {
+        ...state,
+        socket_id: action.payload
+      };
+
+    case 'SET_USER_LOCATION':
+      return {
+        ...state,
+        location: {
+          lat: action.payload.lat,
+          lng: action.payload.lng
+        }
+      }
   }
 
   return state;
