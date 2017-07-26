@@ -16,7 +16,7 @@ router.route('/getQueueInfoHost/:queueid')
   .get(QueueController.getQueueInfoHost);
 
 router.route('/togglequeue/:queueid')
-  .put(QueueController.toggleQueue);
+  .put(QueueController.toggleQueue, QueueController.updatePartiesOnToggleQueue);
 
 router.route('/:queueid/:userid')
   .get(QueueController.getQueueByUser);
