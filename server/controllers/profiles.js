@@ -1,5 +1,18 @@
 const models = require('../../db/models');
+const knex = require('knex');
 
+module.exports.setUserLocation = (req, res) => {
+  console.log('REQ', req);
+  models.Profile.where({ id: req.params.userid })
+    .save({
+      location: knex.raw(`Point (${req.params.lat}, ${req.params.lng})`)
+    }, {
+      patch: true
+    })
+    .then(data => {
+      console.log('success');
+    });
+};
 
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
