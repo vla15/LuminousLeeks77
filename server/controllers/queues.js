@@ -18,7 +18,6 @@ module.exports.toggleQueue = (req, res, next) => {
           models.Queue.where({id: req.params.queueid})
             .fetch({columns: ['is_open']})
             .then(result => { 
-              console.log('result', result);
               // res.send(result) ;
               res.result = result;
               next();
@@ -32,33 +31,31 @@ module.exports.toggleQueue = (req, res, next) => {
     });
 };
 
-module.exports.updatePartiesOnToggleQueue = (req, res, next) => {
+module.exports.updatePartiesOnToggleQueue = (req, res) => {
+ models.Profile.query(qb => {
+   qb.select('*').from('profiles').leftJoin(
+     'parties',
+     'profiles.id',
+     'parties.profile_id')
+ })
+   .fetchAll({
+     columns: ['socket_id', ]
+   })
+   .then(result => {
+     // res.send(result);
+     result.forEach(party => {
+        if (party.attributes.id === null && party.attributes.socket_id) {
 
-  models.Profile.query(qb => {
-    qb.select('*').from('profiles').leftJoin(
-      'parties',
-      'profiles.id',
-      'parties.profile_id');
-    })
-    .fetchAll({
-      columns: ['socket_id', ]
-    })
-    .then(result => {
-      console.log('result', result);
-      res.send(result);
-    })
 
-
-  // res.queue.forEach(party => {
-  //   let profile = party.related('profile');
-  //   if(party.queue.is_o
-  //   emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
-  //   // io.to(profile.get('socket_id')).emit('action', {
-  //   //   type: 'UPDATE_PARTY_INFO',
-  //   //   payload: party
-  //   // });
-  // });
-};
+        models.Queue.where({ id: req.params.queueid }).fetch()
+          .then(queue => {
+            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+          // res.send(queue);
+          })
+        }
+     });
+   })
+}
 
 module.exports.getQueueByUser = (req, res) => {
   console.log('GET QUEUE BY USER');
