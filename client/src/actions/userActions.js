@@ -18,8 +18,9 @@ const setUserInfo = () => {
 };
 
 const setUserLocation = (profile_id, lat, lng) => {
+  console.log('setUserLocation', profile_id, lat, lng);
   return dispatch => {
-    axios.put(`/api/profiles/setUserLocation/${lat}/${lng}`)
+    axios.put(`/api/profiles/setUserLocation/${profile_id}/${lat}/${lng}`)
       .then(result => {
         dispatch({
           type: SET_USER_LOCATION,
@@ -29,4 +30,4 @@ const setUserLocation = (profile_id, lat, lng) => {
   };
 };
 
-export { setUserInfo};
+export { setUserInfo, setUserLocation };
