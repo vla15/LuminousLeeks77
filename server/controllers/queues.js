@@ -2,7 +2,7 @@ const models = require('../../db/models');
 
 //get all of queue
 
-module.exports.toggleQueue = (req, res) => {
+module.exports.toggleQueue = (req, res, next) => {
   console.log('TOGGLE QUEUE');
   models.Queue.where({id: req.params.queueid})
     .fetch({
@@ -10,15 +10,19 @@ module.exports.toggleQueue = (req, res) => {
     })
     .then(open => {
       models.Queue.where({id: req.params.queueid})
-    .save({
-      is_open: !(open.get('is_open'))},
-      {patch: true});
-    })
-    .then(result => {
-      models.Queue.where({id: req.params.queueid})
-        .fetch({columns: ['is_open']})
-        .then(result => { res.send(result); });
-    })
+        .save({
+          is_open: !(open.get('is_open'))},
+          {patch: true})
+        })
+        .then(result => { 
+          models.Queue.where({id: req.params.queueid})
+            .fetch({columns: ['is_open']})
+            .then(result => { 
+              // res.send(result) ;
+              res.result = result;
+              next();
+            })
+          })
     .error(err => {
       res.status(500).send(err);
     })
@@ -26,6 +30,32 @@ module.exports.toggleQueue = (req, res) => {
       res.status(404).send(err);
     });
 };
+
+module.exports.updatePartiesOnToggleQueue = (req, res) => {
+ models.Profile.query(qb => {
+   qb.select('*').from('profiles').leftJoin(
+     'parties',
+     'profiles.id',
+     'parties.profile_id')
+ })
+   .fetchAll({
+     columns: ['socket_id', ]
+   })
+   .then(result => {
+     // res.send(result);
+     result.forEach(party => {
+        if (party.attributes.id === null && party.attributes.socket_id) {
+          models.Queue.where({ id: req.params.queueid }).fetch({
+            withRelated: ['parties']
+          })
+          .then(queue => {
+            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+            // res.send(queue);
+          });
+        }
+     });
+   })
+}
 
 module.exports.getQueueByUser = (req, res) => {
   console.log('GET QUEUE BY USER');
@@ -82,7 +112,6 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
       res.status(500).send(err);
     })
     .catch(err => {
-      // console.log('hiiiiiiiiiiiiiiii------')
       res.status(404).send(err);
     });
 };
@@ -124,15 +153,12 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 
 module.exports.updatePartiesOnDequeue = (req, res) => {
   console.log('res.queue ----->', res.queue);
-
-  res.queue.forEach(party => {
-    let profile = party.related('profile');
-    emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
-    // io.to(profile.get('socket_id')).emit('action', {
-    //   type: 'UPDATE_PARTY_INFO',
-    //   payload: party
-    // });
-  });
+  if (res.queue) {
+    res.queue.forEach(party => {
+      let profile = party.related('profile');
+      emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
+    });
+  }
   res.send(res.queue);
 };
 
