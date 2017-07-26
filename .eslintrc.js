@@ -13,17 +13,8 @@ module.exports = {
     sourceType: 'module',
     ecmaFeatures: {
       'jsx': true,
-      'arrowFunctions': true,
-      'destructuring': true,
       'experimentalObjectRestSpread': true,
       'restParams': true,
-      'forOf': true,
-      'generators': true,
-      'modules': false,
-      'octalLiterals': true,
-      'regexUFlag': true,
-      'regexYFlag': true,
-      'spread': true,
     }
   },
   rules: {
