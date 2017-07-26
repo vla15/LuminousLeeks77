@@ -32,6 +32,8 @@ module.exports.toggleQueue = (req, res, next) => {
 };
 
 module.exports.updatePartiesOnToggleQueue = (req, res) => {
+  let is_open = res.result.attributes;
+
  models.Profile.query(qb => {
    qb.select('*').from('profiles').leftJoin(
      'parties',
@@ -42,8 +44,8 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
      columns: ['socket_id', ]
    })
    .then(result => {
-     // res.send(result);
-     result.forEach(party => {
+     res.send(result);
+      result.forEach(party => {
         if (party.attributes.id === null && party.attributes.socket_id) {
           models.Queue.where({ id: req.params.queueid }).fetch({
             withRelated: ['parties']
@@ -152,7 +154,6 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 };
 
 module.exports.updatePartiesOnDequeue = (req, res) => {
-  console.log('res.queue ----->', res.queue);
   if (res.queue) {
     res.queue.forEach(party => {
       let profile = party.related('profile');
