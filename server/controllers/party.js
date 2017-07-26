@@ -178,15 +178,37 @@ module.exports.sendQueueInfoToHostWithSocket = function(req, res, next) {
     });
 };
 
+sendSocketDequeueForCustomer = (userId, queueId) => {
+  //get queue info for this customer
+  var socket = '';
+  return models.Profile.where({ id: userId })
+    .fetch()
+    .then(profile => {
+      socket = profile.get('socket_id');
+    //   models.Queue.where({id: queueId}).fetch()
+    // })
+    // .then(queue => {
+    //  console.log('QUEUE', queue);
+      emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '' });
+    });
+};
+
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
 
   // console.log('testing dequeueeeee works------>')
   // if ( req.isAuthenticated()) {
-  return models.Party.where({id: req.params.partyid})
+  models.Party.where({id: req.params.partyid})
+    .fetch()
+    .then(result =>{
+      console.log('this is THE result', result.serialize());
+      res.profile_id = result.get('profile_id');
+      sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
+    });
+  return models.Party.where({ id: req.params.partyid})
     .destroy()
     .then(result => {
-      console.log('inside result');
+      console.log('inside result:', result.serialize());
       return models.Party.where({queue_id: req.params.queueid})
         .count('id');
     })
