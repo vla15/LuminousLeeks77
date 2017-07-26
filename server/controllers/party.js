@@ -98,7 +98,7 @@ module.exports.enqueue = (req, res, next) => {
         })
         .then(count => {
           return models.Queue.where({id: req.params.queueid})
-            .save({queue_size: count}, {patch: true});
+            .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
         })
         .then(success => {
           return next();
@@ -201,24 +201,20 @@ module.exports.dequeue = (req, res, next) => {
   models.Party.where({id: req.params.partyid})
     .fetch()
     .then(result =>{
-      console.log('this is THE result', result.serialize());
       res.profile_id = result.get('profile_id');
       sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
     });
   return models.Party.where({ id: req.params.partyid})
     .destroy()
     .then(result => {
-      console.log('inside result:', result.serialize());
       return models.Party.where({queue_id: req.params.queueid})
         .count('id');
     })
     .then(count => {
-      console.log('inside count');
       return models.Queue.where({id: req.params.queueid})
-        .save({queue_size: count}, {patch: true});
+        .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
     })
-    .then(result => {
-      // return redirect('/:queueid/:userid');
+    .then(complete => {
       return next();
     })
     .error(err => {
