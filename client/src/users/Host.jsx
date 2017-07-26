@@ -27,11 +27,7 @@ class Host extends React.Component {
     this.props.redux.dispatch.getQueueInfoHost(1);
     setInterval(() => {
       this.forceUpdate();
-    }, this.now * 1000);
-  }
-
-  componentDidUpdate() {
-    this.now = 60;
+    }, 60000);
   }
 }
 

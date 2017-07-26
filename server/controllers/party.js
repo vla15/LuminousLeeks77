@@ -77,7 +77,7 @@ module.exports.enqueue = (req, res, next) => {
           } else {
             return models.Party.forge({
               queue_id: req.params.queueid,
-              wait_time: moment().add(result.get('next_wait_time'), 'm'),
+              wait_time: moment().add(62, 'm'),
               profile_id: req.params.userid,
               party_size: req.params.partysize,
               first_name: user.get('first'),
@@ -126,7 +126,7 @@ module.exports.enqueue = (req, res, next) => {
           } else {
             return models.Party.forge({
               queue_id: req.params.queueid,
-              wait_time: moment(new Date()).add(result.get('next_wait_time'), 'm'),
+              wait_time: moment().add(result.get('next_wait_time'), 'm'),
               profile_id: req.params.userid,
               party_size: req.params.partysize,
               first_name: user.get('first'),

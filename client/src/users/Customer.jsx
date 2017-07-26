@@ -27,12 +27,9 @@ class Customer extends React.Component {
     this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
     this.props.redux.dispatch.getQueueInfoCustomer(1);
     setInterval(() => {
+      console.log('counter');
       this.forceUpdate();
-    }, this.now * 1000);
-  }
-
-  componentDidUpdate() {
-    this.now = 60;
+    }, 60000);
   }
 }
 

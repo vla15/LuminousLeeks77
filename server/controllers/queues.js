@@ -17,6 +17,22 @@ const models = require('../../db/models');
 //     })
 // }
 
+//query for all those who are not in a party and have a socket id
+
+// module.exports.isOpenStatus = (req, res) => {
+//  models.Profile.query(qb => {
+//    qb.select('profiles.id', 'profiles.admin', 'parties.id as p_id').from('profiles').leftJoin(
+//      'parties',
+//      'profiles.id',
+//      'parties.profile_id').where('parties.id', '=', '1')
+//  })
+//    .fetchAll()
+//    .then(result => {
+//      res.send(result);
+//    })
+// }
+
+
 module.exports.toggleQueue = (req, res) => {
   console.log('TOGGLE QUEUE');
   models.Queue.where({id: req.params.queueid})

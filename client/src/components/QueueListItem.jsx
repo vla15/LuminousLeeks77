@@ -16,7 +16,7 @@ export const QueueListItem = props => {
       <Col xs={2}>
         <h6>
           {moment(moment.utc(props.party.wait_time) - moment())._i < 0 ? 0
-            : moment(moment.utc(props.party.wait_time) - moment()).format('m')} min(s)
+            : moment.utc(props.party.wait_time).diff(moment(), 'minutes')} min(s)
         </h6>
       </Col>
       <Col xs={2}>

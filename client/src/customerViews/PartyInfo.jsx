@@ -3,6 +3,7 @@ import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
 import moment from 'moment';
 
 export const PartyInfo = props => {
+  console.log('counter');
   return (
     <Grid>
       <Row>
@@ -19,7 +20,7 @@ export const PartyInfo = props => {
           <h6>Wait Time</h6>
           <h1>
             {moment(moment.utc(props.redux.store.party.wait_time) - moment())._i < 0 ? 0
-              : moment(moment.utc(props.redux.store.party.wait_time) - moment()).format('m')} min(s)
+              : moment.utc(props.redux.store.party.wait_time).diff(moment(), 'minutes')} min(s)
           </h1>
         </Col>
       </Row>

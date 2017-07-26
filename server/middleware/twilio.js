@@ -23,9 +23,10 @@ module.exports.phoneLookup = (phoneNumber) => {
       if (response) {
         return response.phoneNumber;
       }
-      throw new Error ('not cool');
+      throw new Error ('invalid number');
     })
     .catch(err => {
+      console.log('did this happen?');
       console.error(err);
     });
 };
