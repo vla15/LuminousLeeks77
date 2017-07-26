@@ -1,38 +1,6 @@
 const models = require('../../db/models');
 
 //get all of queue
-
-// module.exports.isOpenStatus = (req, res) => {
-//   models.Profile.query(qb => {
-//     qb.select('*').from('profiles').leftJoin(
-//       'parties',
-//       'profiles.id',
-//       'parties.profile_id')
-//   })
-//     .fetchAll({
-//       columns: ['socket_id', ]
-//     })
-//     .then(result => {
-//       res.send(result);
-//     })
-// }
-
-//query for all those who are not in a party and have a socket id
-
-// module.exports.isOpenStatus = (req, res) => {
-//  models.Profile.query(qb => {
-//    qb.select('profiles.id', 'profiles.admin', 'parties.id as p_id').from('profiles').leftJoin(
-//      'parties',
-//      'profiles.id',
-//      'parties.profile_id').where('parties.id', '=', '1')
-//  })
-//    .fetchAll()
-//    .then(result => {
-//      res.send(result);
-//    })
-// }
-
-
 module.exports.toggleQueue = (req, res) => {
   console.log('TOGGLE QUEUE');
   models.Queue.where({id: req.params.queueid})
@@ -48,13 +16,43 @@ module.exports.toggleQueue = (req, res) => {
     .then(result => { 
       models.Queue.where({id: req.params.queueid})
         .fetch({columns: ['is_open']})
-        .then(result => { res.send(result); });
+        .then(result => { 
+          // res.send(result) ;
+          res.result = result;
+          next();
+        });
     })
     .error(err => {
       res.status(500).send(err);
     })
     .catch(err => {
       res.status(404).send(err);
+    });
+};
+
+module.exports.updatePartiesOnToggleQueue = (req, res) => {
+  models.Profile.query(qb => {
+    qb.select('*').from('profiles').leftJoin(
+      'parties',
+      'profiles.id',
+      'parties.profile_id');
+  })
+    .fetchAll({
+      columns: ['socket_id', ]
+    })
+    .then(result => {
+      // res.send(result);
+      result.forEach(party => {
+        if (party.attributes.id === null && party.attributes.socket_id) {
+          models.Queue.where({ id: req.params.queueid }).fetch({
+            withRelated: ['parties']
+          })
+            .then(queue => {
+              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+            // res.send(queue);
+            });
+        }
+      });
     });
 };
 
@@ -113,7 +111,6 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
       res.status(500).send(err);
     })
     .catch(err => {
-      // console.log('hiiiiiiiiiiiiiiii------')
       res.status(404).send(err);
     });
 };
@@ -123,7 +120,7 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
 //   // io.on('connection', socket => {
 //   //   console.log( 'Socket connected: ?????????' + socket.id);
 //   //   io.to(socket.id).emit('action', {type: 'SET_SOCKET_ID', data: queue});
-//   // });  
+//   // });
 // };
 
 module.exports.getPartyInfoCustomer = (req, res) => {
@@ -155,15 +152,12 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 
 module.exports.updatePartiesOnDequeue = (req, res) => {
   console.log('res.queue ----->', res.queue);
-
-  res.queue.forEach(party => {
-    let profile = party.related('profile');
-    emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
-    // io.to(profile.get('socket_id')).emit('action', {
-    //   type: 'UPDATE_PARTY_INFO',
-    //   payload: party
-    // });
-  });
+  if (res.queue) {
+    res.queue.forEach(party => {
+      let profile = party.related('profile');
+      emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
+    });
+  }
   res.send(res.queue);
 };
 

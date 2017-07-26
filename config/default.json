@@ -3,7 +3,11 @@
     "client": "postgresql",
     "connection": {
       "database": "thesis_devel",
+<<<<<<< HEAD
       "user": "vincentla",
+=======
+      "user": "sheydarezaei",
+>>>>>>> upstream/master
       "password": "",
       "host": "localhost",
       "port": 5432
