@@ -6,7 +6,6 @@ import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 
 export const QueueListItem = props => {
-  console.log(props.party);
   return (
     <Row>
       <Col xs={2}>
@@ -16,8 +15,8 @@ export const QueueListItem = props => {
       </Col>
       <Col xs={2}>
         <h6>
-          {moment(moment.utc(props.redux.store.party.wait_time) - moment())._i < 0 ? 0
-            : moment(moment.utc(props.redux.store.party.wait_time) - moment()).format('m')} min(s)
+          {moment(moment.utc(props.party.wait_time) - moment())._i < 0 ? 0
+            : moment(moment.utc(props.party.wait_time) - moment()).format('m')} min(s)
         </h6>
       </Col>
       <Col xs={2}>

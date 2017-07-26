@@ -8,6 +8,7 @@ class Host extends React.Component {
 
   constructor(props) {
     super(props);
+    this.now = (60 - new Date().getSeconds());
   }
 
   render() {
@@ -26,7 +27,11 @@ class Host extends React.Component {
     this.props.redux.dispatch.getQueueInfoHost(1);
     setInterval(() => {
       this.forceUpdate();
-    }, 60000);
+    }, this.now * 1000);
+  }
+
+  componentDidUpdate() {
+    this.now = 60;
   }
 }
 
