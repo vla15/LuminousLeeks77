@@ -18,7 +18,7 @@ export const PartyInfo = props => {
         <Col xs={5}>
           <h6>Wait Time</h6>
           <h1>
-            {Math.min(moment(moment(props.redux.store.party.wait_time).add(100, 'm') - (new Date())).format('m'), 0)} min
+            {Math.max(moment(moment(props.redux.store.party.wait_time) - (new Date())).format('m'), 0)} min(s)
           </h1>
         </Col>
       </Row>

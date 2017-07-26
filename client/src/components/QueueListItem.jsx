@@ -15,7 +15,7 @@ export const QueueListItem = props => {
       </Col>
       <Col xs={2}>
         <h6>
-          {Math.min(moment(moment(props.redux.store.party.wait_time).add(100, 'm') - (new Date())).format('m'), 0)} min
+          {Math.max(moment(moment(props.redux.store.party.wait_time) - (new Date())).format('m'), 0)} min(s)
         </h6>
       </Col>
       <Col xs={2}>
