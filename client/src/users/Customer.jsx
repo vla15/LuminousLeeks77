@@ -30,6 +30,13 @@ class Customer extends React.Component {
       console.log('counter');
       this.forceUpdate();
     }, 60000);
+    navigator.geolocation.watchPosition(position => {
+      this.props.redux.dispatch.setUserLocation(
+        this.props.redux.store.user.profile_id,
+        position.coords.latitude,
+        position.coords.longitude
+      );
+    });
   }
 }
 
