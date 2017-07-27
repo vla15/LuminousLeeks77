@@ -7,6 +7,15 @@ const QueueController = require('../controllers').Queues;
 router.route('/:queueid/:userid')
   .get(PartyController.getPartyInfoCustomer);
 
+// Queues a customer
+// Sends QueueInfoHost back as Res
+// Sends sockets to:
+// --------------------------------------------------------
+//  Host:               QueueInfoHost
+//  Queued Customer:    QueueInfoCustomer, PartyInfoCustomer
+//  NonQueued Customer: QueueInfoCustomer
+// --------------------------------------------------------
+
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
   .put(PartyController.enqueue,
     PartyController.sendSocketDataForParties,
