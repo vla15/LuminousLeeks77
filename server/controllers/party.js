@@ -1,5 +1,19 @@
 const models = require('../../db/models');
 const moment = require('moment');
+const knex = require('knex');
+
+module.exports.putPartyLocation = (req, res) => {
+  models.Party.where({ id: req.params.partyid })
+    .save({
+      location: knex.raw(`Point (${req.params.lat}, ${req.params.lng})`)
+    }, {
+      patch: true
+    })
+    .then(data => {
+      res.status(200).send('anything');
+      console.log('success');
+    });
+};
 
 module.exports.getOne = (req, res) => {
   models.Party.where({id: req.params.partyid})

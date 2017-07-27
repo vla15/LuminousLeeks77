@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { QueueClosed } from '../customerViews/QueueClosed.jsx';
-import { QueueInfo } from '../customerViews/QueueInfo.jsx';
-import { PartyInfo } from '../customerViews/PartyInfo.jsx';
+import QueueInfo from '../customerViews/QueueInfo.jsx';
+import PartyInfo from '../customerViews/PartyInfo.jsx';
 
 class Customer extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
+  constructor(props) { super(props); }
 
   render() {
     return (
@@ -25,12 +23,22 @@ class Customer extends React.Component {
   componentDidMount() {
     this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
     this.props.redux.dispatch.getQueueInfoCustomer(1);
-    // navigator.geolocation.watchPosition(position => {
-    //   this.props.redux.dispatch.updatePartyLocation(
-    //     position.coords.latitude,
-    //     position.coords.longitude
-    //   );
-    // });
+    navigator.geolocation.watchPosition(position => {
+      if (this.props.redux.store.party.id === undefined) {
+        navigator.geolocation.watchPosition(position => {
+          this.props.redux.dispatch.updatePartyLocation(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+        });
+      } else {
+        this.props.redux.dispatch.putPartyLocation(
+          this.props.redux.store.party.id,
+          position.coords.latitude,
+          position.coords.longitude
+        );
+      }
+    });
   }
 }
 

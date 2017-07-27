@@ -18,17 +18,4 @@ userActions.setUserInfo = () => {
   };
 };
 
-userActions.setUserLocation = (profile_id, lat, lng) => {
-  console.log('setUserLocation', profile_id, lat, lng);
-  return dispatch => {
-    axios.put(`/api/profiles/setUserLocation/${profile_id}/${lat}/${lng}`)
-      .then(result => {
-        dispatch({
-          type: actionTypes.SET_USER_LOCATION,
-          payload: { lat: lat, lng: lng }
-        });
-      });
-  };
-};
-
 module.exports = userActions;

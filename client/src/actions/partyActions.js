@@ -66,7 +66,19 @@ partyActions.updatePartyLocation = (lat, lng) => {
   return {
     type: actionTypes.UPDATE_PARTY_LOCATION,
     payload: { lat: lat, lng: lng }
-  }
-}
+  };
+};
+
+partyActions.putPartyLocation = (party_id, lat, lng) => {
+  return dispatch => {
+    axios.put(`/api/partyInfo/putPartyLocation/${party_id}/${lat}/${lng}`)
+      .then(result => {
+        dispatch({
+          type: actionTypes.PUT_PARTY_LOCATION,
+          payload: { lat: lat, lng: lng }
+        });
+      });
+  };
+};
 
 module.exports = partyActions;

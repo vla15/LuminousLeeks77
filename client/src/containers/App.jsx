@@ -14,12 +14,7 @@ import Customer from '../users/Customer.jsx';
 import { Loading } from '../components/Loading.jsx';
 
 
-
-const mapStateToProps = state => {
-  return {
-    store: state
-  };
-};
+const mapStateToProps = state => { return { store: state }; };
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -30,6 +25,8 @@ const mapDispatchToProps = dispatch => {
       updatePhoneNumber: phoneNumber => { dispatch(partyActions.updatePhoneNumber(phoneNumber)); },
       updatePartySize: partySize => { dispatch(partyActions.updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(partyActions.updateFirstName(firstName)); },
+      updatePartyLocation: (lat, lng) => { dispatch(partyActions.updatePartyLocation(lat, lng)); },
+      putPartyLocation: (party_id, lat, lng) => { dispatch(partyActions.putPartyLocation(party_id, lat, lng)); },
 
       enqueueHost: (uid, qid, ps, fn, pn) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn)); },
       dequeueHost: (queue_id, party_id) => { dispatch(queueActions.dequeueHost(queue_id, party_id)); },
@@ -37,7 +34,6 @@ const mapDispatchToProps = dispatch => {
       getQueueInfoHost: queue_id => { dispatch(queueActions.getQueueInfoHost(queue_id)); },
       toggleQueue: queue_id => { dispatch(queueActions.toggleQueue(queue_id)); },
 
-      setUserLocation: (profile_id, lat, lng) => { dispatch(userActions.setUserLocation(profile_id, lat, lng)); },
       sendUserId: (userId) => { dispatch(userActions.sendUserId(userId)); },
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
 

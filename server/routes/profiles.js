@@ -13,7 +13,4 @@ router.route('/:id')
   .put(ProfileController.update);
 // .delete(ProfileController.deleteOne);
 
-router.route('/setUserLocation/:userid/:lat/:lng')
-  .put(ProfileController.setUserLocation);
-
 module.exports = router;

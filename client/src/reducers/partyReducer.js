@@ -26,7 +26,10 @@ const partyReducer = (state = initial, action) => {
       return { ...state, phone_number: action.payload };
 
     case 'UPDATE_PARTY_LOCATION':
-      return { ...state, location: { lat: action.payload.lat, lng: action.payload.lng } }
+      return { ...state, location: { lat: action.payload.lat, lng: action.payload.lng } };
+
+    case 'PUT_PARTY_LOCATION':
+      return { ...state, location: { lat: action.payload.lat, lng: action.payload.lng } };
 
     case 'CLEAR_PARTY':
       return { party_size: 1, first_name: '', phone_number: '' };

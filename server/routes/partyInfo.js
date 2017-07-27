@@ -8,18 +8,21 @@ router.route('/:queueid/:userid')
   .get(PartyController.getPartyInfoCustomer);
 
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
-  .put(PartyController.enqueue, 
-    PartyController.sendSocketDataForParties, 
-    PartyController.sendQueueInfoToHostWithSocket, 
+  .put(PartyController.enqueue,
+    PartyController.sendSocketDataForParties,
+    PartyController.sendQueueInfoToHostWithSocket,
     PartyController.getPartyInfoCustomer);
   //.put(PartyController.enqueue, PartyController.getPartyInfoCustomer);
 
 // router.route('/rm/:queueid/:partyid')
 //   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);
 router.route('/rm/:queueid/:partyid')
-  .delete(PartyController.dequeue, 
-    PartyController.sendQueueInfoToHostWithSocket, 
+  .delete(PartyController.dequeue,
+    PartyController.sendQueueInfoToHostWithSocket,
     QueueController.getPartyInfoOfQueue,
     QueueController.updatePartiesOnDequeue);
+
+router.route('/putPartyLocation/:partyid/:lat/:lng')
+  .put(PartyController.putPartyLocation);
 
 module.exports = router;
