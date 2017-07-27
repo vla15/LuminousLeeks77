@@ -1,7 +1,7 @@
 const models = require('../../db/models');
 
 //get all of queue
-module.exports.toggleQueue = (req, res) => {
+module.exports.toggleQueue = (req, res, next) => {
   models.Queue.where({id: req.params.queueid})
     .fetch()
     .then(queue => {
