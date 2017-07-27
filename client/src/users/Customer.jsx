@@ -8,6 +8,7 @@ class Customer extends React.Component {
 
   constructor(props) {
     super(props);
+    this.now = (60 - new Date().getSeconds());
   }
 
   render() {
@@ -25,6 +26,17 @@ class Customer extends React.Component {
   componentDidMount() {
     this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
     this.props.redux.dispatch.getQueueInfoCustomer(1);
+    setInterval(() => {
+      console.log('counter');
+      this.forceUpdate();
+    }, 60000);
+    // navigator.geolocation.watchPosition(position => {
+    //   this.props.redux.dispatch.setUserLocation(
+    //     this.props.redux.store.user.profile_id,
+    //     position.coords.latitude,
+    //     position.coords.longitude
+    //   );
+    // });
   }
 }
 

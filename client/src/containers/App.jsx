@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { enqueueCustomer, dequeueCustomer, getPartyInfo, updatePartySize, updateFirstName, updatePhoneNumber } from '../actions/partyActions.js';
 
-import { setUserInfo, sendUserId } from '../actions/userActions.js';
+import { setUserInfo, sendUserId, setUserLocation } from '../actions/userActions.js';
 import { enqueueHost, dequeueHost, getQueueInfoHost, toggleQueue, getQueueInfoCustomer } from '../actions/queueActions.js';
 import { testSocketConnect } from '../actions/testSocketActions.js';
 import { Header } from '../components/Header.jsx';
@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch: {
       setUserInfo: () => { dispatch(setUserInfo()); },
-
+      setUserLocation: (profile_id, lat, lng) => { dispatch(setUserLocation(profile_id, lat, lng)); }, 
 
       getQueueInfoCustomer: queue_id => { dispatch(getQueueInfoCustomer(queue_id)); },
       getQueueInfoHost: queue_id => { dispatch(getQueueInfoHost(queue_id)); },

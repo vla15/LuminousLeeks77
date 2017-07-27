@@ -3,7 +3,7 @@
     "client": "postgresql",
     "connection": {
       "database": "thesis_devel",
-      "user": "sheydarezaei",
+      "user": "vincentla",
       "password": "",
       "host": "localhost",
       "port": 5432
@@ -25,5 +25,10 @@
     "Google": {},
     "Facebook": {},
     "Twitter": {}
+  },
+  "twilio": {
+    "accountSID": "ACeec5fd64bc8f7a83cee60354533e872d",
+    "authToken": "d0f325a281c7f969d8c9a405253a8c22",
+    "number": "+14159686722"
   }
 }

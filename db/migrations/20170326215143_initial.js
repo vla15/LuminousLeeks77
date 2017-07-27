@@ -26,7 +26,6 @@ exports.up = function (knex, Promise) {
       table.integer('organization_id').nullable();
       table.integer('next_wait_time').nullable();
       table.boolean('is_open').nullable();
-      table.specificType('location', 'POINT').nullable();
     }),
     knex.schema.createTableIfNotExists('parties', function(table) {
       table.increments('id').unsigned().primary();
@@ -36,7 +35,6 @@ exports.up = function (knex, Promise) {
       table.integer('party_size').nullable();
       table.string('first_name', 100).nullable();
       table.string('phone_number', 100).nullable();
-      table.specificType('location', 'POINT').nullable();
     }),
     knex.schema.createTableIfNotExists('party_size', function(table) {
       table.increments('id').unsigned().primary();
