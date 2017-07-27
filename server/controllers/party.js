@@ -18,7 +18,6 @@ module.exports.getOne = (req, res) => {
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
-  console.log('IN GET PARTY INFO CUSTOMER');
   return models.Party.where({profile_id: req.params.userid})
     .fetch({require: true})
     .then(party => {
@@ -42,11 +41,9 @@ module.exports.getPartyInfoCustomer = (req, res) => {
       targetCustomer = targetCustomer.filter(party => {
         return party.get('id') === Number(res.party_id);
       });
-      console.log('targetCustomer: ', targetCustomer);
       res.send(targetCustomer);
     })
     .catch(err => {
-      console.log('I had a problem');
       res.sendStatus(404);
     });
 };
@@ -103,14 +100,12 @@ module.exports.enqueue = (req, res, next) => {
         .then(success => {
           return next();
           let queueSize = success.attributes.queue_size;
-          console.log(success.get('queue_size'));
           // send new queue size to all the clients in the queue
           models.Party.where({queue_id: req.params.queueid})
             .fetchAll()
             .then(parties => {
               parties.each((party, i) => {
                 //get the socketID for each user
-                console.log('party', i);
               });
             });
           //getAllPartiesInQueue(req.params.queueId);
@@ -127,7 +122,6 @@ module.exports.enqueue = (req, res, next) => {
 
 
 module.exports.sendSocketDataForParties = function (req, res, next) {
-  console.log('in send Sockets');
   return models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -137,7 +131,6 @@ module.exports.sendSocketDataForParties = function (req, res, next) {
       columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
     })
     .then(result => {
-      console.log('result: ', result);
       var length = result.length;
       var targetCustomer = result.map((customer, index) => {
         customer.set({parties_ahead: index});
@@ -145,7 +138,6 @@ module.exports.sendSocketDataForParties = function (req, res, next) {
         return customer;
       });
       targetCustomer.forEach(customer => {
-        console.log('customer: ', customer);
         emitSocketMessage(customer.related('profile').get('socket_id'), 'UPDATE_PARTY_INFO', customer);
       });
       next();
@@ -153,7 +145,6 @@ module.exports.sendSocketDataForParties = function (req, res, next) {
 };
 
 module.exports.sendQueueInfoToHostWithSocket = function(req, res, next) {
-  console.log('SEND QUEUE INFO TO HOST WITH SOCKET');
   return models.Queue
     .where({ id: req.params.queueid })
     .fetch({
@@ -168,7 +159,6 @@ module.exports.sendQueueInfoToHostWithSocket = function(req, res, next) {
         .fetchAll({ withRelated: ['queue']})
         .then(profiles => {
           profiles.forEach(profile => {
-            console.log(profile.serialize());
             emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', res.queue);
           });
         })
@@ -188,9 +178,8 @@ sendSocketDequeueForCustomer = (userId, queueId) => {
       return models.Queue.where({id: queueId}).fetch();
     })
     .then(queue => {
-      console.log('QUEUE******************************************************', queue);
       queue.set('queue_size', queue.get('queue_size') - 1);
-    //needs 2 actions: update_queue_info
+      //needs 2 actions: update_queue_info
       emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '' });
       emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
     });
