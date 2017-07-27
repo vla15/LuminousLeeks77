@@ -2,7 +2,6 @@ const models = require('../../db/models');
 
 //get all of queue
 module.exports.toggleQueue = (req, res) => {
-  console.log('TOGGLE QUEUE');
   models.Queue.where({id: req.params.queueid})
     .fetch({
       columns: ['is_open']
@@ -57,7 +56,6 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
 };
 
 module.exports.getQueueByUser = (req, res) => {
-  console.log('GET QUEUE BY USER');
   models.Queue.where({id: req.params.queueid}).fetch()
     .then(queue => {
       if (!queue) {
@@ -151,7 +149,6 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 };
 
 module.exports.updatePartiesOnDequeue = (req, res) => {
-  console.log('res.queue ----->', res.queue);
   if (res.queue) {
     res.queue.forEach(party => {
       let profile = party.related('profile');

@@ -1,23 +1,22 @@
 const models = require('../../db/models');
-const knex = require('knex');
+// const knex = require('knex');
 
-module.exports.setUserLocation = (req, res) => {
-  models.Profile.where({ id: req.params.userid })
-    .save({
-      location: knex.raw(`Point (${req.params.lat}, ${req.params.lng})`)
-    }, {
-      patch: true
-    })
-    .then(data => {
-      res.status(200).send('anything');
-      console.log('success');
-    });
-};
+// module.exports.setUserLocation = (req, res) => {
+//   models.Profile.where({ id: req.params.userid })
+//     .save({
+//       location: knex.raw(`Point (${req.params.lat}, ${req.params.lng})`)
+//     }, {
+//       patch: true
+//     })
+//     .then(data => {
+//       res.status(200).send('anything');
+//       console.log('success');
+//     });
+// };
 
 module.exports.getAll = (req, res) => {
   models.Profile.fetchAll()
     .then(profiles => {
-      console.log('profiles', profiles);
       res.status(200).send(profiles);
     })
     .catch(err => {
@@ -80,7 +79,6 @@ module.exports.updatePhone = (req, res) => {
 };
 
 module.exports.updateSocketId = (userId, socketId) => {
-  console.log('IN update SocketId');
   models.Profile.where({ id: userId }).fetch()
     .then(profile => {
       if (!profile) {
