@@ -6,7 +6,7 @@ const Profile = db.Model.extend({
     return this.hasMany('Auth');
   },
   queue: function() {
-    return this.belongsTo('Queue')
+    return this.belongsTo('Queue');
   }
 });
 
