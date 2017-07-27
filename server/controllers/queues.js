@@ -1,12 +1,14 @@
 const models = require('../../db/models');
 
 //get all of queue
-module.exports.toggleQueue = (req, res) => {
+module.exports.toggleQueue = (req, res, next) => {
   models.Queue.where({id: req.params.queueid})
     .fetch()
     .then(queue => {
       let status = !queue.get('is_open');
-      queue.set('is_open', status).save();
+      return queue.set('is_open', status).save();
+    })
+    .then(queue => {
       res.result = queue;
       next();
     })
@@ -19,6 +21,7 @@ module.exports.toggleQueue = (req, res) => {
 };
 
 module.exports.updatePartiesOnToggleQueue = (req, res) => {
+  console.log('in updatePartiesOnToggleQueue');
   let is_open = res.result.attributes;
 
   models.Profile.query(qb => {
@@ -28,7 +31,7 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
       'parties.profile_id');
   })
     .fetchAll({
-      columns: ['socket_id', ]
+      columns: ['socket_id']
     })
     .then(result => {
       // res.send(result);

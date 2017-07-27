@@ -1,6 +1,12 @@
 const models = require('../../db/models');
 const moment = require('moment');
 
+var getPartyInfoCustomerQuery = (userId) => {
+  return models.Party
+    .where({ profile_id: userId })
+    .fetch({ require: true });
+};
+
 module.exports.getOne = (req, res) => {
   models.Party.where({id: req.params.partyid})
     .fetch({
@@ -18,39 +24,39 @@ module.exports.getOne = (req, res) => {
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
-  return models.Party.where({profile_id: req.params.userid})
-    .fetch({require: true})
-    .then(party => {
-      res.party_id = res.party_id || party.get('id');
-      return models.Party.where({queue_id: req.params.queueid})
-        .query((qb) => {
-          qb.orderBy('wait_time', 'ASC');
-        })
-        .fetchAll({
-          withRelated: ['queue', 'profile'],
-          columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
-        });
-    })
-    .then(result => {
-      var length = result.length;
-      var targetCustomer = result.map((customer, index) => {
-        customer.set({parties_ahead: index});
-        customer.set({parties_behind: length - (index + 1)});
-        return customer;
+  getPartyInfoCustomerQuery(req.params.userid)
+  .then(party => {
+    res.party_id = res.party_id || party.get('id');
+    return models.Party.where({queue_id: req.params.queueid})
+      .query((qb) => {
+        qb.orderBy('wait_time', 'ASC');
+      })
+      .fetchAll({
+        withRelated: ['queue', 'profile'],
+        columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
       });
-      targetCustomer = targetCustomer.filter(party => {
-        return party.get('id') === Number(res.party_id);
-      });
-      res.send(targetCustomer);
-    })
-    .catch(err => {
-      res.sendStatus(404);
+  })
+  .then(result => {
+    var length = result.length;
+    var targetCustomer = result.map((customer, index) => {
+      customer.set({parties_ahead: index});
+      customer.set({parties_behind: length - (index + 1)});
+      return customer;
     });
+    targetCustomer = targetCustomer.filter(party => {
+      return party.get('id') === Number(res.party_id);
+    });
+    res.send(targetCustomer);
+  })
+  .catch(err => {
+    res.sendStatus(404);
+  });
 };
 
 
 //remove not operator when launching
 module.exports.enqueue = (req, res, next) => {
+  console.log('IN ENQUEUE');
   //if (req.isAuthenticated()) {
   models.Profile.where({ id: req.params.userid })
     .fetch()
