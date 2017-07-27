@@ -4,29 +4,41 @@ const models = require('../../db/models');
 
 module.exports.toggleQueue = (req, res, next) => {
   console.log('TOGGLE QUEUE');
+  // models.Queue.where({id: req.params.queueid})
+  //   .fetch({
+  //     columns: ['is_open']
+  //   })
+  //   .then(open => {
+  //     console.log(open);
+  //     models.Queue.where({id: req.params.queueid})
+  //       .save({
+  //         is_open: !(open.get('is_open'))},
+  //         {patch: true})
+  //       })
+  //       .then(result => { 
+  //         models.Queue.where({id: req.params.queueid})
+  //           .fetch({columns: ['is_open']})
+  //           .then(result => { 
+  //             // res.send(result) ;
+  //             res.result = result;
+  //             next();
+  //           })
+  //         })
+
   models.Queue.where({id: req.params.queueid})
-    .fetch({
-      columns: ['is_open']
+    .fetch()
+    .then(queue => {
+      let status = !queue.get('is_open');
+      queue.set('is_open', status).save();
+      res.result = queue;
+      next();
     })
-    .then(open => {
-      models.Queue.where({id: req.params.queueid})
-        .save({
-          is_open: !(open.get('is_open'))},
-          {patch: true})
-        })
-        .then(result => { 
-          models.Queue.where({id: req.params.queueid})
-            .fetch({columns: ['is_open']})
-            .then(result => { 
-              // res.send(result) ;
-              res.result = result;
-              next();
-            })
-          })
     .error(err => {
+      console.log('**** error **** ', err);
       res.status(500).send(err);
     })
     .catch(err => {
+      console.log('**** error **** ', err);
       res.status(404).send(err);
     });
 };
@@ -50,11 +62,20 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
           })
           .then(queue => {
             emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-            // res.send(queue);
+            
           });
         }
      });
+     res.status(200).send('ok');
    })
+   .error(err => {
+      console.log('**** error **** ', err);
+      res.status(500).send(err);
+    })
+    .catch(err => {
+      console.log('**** error **** ', err);
+      res.status(404).send(err);
+    });
 }
 
 module.exports.getQueueByUser = (req, res) => {

@@ -22,4 +22,7 @@ router.route('/rm/:queueid/:partyid')
     QueueController.getPartyInfoOfQueue,
     QueueController.updatePartiesOnDequeue);
 
+// router.route('/rm/host/:queueid/:partyid')
+//   .delete()
+
 module.exports = router;
