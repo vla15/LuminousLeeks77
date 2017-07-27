@@ -3,7 +3,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import FontAwesome from 'react-fontawesome';
-
+import moment from 'moment';
 
 export const QueueListItem = props => {
   return (
@@ -15,7 +15,8 @@ export const QueueListItem = props => {
       </Col>
       <Col xs={2}>
         <h6>
-          10min
+          {moment(moment.utc(props.party.wait_time) - moment())._i < 0 ? 0
+            : moment.utc(props.party.wait_time).diff(moment(), 'minutes')} min(s)
         </h6>
       </Col>
       <Col xs={2}>
