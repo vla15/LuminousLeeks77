@@ -3,6 +3,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 import { EnqueueFormCustomer } from '../components/EnqueueFormCustomer.jsx';
 import { QueueStats } from '../components/QueueStats.jsx';
+import MapContainer from '../components/MapContainer.jsx';
 
 export const QueueInfo = props => {
   return (
@@ -14,6 +15,7 @@ export const QueueInfo = props => {
       </Row>
       <QueueStats redux={props.redux} />
       <EnqueueFormCustomer redux={props.redux} />
+      <MapContainer />
     </Grid>
   );
 };

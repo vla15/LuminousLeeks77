@@ -20,7 +20,22 @@ const getPartyInfo = (queue_id, user_id) => {
       });
   };
 };
-
+/*
+const dequeueCustomer = (queue_id, party_id) => {
+  return dispatch => {
+    axios.delete(`/api/partyInfo/rm/${queue_id}/${party_id}`)
+      .then(() => {
+        axios.get(`/api/queueInfo/getQueueInfoCustomer/${queue_id}`)
+         .then(result => {
+            dispatch({
+              type: DEQUEUE_CUSTOMER,
+              payload: result.data
+            });
+          });
+      });
+  };
+};
+*/
 const dequeueCustomer = (queue_id, party_id) => {
   return dispatch => {
     axios.delete(`/api/partyInfo/rm/${queue_id}/${party_id}`)
