@@ -53,6 +53,8 @@ class App extends React.Component {
             ? <Host redux={this.props} />
             : <Customer redux={this.props} /> }
       </div>
+
+
     );
   }
 

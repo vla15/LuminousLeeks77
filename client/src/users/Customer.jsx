@@ -1,12 +1,15 @@
 import React from 'react';
 
 import { QueueClosed } from '../customerViews/QueueClosed.jsx';
-import QueueInfo from '../customerViews/QueueInfo.jsx';
-import PartyInfo from '../customerViews/PartyInfo.jsx';
+import { QueueInfo } from '../customerViews/QueueInfo.jsx';
+import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 
 class Customer extends React.Component {
 
-  constructor(props) { super(props); }
+  constructor(props) {
+    super(props);
+    this.now = (60 - new Date().getSeconds());
+  }
 
   render() {
     return (
@@ -39,6 +42,10 @@ class Customer extends React.Component {
         );
       }
     });
+    setInterval(() => {
+      console.log('counter');
+      this.forceUpdate();
+    }, 60000);
   }
 }
 
