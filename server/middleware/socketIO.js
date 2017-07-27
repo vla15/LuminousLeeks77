@@ -10,7 +10,7 @@ module.exports = io => {
     // io.to(socket.id).emit('action', {type: 'SET_SOCKET_ID', data: `${socket.id}`});
     //io.sockets.sockets[socket.id].join(socket.id)
     // io.to(socket.id).emit('action', {type: 'server/testSocket_ServerToClient', data: 'For your eyes only!'});
-   // socket.emit('action', {type: 'server/testSocket_ServerToClient', data: 'For errybody!!!!!!!!!!!'});
+    // socket.emit('action', {type: 'server/testSocket_ServerToClient', data: 'For errybody!!!!!!!!!!!'});
     // io.emit('action', {type: 'server/testSocket_ServerToClient', data: 'For errybody!!!!!!!!!!!'});
     // socket.on('action', (action) => {
     //   if (action.type === 'server/testSocket_ClientToServer') {

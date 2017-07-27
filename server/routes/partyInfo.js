@@ -12,7 +12,7 @@ router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
     PartyController.sendSocketDataForParties, 
     PartyController.sendQueueInfoToHostWithSocket, 
     PartyController.getPartyInfoCustomer);
-  //.put(PartyController.enqueue, PartyController.getPartyInfoCustomer);
+//.put(PartyController.enqueue, PartyController.getPartyInfoCustomer);
 
 // router.route('/rm/:queueid/:partyid')
 //   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);

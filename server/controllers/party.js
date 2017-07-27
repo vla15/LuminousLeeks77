@@ -98,7 +98,7 @@ module.exports.enqueue = (req, res, next) => {
         })
         .then(count => {
           return models.Queue.where({id: req.params.queueid})
-            .save({queue_size: count}, {patch: true});
+            .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
         })
         .then(success => {
           return next();
@@ -185,11 +185,11 @@ sendSocketDequeueForCustomer = (userId, queueId) => {
     .fetch()
     .then(profile => {
       socket = profile.get('socket_id');
-      return models.Queue.where({id: queueId}).fetch()
+      return models.Queue.where({id: queueId}).fetch();
     })
     .then(queue => {
-     console.log('QUEUE******************************************************', queue);
-     queue.set('queue_size', queue.get('queue_size') - 1);
+      console.log('QUEUE******************************************************', queue);
+      queue.set('queue_size', queue.get('queue_size') - 1);
     //needs 2 actions: update_queue_info
       emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '' });
       emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
@@ -204,24 +204,20 @@ module.exports.dequeue = (req, res, next) => {
   models.Party.where({id: req.params.partyid})
     .fetch()
     .then(result =>{
-      console.log('this is THE result', result.serialize());
       res.profile_id = result.get('profile_id');
       sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
     });
   return models.Party.where({ id: req.params.partyid})
     .destroy()
     .then(result => {
-      console.log('inside result:', result.serialize());
       return models.Party.where({queue_id: req.params.queueid})
         .count('id');
     })
     .then(count => {
-      console.log('inside count');
       return models.Queue.where({id: req.params.queueid})
-        .save({queue_size: count}, {patch: true});
+        .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
     })
-    .then(result => {
-      // return redirect('/:queueid/:userid');
+    .then(complete => {
       return next();
     })
     .error(err => {

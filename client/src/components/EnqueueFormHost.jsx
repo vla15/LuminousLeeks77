@@ -13,7 +13,7 @@ export const EnqueueFormHost = props => {
             placeholder="First name"
             value={props.redux.store.party.first_name}
             onChange={() => {
-              props.redux.dispatch.updateFirstName(document.getElementById("firstName").value)
+              props.redux.dispatch.updateFirstName(document.getElementById('firstName').value);
             }}
           >
           </input>
@@ -29,7 +29,8 @@ export const EnqueueFormHost = props => {
             id="partySize"
             name="partySize"
             value={props.redux.store.party.party_size}
-            onChange={() => {props.redux.dispatch.updatePartySize(document.getElementById("partySize").value);
+            onChange={() => { 
+              props.redux.dispatch.updatePartySize(document.getElementById('partySize').value);
             }}
           >
             <option value={1}>1</option>
@@ -47,12 +48,12 @@ export const EnqueueFormHost = props => {
       <Col xs={4}>
         <h6>
           <input
-            id="phoneNumber"
-            name="phoneNumber"
-            placeholder="Phone number"
+            id='phoneNumber'
+            name='phoneNumber'
+            placeholder='Phone number'
             value={props.redux.store.party.phone_number}
             onChange={() => {
-              props.redux.dispatch.updatePhoneNumber(document.getElementById("phoneNumber").value);
+              props.redux.dispatch.updatePhoneNumber(document.getElementById('phoneNumber').value);
             }}
           >
           </input>
@@ -69,7 +70,7 @@ export const EnqueueFormHost = props => {
                 props.redux.store.party.party_size,
                 props.redux.store.party.first_name,
                 props.redux.store.party.phone_number
-              )
+              );
             }}
           />
         </h6>
