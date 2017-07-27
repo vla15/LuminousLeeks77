@@ -1,5 +1,6 @@
 const models = require('../../db/models');
 const moment = require('moment');
+const Queue = require('./queues');
 
 var getPartyInfoCustomerQuery = (userId) => {
   return models.Party
@@ -104,6 +105,7 @@ module.exports.enqueue = (req, res, next) => {
             .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
         })
         .then(success => {
+          Queue.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
           return next();
           let queueSize = success.attributes.queue_size;
           // send new queue size to all the clients in the queue
@@ -213,7 +215,8 @@ module.exports.dequeue = (req, res, next) => {
         .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
     })
     .then(complete => {
-      return next();
+      Queue.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
+      next();
     })
     .error(err => {
       res.status(305).send(err);
