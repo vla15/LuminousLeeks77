@@ -6,3 +6,4 @@ module.exports.flash = require('connect-flash');
 module.exports.cookieParser = require('cookie-parser');
 module.exports.socketIO = require('./socketIO');
 module.exports.twilioClient = require('./twilio');
+module.exports.cron = require('./cron');
