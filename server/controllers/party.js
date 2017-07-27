@@ -185,11 +185,14 @@ sendSocketDequeueForCustomer = (userId, queueId) => {
     .fetch()
     .then(profile => {
       socket = profile.get('socket_id');
-      //   models.Queue.where({id: queueId}).fetch()
-      // })
-      // .then(queue => {
-      //  console.log('QUEUE', queue);
+      return models.Queue.where({id: queueId}).fetch();
+    })
+    .then(queue => {
+      console.log('QUEUE******************************************************', queue);
+      queue.set('queue_size', queue.get('queue_size') - 1);
+    //needs 2 actions: update_queue_info
       emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '' });
+      emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
     });
 };
 
