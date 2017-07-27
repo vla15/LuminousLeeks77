@@ -4,8 +4,6 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
-module.exports.io = io;
-
 module.exports.emitSocketMessage = (socketId, action, payload) => {
   console.log(`***** socket: ${socketId}, action: ${action}, payload: ${payload}`);
   io.to(socketId).emit('action', {
@@ -34,7 +32,7 @@ app.use(middleware.flash());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-middleware.socketIO(io);
+middleware.socketIO.io(io);
 
 app.use('/', routes.auth); 
 app.use('/api', routes.api);
