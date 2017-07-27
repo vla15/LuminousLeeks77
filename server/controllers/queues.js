@@ -1,4 +1,32 @@
 const models = require('../../db/models');
+const Party = require('./party');
+
+module.exports.updateQueueInfoForNonqueuedCustomers = (queueId) => {
+  models.Profile.query(qb => {
+    qb.select('*').from('profiles').leftJoin(
+      'parties',
+      'profiles.id',
+      'parties.profile_id');
+  })
+  .fetchAll({
+    columns: ['socket_id']
+  })
+  .then(result => {
+    // res.send(result);
+    result.forEach(party => {
+      if (party.attributes.id === null && party.attributes.socket_id) {
+        models.Queue.where({ id: queueId }).fetch({
+          withRelated: ['parties']
+        })
+          .then(queue => {
+            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+          
+          });
+      }
+    });
+  });
+};
+
 
 //get all of queue
 module.exports.toggleQueue = (req, res, next) => {
@@ -6,7 +34,9 @@ module.exports.toggleQueue = (req, res, next) => {
     .fetch()
     .then(queue => {
       let status = !queue.get('is_open');
-      queue.set('is_open', status).save();
+      return queue.set('is_open', status).save();
+    })
+    .then(queue => {
       res.result = queue;
       next();
     })
@@ -19,6 +49,7 @@ module.exports.toggleQueue = (req, res, next) => {
 };
 
 module.exports.updatePartiesOnToggleQueue = (req, res) => {
+  console.log('in updatePartiesOnToggleQueue');
   let is_open = res.result.attributes;
 
   models.Profile.query(qb => {
@@ -28,7 +59,7 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
       'parties.profile_id');
   })
     .fetchAll({
-      columns: ['socket_id', ]
+      columns: ['socket_id']
     })
     .then(result => {
       // res.send(result);

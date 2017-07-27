@@ -15,7 +15,7 @@ export const QueueInfo = props => {
       </Row>
       <QueueStats redux={props.redux} />
       <EnqueueFormCustomer redux={props.redux} />
-      <MapContainer />
+      {/*<MapContainer />*/}
     </Grid>
   );
 };

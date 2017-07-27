@@ -15,6 +15,15 @@ router.route('/getQueueInfoCustomer/:queueid')
 router.route('/getQueueInfoHost/:queueid')
   .get(QueueController.getQueueInfoHost);
 
+// Opens or Closes Queue
+// Sends QueueInfoHost back as Res
+// Sends sockets to:
+// --------------------------------------------------------
+//  Host:               QueueInfoHost
+//  Queued Customer:    QueueInfoCustomer, PartyInfoCustomer
+//  NonQueued Customer: QueueInfoCustomer
+// --------------------------------------------------------
+
 router.route('/togglequeue/:queueid')
   .put(QueueController.toggleQueue, QueueController.updatePartiesOnToggleQueue);
 
