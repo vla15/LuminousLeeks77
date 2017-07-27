@@ -13,7 +13,6 @@ import Customer from '../users/Customer.jsx';
 import { Loading } from '../components/Loading.jsx';
 
 
-
 const mapStateToProps = state => {
   return {
     store: state
@@ -55,6 +54,8 @@ class App extends React.Component {
             ? <Host redux={this.props} />
             : <Customer redux={this.props} /> }
       </div>
+
+
     );
   }
 
