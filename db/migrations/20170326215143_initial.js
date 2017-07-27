@@ -10,7 +10,6 @@ exports.up = function (knex, Promise) {
       table.string('admin', 100).nullable();
       table.string('socket_id', 100).nullable();
       table.timestamps(true, true);
-      table.specificType('location', 'POINT').nullable();
     }),
     knex.schema.createTableIfNotExists('auths', function(table) {
       table.increments('id').unsigned().primary();
@@ -27,7 +26,6 @@ exports.up = function (knex, Promise) {
       table.integer('organization_id').nullable();
       table.integer('next_wait_time').nullable();
       table.boolean('is_open').nullable();
-      table.specificType('location', 'POINT').nullable();
     }),
     knex.schema.createTableIfNotExists('parties', function(table) {
       table.increments('id').unsigned().primary();

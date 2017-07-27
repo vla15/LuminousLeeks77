@@ -2,7 +2,6 @@ const models = require('../../db/models');
 
 //get all of queue
 module.exports.toggleQueue = (req, res) => {
-  console.log('TOGGLE QUEUE');
   models.Queue.where({id: req.params.queueid})
     .fetch()
     .then(queue => {
@@ -12,11 +11,9 @@ module.exports.toggleQueue = (req, res) => {
       next();
     })
     .error(err => {
-      console.log('**** error **** ', err);
       res.status(500).send(err);
     })
     .catch(err => {
-      console.log('**** error **** ', err);
       res.status(404).send(err);
     });
 };
@@ -38,26 +35,23 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
           models.Queue.where({ id: req.params.queueid }).fetch({
             withRelated: ['parties']
           })
-          .then(queue => {
-            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+            .then(queue => {
+              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
             
-          });
+            });
         }
       });
       res.status(200).send('ok');
     })
     .error(err => {
-      console.log('**** error **** ', err);
       res.status(500).send(err);
     })
     .catch(err => {
-      console.log('**** error **** ', err);
       res.status(404).send(err);
     });
 };
 
 module.exports.getQueueByUser = (req, res) => {
-  console.log('GET QUEUE BY USER');
   models.Queue.where({id: req.params.queueid}).fetch()
     .then(queue => {
       if (!queue) {
@@ -151,7 +145,6 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 };
 
 module.exports.updatePartiesOnDequeue = (req, res) => {
-  console.log('res.queue ----->', res.queue);
   if (res.queue) {
     res.queue.forEach(party => {
       let profile = party.related('profile');
