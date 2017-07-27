@@ -19,6 +19,8 @@ module.exports.toggleQueue = (req, res) => {
 };
 
 module.exports.updatePartiesOnToggleQueue = (req, res) => {
+  let is_open = res.result.attributes;
+
   models.Profile.query(qb => {
     qb.select('*').from('profiles').leftJoin(
       'parties',
