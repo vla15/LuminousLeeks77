@@ -40,17 +40,17 @@ export class CustomerMap extends React.Component {
             centerAroundCurrentLocation={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            style={{ position: "fixed", height: "100%" }}
+            style={{ position: "fixed !important", height: "100%" }}
             styles={this.props.mapStyles}
             scrollwheel={false}
             navigationControl={false}
             mapTypeControl={false}
             scaleControl={false}
-            draggable={false}
             zoom={15}
             zoomControl={false}
             scaleControl={false}
             disableDoubleClickZoom={true}
+            className="map"
           >
 
           <Marker name={'Queue'} position={{lat: 37.759703, lng: -122.428093}} />

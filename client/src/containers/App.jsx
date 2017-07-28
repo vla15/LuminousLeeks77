@@ -36,6 +36,7 @@ const mapDispatchToProps = dispatch => {
 
       sendUserId: (userId) => { dispatch(userActions.sendUserId(userId)); },
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
+      goToProfile: () => { dispatch(userActions.goToProfile()); },
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
     }

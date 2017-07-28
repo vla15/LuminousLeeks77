@@ -26,6 +26,9 @@ const userReducer = (state = null, action) => {
         lng: action.payload.lng
       }
     };
+
+  case 'GO_TO_PROFILE':
+    return state;
   }
 
   return state;

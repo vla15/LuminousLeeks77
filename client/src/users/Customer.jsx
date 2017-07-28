@@ -3,6 +3,8 @@ import React from 'react';
 import { QueueClosed } from '../customerViews/QueueClosed.jsx';
 import { QueueInfo } from '../customerViews/QueueInfo.jsx';
 import { PartyInfo } from '../customerViews/PartyInfo.jsx';
+import { EnqueueFormCustomer } from '../components/EnqueueFormCustomer.jsx';
+
 
 import CustomerMap from '../components/CustomerMap.jsx';
 
@@ -21,10 +23,12 @@ class Customer extends React.Component {
           : this.props.redux.store.party.id === undefined
             ? <QueueInfo redux={this.props.redux} />
             : <PartyInfo redux={this.props.redux}/> }
-        <CustomerMap className="fullscreen" redux={this.props.redux} />
+        <CustomerMap redux={this.props.redux} />
       </div>
     );
   }
+
+
 
   componentDidMount() {
     this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);

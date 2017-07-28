@@ -1,12 +1,15 @@
 <% include head.ejs%>
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-rocket"></span> Profile Page</h1>
-        <% if (user.phone) { %>
-        <a href="/" class="btn btn-default btn-sm">Home page</a>
-        <% } %>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <a class="navbar-brand" href="/">Q</a>
+          <p class="navbar-text navbar-right">
+            <% if (user.phone) { %> <a href="/">Queue</a> <% } %>
+          </p>
+        </ul>
+      </div>
+    </nav>
 
     <div class="row">
 
