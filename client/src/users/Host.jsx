@@ -3,6 +3,7 @@ import React from 'react';
 import { QueueOpen } from '../hostViews/QueueOpen.jsx';
 import { QueueClosedEmpty } from '../hostViews/QueueClosedEmpty.jsx';
 import { QueueClosedFull } from '../hostViews/QueueClosedFull.jsx';
+import MapContainer from '../components/MapContainer.jsx';
 
 class Host extends React.Component {
 
@@ -19,6 +20,7 @@ class Host extends React.Component {
           : this.props.redux.store.queue.parties.length === 0
             ? <QueueClosedEmpty redux={this.props.redux} />
             : <QueueClosedFull redux={this.props.redux} />}
+        <MapContainer redux={this.props.redux} />
       </div>
     );
   }
