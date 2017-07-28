@@ -4,11 +4,17 @@ import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 export class MapContainer extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {};
-  //   this.loadMap = this.loadMap.bind(this);
-  // }
+  constructor() {
+    super();
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+    };
+    this.loadMap = this.loadMap.bind(this);
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    // this.onMapClicked = this.onMapClicked.bind(this);
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -44,6 +50,20 @@ export class MapContainer extends React.Component {
   }
 
   onMarkerClick(props, marker, e) {
+    let context = this;
+    context.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  }
+  onMapClicked (props) {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
   }
 
   render() {
@@ -78,17 +98,30 @@ export class MapContainer extends React.Component {
             // }}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            // onClick={this.onMapClicked} //write this function
+            onClick={this.onMapClicked} //write this function
           >
             <Marker
               title={'The marker`s title will appear as a tooltip.'}
               name={'Party'}
-              position={{lat: 37.778519, lng: -122.405640}}
+              position={{lat: '37.778519', lng: '-122.405640'}}
               onMarkerClick={this.onMarkerClick.bind(this)}
             />
+
             <Marker
               name={'Queue'}
-              position={{lat: 37.759703, lng: -122.428093}} />
+              position={{lat: '37.759703', lng: '-122.428093'}} 
+              onMarkerClick={this.onMarkerClick.bind(this)}
+            />
+
+            <InfoWindow
+              // marker={this.props.activeMarker}
+              visible={this.state.showInfoWindow}
+              onClose={this.state.onInfoWindowClose}
+            >
+              <div>
+              </div>
+            </InfoWindow>
+
           </Map>
         </div>
       );
@@ -99,6 +132,25 @@ export class MapContainer extends React.Component {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw'
 })(MapContainer);
+
+
+
+/*
+{props.redux.queues.map((marker,i) => (
+  <Marker
+    key={i}
+    position={marker.location}
+    time={marker.time}
+    onClick={() => props.onMarkerClick(marker)}
+  >
+}
+
+*/
+
+
+
+
+
 
 //extra apiKey just in case:
 //AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo
