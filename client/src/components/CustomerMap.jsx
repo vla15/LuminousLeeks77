@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
-export class MapContainer extends React.Component {
+export class CustomerMap extends React.Component {
 
   constructor(props) { super(props); };
 
@@ -75,15 +75,12 @@ export class MapContainer extends React.Component {
 
           <Marker name={'Queue'} position={{lat: 37.759703, lng: -122.428093}} />
 
-          { this.props.redux.store.queue.parties.map(party => {
-              return <Marker
-                title={party.first_name}
-                name={party.first_name}
-                icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
-                onMarkerClick={this.onMarkerClick.bind(this)}
-                position={{lat: party.lat, lng: party.lng}}
-              />
-          }) }
+          <Marker
+            title={'Party'}
+            name={'Party'}
+            icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
+            onMarkerClick={this.onMarkerClick.bind(this)}
+          />
           </Map>
         </div>
       );
@@ -92,8 +89,8 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw'
-})(MapContainer);
+  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo'
+})(CustomerMap);
 
 //extra apiKey just in case:
 //AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo
