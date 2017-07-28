@@ -21,7 +21,7 @@ class Customer extends React.Component {
           : this.props.redux.store.party.id === undefined
             ? <QueueInfo redux={this.props.redux} />
             : <PartyInfo redux={this.props.redux}/> }
-        <CustomerMap redux={this.props.redux} />
+        <CustomerMap className="fullscreen" redux={this.props.redux} />
       </div>
     );
   }
