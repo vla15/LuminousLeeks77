@@ -4,6 +4,8 @@ import { QueueClosed } from '../customerViews/QueueClosed.jsx';
 import { QueueInfo } from '../customerViews/QueueInfo.jsx';
 import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 
+import CustomerMap from '../components/CustomerMap.jsx';
+
 class Customer extends React.Component {
 
   constructor(props) {
@@ -19,6 +21,7 @@ class Customer extends React.Component {
           : this.props.redux.store.party.id === undefined
             ? <QueueInfo redux={this.props.redux} />
             : <PartyInfo redux={this.props.redux}/> }
+        <CustomerMap redux={this.props.redux} />
       </div>
     );
   }
@@ -26,17 +29,18 @@ class Customer extends React.Component {
   componentDidMount() {
     this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
     this.props.redux.dispatch.getQueueInfoCustomer(1);
+    navigator.geolocation.getCurrentPosition(position => {
+      this.props.redux.dispatch.updatePartyLocation( position.coords.latitude, position.coords.longitude );
+    });
+    navigator.geolocation.watchPosition(position => {
+      if (this.props.redux.store.party.id !== undefined) {
+        this.props.redux.dispatch.putPartyLocation( this.props.redux.store.party.id, position.coords.latitude, position.coords.longitude );
+      }
+    });
     setInterval(() => {
       console.log('counter');
       this.forceUpdate();
     }, 60000);
-    // navigator.geolocation.watchPosition(position => {
-    //   this.props.redux.dispatch.setUserLocation(
-    //     this.props.redux.store.user.profile_id,
-    //     position.coords.latitude,
-    //     position.coords.longitude
-    //   );
-    // });
   }
 }
 
