@@ -52,7 +52,6 @@ export class CustomerMap extends React.Component {
   }
 
   onMarkerClick(props, marker, e) {
-    console.log('Marker Clickedd')
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
