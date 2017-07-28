@@ -1,31 +1,8 @@
 const models = require('../../db/models');
 const Party = require('./party');
+const SocketIO = require('../sockets/socketIO');
 
-module.exports.updateQueueInfoForNonqueuedCustomers = (queueId) => {
-  models.Profile.query(qb => {
-    qb.select('*').from('profiles').leftJoin(
-      'parties',
-      'profiles.id',
-      'parties.profile_id');
-  })
-  .fetchAll({
-    columns: ['socket_id']
-  })
-  .then(result => {
-    // res.send(result);
-    result.forEach(party => {
-      if (party.attributes.id === null && party.attributes.socket_id) {
-        models.Queue.where({ id: queueId }).fetch({
-          withRelated: ['parties']
-        })
-          .then(queue => {
-            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-          
-          });
-      }
-    });
-  });
-};
+console.log(SocketIO);
 
 
 //get all of queue
@@ -69,7 +46,7 @@ module.exports.updatePartiesOnToggleQueue = (req, res) => {
             withRelated: ['parties']
           })
             .then(queue => {
-              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+              SocketIO.emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
             
             });
         }
@@ -181,7 +158,7 @@ module.exports.updatePartiesOnDequeue = (req, res) => {
   if (res.queue) {
     res.queue.forEach(party => {
       let profile = party.related('profile');
-      emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
+      SocketIO.emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
     });
   }
   res.send(res.queue);
@@ -204,5 +181,5 @@ module.exports.getQueueInfoHost = (req, res) => {
     });
 };
 
-const emitSocketMessage = require('../app').emitSocketMessage;
+
 //no rows defaults to catch
