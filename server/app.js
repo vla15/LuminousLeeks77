@@ -19,6 +19,7 @@ const path = require('path');
 const middleware = require('./middleware');
 
 const routes = require('./routes');
+const twilio = require('./twilio');
 
 app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
@@ -27,7 +28,8 @@ app.use(middleware.bodyParser.json());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(middleware.cron());
+// app.use(twilio.cron());
+// app.use(twilio.subscribers());
 app.use(middleware.auth.session);
 app.use(middleware.passport.initialize()); 
 app.use(middleware.passport.session()); 
