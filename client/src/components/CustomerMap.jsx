@@ -1,11 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
+import Polygon from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 export class CustomerMap extends React.Component {
 
-  constructor(props) { super(props); }
+  constructor(props) { 
+    super(props);
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}, 
+    };
+    this.loadMap = this.loadMap.bind(this);
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.onMapClicked = this.onMapClicked.bind(this);
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -41,7 +52,22 @@ export class CustomerMap extends React.Component {
   }
 
   onMarkerClick(props, marker, e) {
+    console.log('Marker Clickedd')
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
   }
+  onMapClicked (props) {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  }
+
 
   render() {
 
@@ -52,8 +78,7 @@ export class CustomerMap extends React.Component {
       {lat: 25.774, lng: -80.190}
     ];
     const style = {
-      width: '100vw',
-      height: '100vh'
+      height: '100%'
     };
 
     if (!this.props.loaded) {
@@ -68,13 +93,24 @@ export class CustomerMap extends React.Component {
           <Map
             google={this.props.google}
             zoom={13}
-            disableDefaultUI={true}
+            // disableDefaultUI={true}
             centerAroundCurrentLocation={true}
+            
+            // zoomControl={false}
             visible={true}
             onReady={this.mapReady.bind(this)}
+            onClick={this.onMapClicked}
           >
+            <Polygon
+              paths={triangleCoords}
+              strokeColor="#0000FF"
+              strokeOpacity={0.8}
+              strokeWeight={2}
+              fillColor="#0000FF"
+              fillOpacity={0.35} />
 
-            <Marker name={'Queue'} position={{lat: 37.759703, lng: -122.428093}} />
+            
+            <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
 
             <Marker
               title={'Party'}
@@ -82,6 +118,15 @@ export class CustomerMap extends React.Component {
               icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
               onMarkerClick={this.onMarkerClick.bind(this)}
             />
+            
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
+            >
+              <div>
+              </div>
+            </InfoWindow>
+
           </Map>
         </div>
       );
@@ -90,8 +135,21 @@ export class CustomerMap extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo'
+  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo', 
+  version: '3.27',
+  setClickableIcons: true
 })(CustomerMap);
+
+
+/*
+           <Polygon
+              paths={'auto'}
+              strokeColor="#0000FF"
+              strokeOpacity={0.8}
+              strokeWeight={2}
+              fillColor="#0000FF"
+              fillOpacity={0.35} />
+*/
 
 //extra apiKey just in case:
 //AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo

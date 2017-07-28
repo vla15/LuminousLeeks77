@@ -108,7 +108,8 @@ export class HostMap extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw'
+  apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw',
+  version: '3.27'
 })(HostMap);
 
 

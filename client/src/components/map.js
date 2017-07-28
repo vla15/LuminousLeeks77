@@ -3,18 +3,19 @@ import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
-export class MapContainer extends React.Component {
-  constructor() {
-    super();
+export class CustomerMap extends React.Component {
+
+  constructor(props) { 
+    super(props);
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {},
-    };
+      selectedPlace: {}, 
+    }
     this.loadMap = this.loadMap.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
-    // this.onMapClicked = this.onMapClicked.bind(this);
-  }
+    this.onMapClicked = this.onMapClicked.bind(this);
+ }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -50,8 +51,8 @@ export class MapContainer extends React.Component {
   }
 
   onMarkerClick(props, marker, e) {
-    let context = this;
-    context.setState({
+    console.log('Marker Clickedd')
+    this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
@@ -66,6 +67,7 @@ export class MapContainer extends React.Component {
     }
   }
 
+
   render() {
 
     let triangleCoords = [
@@ -75,8 +77,7 @@ export class MapContainer extends React.Component {
       {lat: 25.774, lng: -80.190}
     ];
     const style = {
-      width: '100vw',
-      height: '100vh'
+      height: '100%'
     };
 
     if (!this.props.loaded) {
@@ -88,35 +89,31 @@ export class MapContainer extends React.Component {
     } else {
       return (
         <div style={style}>
-          <Map 
-            google={this.props.google} 
+          <Map
+            google={this.props.google}
             zoom={13}
-            centerAroundCurrentLocation={true} 
-            // initialCenter={{
-            //   lat: 40.854885,
-            //   lng: -88.081807
-            // }}
+            // disableDefaultUI={true}
+            centerAroundCurrentLocation={true}
+            
+            // zoomControl={false}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            onClick={this.onMapClicked} //write this function
+            onClick={this.onMapClicked}
           >
+
+            
+            <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
+
             <Marker
-              title={'The marker`s title will appear as a tooltip.'}
+              title={'Party'}
               name={'Party'}
-              position={{lat: '37.778519', lng: '-122.405640'}}
+              icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
               onMarkerClick={this.onMarkerClick.bind(this)}
             />
-
-            <Marker
-              name={'Queue'}
-              position={{lat: '37.759703', lng: '-122.428093'}} 
-              onMarkerClick={this.onMarkerClick.bind(this)}
-            />
-
+            
             <InfoWindow
-              // marker={this.props.activeMarker}
-              visible={this.state.showInfoWindow}
-              onClose={this.state.onInfoWindowClose}
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
             >
               <div>
               </div>
@@ -128,29 +125,22 @@ export class MapContainer extends React.Component {
     }
   }
 }
- 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw'
-})(MapContainer);
 
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo', 
+  version: '3.27'
+})(CustomerMap);
 
 
 /*
-{props.redux.queues.map((marker,i) => (
-  <Marker
-    key={i}
-    position={marker.location}
-    time={marker.time}
-    onClick={() => props.onMarkerClick(marker)}
-  >
-}
-
+           <Polygon
+              paths={'auto'}
+              strokeColor="#0000FF"
+              strokeOpacity={0.8}
+              strokeWeight={2}
+              fillColor="#0000FF"
+              fillOpacity={0.35} />
 */
-
-
-
-
-
 
 //extra apiKey just in case:
 //AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo
