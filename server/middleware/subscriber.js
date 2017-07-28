@@ -18,7 +18,8 @@ module.exports = () => {
               var message = msg[1];
               Promise.resolve(twilioClient.phoneLookup(number))
                 .then((number) => {
-                  // twilioClient.sendSms(number, message);
+                  console.log('message is being sent inside of the subscriber');
+                  twilioClient.sendSms(number, message);
                 })
                 .catch((err) => {
                   console.log(err);

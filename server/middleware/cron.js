@@ -1,6 +1,7 @@
 const CronJob = require('cron').CronJob;
 const moment = require('moment');
 const models = require('../../db/models');
+const publisher = require('./publisher');
 
 const smsNotifications = new CronJob({
   cronTime: '0 */1 * * * *',
@@ -9,17 +10,13 @@ const smsNotifications = new CronJob({
     models.Party.fetchAll()
       .then(parties => {
         parties.forEach(party => {
-          if (party.get('wait_time').diff(moment) < 0) {
-            //task rabbit
+          if (moment(party.get('wait_time')).diff(moment()) < 0) {
+            console.log('we are past seating time');
+            publisher(party.get('phone_number'), 'Please proceed to the queue');
           }
         });
       });
-    //iterate through them
-    //check wait_time timestamp
-    //if expired, send to rabbitmq
-    //need to make if expired
-    console.log('this is a new moment', moment());
-    console.log('this is a new date', new Date());
+    console.log('cron is still working');
   },
   onComplete: null,
   start: false,
@@ -33,7 +30,7 @@ const smsNotifications = new CronJob({
 
 //utilize moment date to compare
 module.exports = () => {
-  smsNotifications.stop();
+  smsNotifications.start();
   return (req, res, next) => {
     next();
   };
