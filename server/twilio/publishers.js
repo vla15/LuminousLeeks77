@@ -1,8 +1,9 @@
 const mq = require('amqplib');
+const db = process.env.RABBITMQ_BIGWIG_URL || 'amqp://localhost';
 
 
 module.exports = (number, message) => {
-  mq.connect('amqp://localhost')
+  mq.connect(db)
     .then((conn) => {
       console.log('created channel');
       return conn.createChannel();

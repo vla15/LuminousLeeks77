@@ -10,8 +10,10 @@ const smsNotifications = new CronJob({
     models.Party.fetchAll()
       .then(parties => {
         parties.forEach(party => {
+          console.log('lets get it cron!');
           if (moment(party.get('wait_time')).diff(moment()) < 0) {
-            publisher(party.get('phone_number'), 'Please proceed to the queue');
+            console.log(moment(party.get('wait_time')).diff(moment()));
+            // publisher(party.get('phone_number'), 'Please proceed to the queue');
           }
         });
       });
@@ -21,13 +23,8 @@ const smsNotifications = new CronJob({
   timezone: 'America/Los_Angeles'
 });
 
-//every minute will need to query the database to check time has expired
-//has to pass this down to sms module
-//need to identify when we've already sent an sms
-
-
-//utilize moment date to compare
 module.exports = () => {
+  console.log('start cron');
   smsNotifications.start();
   return (req, res, next) => {
     next();
