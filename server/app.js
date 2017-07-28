@@ -3,10 +3,10 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-//module.exports.io = io;
+module.exports.io = io;
 const path = require('path');
 const middleware = require('./middleware');
-const sockets = require('./sockets/socketIO');
+
 
 const routes = require('./routes');
 
@@ -24,7 +24,6 @@ app.use(middleware.flash());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-sockets.socketIO.init(io);
 
 app.use('/', routes.auth); 
 app.use('/api', routes.api);
@@ -34,3 +33,7 @@ app.use('/api/partyinfo', routes.partyInfo);
 
 
 module.exports.server = server;
+
+//console.log(sockets);
+//const sockets = require('./sockets/socketIO');
+//sockets.init(io);

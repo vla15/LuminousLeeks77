@@ -1,20 +1,18 @@
 const Profiles = require('../controllers').Profiles;
 const models = require('../../db/models');
-//const io = require('../app').io;
+const io = require('../app').io;
 
-module.exports.init = io => {
 
-  io.on('connection', socket => {
-
-    socket.on('action', (action) => {
-      if (action.type === 'server/SEND_USER_ID') {
-        Profiles.updateSocketId(action.payload, socket.id);
-      }
-    });
+io.on('connection', socket => {
+  socket.on('action', (action) => {
+    if (action.type === 'server/SEND_USER_ID') {
+      Profiles.updateSocketId(action.payload, socket.id);
+    }
   });
-};
+});
 
-module.exports.emitSocketMessage = (socketId, action, payload) => {
+
+var emitSocketMessage = (socketId, action, payload) => {
   console.log(`***** socket: ${socketId}, action: ${action}, payload: ${payload}`);
   io.to(socketId).emit('action', {
     type: action,
@@ -22,7 +20,7 @@ module.exports.emitSocketMessage = (socketId, action, payload) => {
   });
 };
 
-module.exports.sendSocketDataForParties = function (req, res, next) {
+var sendSocketDataForParties = function (req, res, next) {
   return models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -39,13 +37,12 @@ module.exports.sendSocketDataForParties = function (req, res, next) {
         return customer;
       });
       targetCustomer.forEach(customer => {
-        SocketIO.emitSocketMessage(customer.related('profile').get('socket_id'), 'UPDATE_PARTY_INFO', customer);
+        emitSocketMessage(customer.related('profile').get('socket_id'), 'UPDATE_PARTY_INFO', customer);
       });
       next();
     });
 };
-
-module.exports.updateQueueInfoForNonqueuedCustomers = (queueId) => {
+var updateQueueInfoForNonqueuedCustomers = (queueId) => {
   models.Profile.query(qb => {
     qb.select('*').from('profiles').leftJoin(
       'parties',
@@ -63,10 +60,16 @@ module.exports.updateQueueInfoForNonqueuedCustomers = (queueId) => {
           withRelated: ['parties']
         })
           .then(queue => {
-            SocketIO.emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
           
           });
       }
     });
   });
+};
+
+module.exports = {
+  emitSocketMessage: emitSocketMessage,
+  sendSocketDataForParties: sendSocketDataForParties,
+  updateQueueInfoForNonqueuedCustomers: updateQueueInfoForNonqueuedCustomers
 };

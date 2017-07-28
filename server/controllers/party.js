@@ -2,7 +2,7 @@ const models = require('../../db/models');
 const moment = require('moment');
 const Queue = require('./queues');
 const SocketIO = require('../sockets/socketIO');
-//console.log(SocketIO);
+console.log(SocketIO);
 
 var getPartyInfoCustomerQuery = (userId) => {
   return models.Party
