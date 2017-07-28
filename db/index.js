@@ -7,3 +7,4 @@ db.plugin('bookshelf-postgis');
 
 module.exports = db;
 
+

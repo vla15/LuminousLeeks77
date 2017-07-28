@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
-export class MapContainer extends React.Component {
-  // constructor() {
-  //   super();
-  //   this.state = {};
-  //   this.loadMap = this.loadMap.bind(this);
-  // }
+export class CustomerMap extends React.Component {
+
+  constructor(props) { super(props); }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -68,37 +65,33 @@ export class MapContainer extends React.Component {
     } else {
       return (
         <div style={style}>
-          <Map 
-            google={this.props.google} 
+          <Map
+            google={this.props.google}
             zoom={13}
-            centerAroundCurrentLocation={true} 
-            // initialCenter={{
-            //   lat: 40.854885,
-            //   lng: -88.081807
-            // }}
+            centerAroundCurrentLocation={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            // onClick={this.onMapClicked} //write this function
           >
+
+            <Marker name={'Queue'} position={{lat: 37.759703, lng: -122.428093}} />
+
             <Marker
-              title={'The marker`s title will appear as a tooltip.'}
+              title={'Party'}
               name={'Party'}
-              position={{lat: 37.778519, lng: -122.405640}}
+              icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
               onMarkerClick={this.onMarkerClick.bind(this)}
             />
-            <Marker
-              name={'Queue'}
-              position={{lat: 37.759703, lng: -122.428093}} />
           </Map>
         </div>
       );
     }
   }
 }
- 
+
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw'
-})(MapContainer);
+  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo',
+  version: '3.27'
+})(CustomerMap);
 
 //extra apiKey just in case:
 //AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo

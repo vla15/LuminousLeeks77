@@ -1,6 +1,7 @@
 const models = require('../../db/models');
 // const knex = require('knex');
 
+
 // module.exports.setUserLocation = (req, res) => {
 //   models.Profile.where({ id: req.params.userid })
 //     .save({

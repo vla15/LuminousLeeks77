@@ -30,6 +30,9 @@ router.route('/rm/:queueid/:partyid')
     //PartyController.sendQueueInfoToHostWithSocket, 
     QueueController.getPartyInfoOfQueue);
 
+router.route('/putPartyLocation/:partyid/:lat/:lng')
+  .put(PartyController.putPartyLocation);
+
 // router.route('/rm/host/:queueid/:partyid')
 //   .delete()
 

@@ -1,12 +1,17 @@
 const config = require('config')['twilio'];
-const client = require('twilio')(config.accountSID, config.authToken);
+let client;
+if (process.env.TWILIO_ACCOUNTSID) {
+  client = require('twilio')(process.env.TWILIO_ACCOUNTSID, process.env.TWILIO_AUTHTOKEN);
+} else {
+  client = require('twilio')(config.accountSID, config.authToken);
+}
 
 module.exports.sendSms = (to, message) => {
   return client.api.messages
     .create({
       body: message,
       to: to,
-      from: config.number,
+      from: process.env.TWILIO_PHNUMBER || config.number,
     }).then((data) => {
       console.log('Message Sent');
     }).catch((err) => {
