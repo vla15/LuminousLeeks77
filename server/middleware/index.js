@@ -5,4 +5,3 @@ module.exports.bodyParser = require('body-parser');
 module.exports.flash = require('connect-flash');
 module.exports.cookieParser = require('cookie-parser');
 module.exports.socketIO = require('./socketIO');
-module.exports.twilioClient = require('./twilio');
