@@ -27,9 +27,5 @@ module.exports = () => {
           });
         });
     })
-    .catch(console.warn);
-  return (req, res, next) => {
-    next();
-  };
-  
+    .catch(console.warn);  
 };

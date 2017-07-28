@@ -15,7 +15,4 @@ module.exports = (number, message) => {
         });
     })
     .catch(console.warn);
-  return (req, res, next) => {
-    next();
-  };
 };
