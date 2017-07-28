@@ -111,7 +111,7 @@ module.exports.enqueue = (req, res, next) => {
         })
         .then(count => {
           return models.Queue.where({id: req.params.queueid})
-            .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
+            .save({queue_size: count, next_wait_time: Math.max((Number(count) + 1) * 10, 10)}, {patch: true});
         })
         .then(success => {
           Queue.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
@@ -217,11 +217,24 @@ module.exports.dequeue = (req, res, next) => {
     .destroy()
     .then(result => {
       return models.Party.where({queue_id: req.params.queueid})
-        .count('id');
+        .query((qb) => {
+          qb.orderBy('wait_time', 'ASC');
+        })
+        .fetchAll();
     })
     .then(count => {
+      var partyLength = count.length || 0;
+      if (count) {
+        count.forEach((party, index) => {
+          console.log(party.get('wait_time'));
+          models.Party.where({id: party.get('id')})
+            .save({wait_time: 
+            moment().add((index + 1) * 10, 'm') < party.get('wait_time') ? moment().add((index + 1) * 10, 'm') : party.get('wait_time')}, 
+            {patch: true});
+        });
+      }
       return models.Queue.where({id: req.params.queueid})
-        .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
+        .save({queue_size: partyLength, next_wait_time: Math.max((partyLength + 1) * 10, 10)}, {patch: true});
     })
     .then(complete => {
       Queue.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
