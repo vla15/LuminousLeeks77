@@ -220,7 +220,7 @@ module.exports.dequeue = (req, res, next) => {
         .fetchAll();
     })
     .then(count => {
-      var partyLength = count || 0;
+      var partyLength = count.length || 0;
       if (partyLength) {
         count.forEach((party, index) => {
           models.Party.where({id: party.get('id')})
@@ -230,7 +230,7 @@ module.exports.dequeue = (req, res, next) => {
         });
       }
       return models.Queue.where({id: req.params.queueid})
-        .save({queue_size: partyLength, next_wait_time: Math.max(partyLength * 10, 10)}, {patch: true});
+        .save({queue_size: partyLength, next_wait_time: Math.max((Number(partyLength) + 1) * 10, 10)}, {patch: true});
     })
     .then(complete => {
       Queue.updateQueueInfoForNonqueuedCustomers(req.params.queueid);

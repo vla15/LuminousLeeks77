@@ -1,5 +1,7 @@
-const testSocketConnect = () => {
+const testSocketActions = {};
+
+testSocketActions.testSocketConnect = () => {
   return { type: 'server/testSocket_ClientToServer', data: 'Socket data flow from client to server confirmed'};
 };
 
-export { testSocketConnect };
+module.exports = testSocketActions;
