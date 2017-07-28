@@ -2,7 +2,6 @@ const models = require('../../db/models');
 const moment = require('moment');
 const Queue = require('./queues');
 const SocketIO = require('../sockets/socketIO');
-console.log(SocketIO);
 
 var getPartyInfoCustomerQuery = (userId) => {
   return models.Party
@@ -107,6 +106,7 @@ module.exports.enqueue = (req, res, next) => {
             .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
         })
         .then(success => {
+          SocketIO.sendSocketDataForParties(req.params.queueid);
           SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
           return next();
           let queueSize = success.attributes.queue_size;
@@ -178,22 +178,7 @@ module.exports.sendQueueInfoToHostWithSocket = function(req, res, next) {
     });
 };
 
-sendSocketDequeueForCustomer = (userId, queueId) => {
-  //get queue info for this customer
-  var socket = '';
-  return models.Profile.where({ id: userId })
-    .fetch()
-    .then(profile => {
-      socket = profile.get('socket_id');
-      return models.Queue.where({id: queueId}).fetch();
-    })
-    .then(queue => {
-      queue.set('queue_size', queue.get('queue_size') - 1);
-      //needs 2 actions: update_queue_info
-      SocketIO.emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '' });
-      SocketIO.emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
-    });
-};
+
 
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
@@ -204,7 +189,7 @@ module.exports.dequeue = (req, res, next) => {
     .fetch()
     .then(result =>{
       res.profile_id = result.get('profile_id');
-      sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
+      SocketIO.sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
     });
   return models.Party.where({ id: req.params.partyid})
     .destroy()
@@ -217,7 +202,9 @@ module.exports.dequeue = (req, res, next) => {
         .save({queue_size: count, next_wait_time: Math.max(count * 10, 10)}, {patch: true});
     })
     .then(complete => {
+      SocketIO.sendSocketDataForParties(req.params.queueid);
       SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
+      SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
       next();
     })
     .error(err => {

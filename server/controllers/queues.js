@@ -2,9 +2,6 @@ const models = require('../../db/models');
 const Party = require('./party');
 const SocketIO = require('../sockets/socketIO');
 
-console.log(SocketIO);
-
-
 //get all of queue
 module.exports.toggleQueue = (req, res, next) => {
   models.Queue.where({id: req.params.queueid})
@@ -106,10 +103,7 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
         // console.log('queue list/parties------>', queue);
 
         // res.status(200).send(queue);
-      res.queue = queue;
-      next();
-
-      // }
+      res.send(queue);
     })
     .error(err => {
       res.status(500).send(err);
@@ -171,7 +165,6 @@ module.exports.getQueueInfoCustomer = (req, res) => {
     });
 };
 
-
 module.exports.getQueueInfoHost = (req, res) => {
   models.Queue.where({ id: req.params.queueid }).fetch({
     withRelated: ['parties']
@@ -180,6 +173,5 @@ module.exports.getQueueInfoHost = (req, res) => {
       res.send(queue);
     });
 };
-
 
 //no rows defaults to catch
