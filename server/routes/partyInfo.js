@@ -17,19 +17,18 @@ router.route('/:queueid/:userid')
 // --------------------------------------------------------
 
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
-  .put(PartyController.enqueue,
-    PartyController.sendSocketDataForParties,
-    PartyController.sendQueueInfoToHostWithSocket,
+  .put(PartyController.enqueue, 
+    //PartyController.sendSocketDataForParties, 
+    //PartyController.sendQueueInfoToHostWithSocket, 
     PartyController.getPartyInfoCustomer);
 //.put(PartyController.enqueue, PartyController.getPartyInfoCustomer);
 
 // router.route('/rm/:queueid/:partyid')
 //   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);
 router.route('/rm/:queueid/:partyid')
-  .delete(PartyController.dequeue,
-    PartyController.sendQueueInfoToHostWithSocket,
-    QueueController.getPartyInfoOfQueue,
-    QueueController.updatePartiesOnDequeue);
+  .delete(PartyController.dequeue, 
+    //PartyController.sendQueueInfoToHostWithSocket, 
+    QueueController.getPartyInfoOfQueue);
 
 router.route('/putPartyLocation/:partyid/:lat/:lng')
   .put(PartyController.putPartyLocation);

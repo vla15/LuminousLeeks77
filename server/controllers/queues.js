@@ -1,32 +1,6 @@
 const models = require('../../db/models');
 const Party = require('./party');
-
-module.exports.updateQueueInfoForNonqueuedCustomers = (queueId) => {
-  models.Profile.query(qb => {
-    qb.select('*').from('profiles').leftJoin(
-      'parties',
-      'profiles.id',
-      'parties.profile_id');
-  })
-  .fetchAll({
-    columns: ['socket_id']
-  })
-  .then(result => {
-    // res.send(result);
-    result.forEach(party => {
-      if (party.attributes.id === null && party.attributes.socket_id) {
-        models.Queue.where({ id: queueId }).fetch({
-          withRelated: ['parties']
-        })
-          .then(queue => {
-            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-          
-          });
-      }
-    });
-  });
-};
-
+const SocketIO = require('../sockets/socketIO');
 
 //get all of queue
 module.exports.toggleQueue = (req, res, next) => {
@@ -38,43 +12,8 @@ module.exports.toggleQueue = (req, res, next) => {
     })
     .then(queue => {
       res.result = queue;
-      next();
-    })
-    .error(err => {
-      res.status(500).send(err);
-    })
-    .catch(err => {
-      res.status(404).send(err);
-    });
-};
-
-module.exports.updatePartiesOnToggleQueue = (req, res) => {
-  console.log('in updatePartiesOnToggleQueue');
-  let is_open = res.result.attributes;
-
-  models.Profile.query(qb => {
-    qb.select('*').from('profiles').leftJoin(
-      'parties',
-      'profiles.id',
-      'parties.profile_id');
-  })
-    .fetchAll({
-      columns: ['socket_id']
-    })
-    .then(result => {
-      // res.send(result);
-      result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.socket_id) {
-          models.Queue.where({ id: req.params.queueid }).fetch({
-            withRelated: ['parties']
-          })
-            .then(queue => {
-              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-            
-            });
-        }
-      });
-      res.status(200).send('ok');
+      SocketIO.updatePartiesOnToggleQueue(req.params.queueid);
+      res.send('ok');
     })
     .error(err => {
       res.status(500).send(err);
@@ -122,17 +61,8 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
         customer.set({parties_behind: length - (index + 1)});
         return customer;
       });
-      // if (!queue) {
 
-      //   throw queue;
-      // } else {
-        // console.log('queue list/parties------>', queue);
-
-        // res.status(200).send(queue);
-      res.queue = queue;
-      next();
-
-      // }
+      res.send(queue);
     })
     .error(err => {
       res.status(500).send(err);
@@ -141,14 +71,6 @@ module.exports.getPartyInfoOfQueue = (req, res, next) => {
       res.status(404).send(err);
     });
 };
-
-// module.exports.updatePartiesOnDequeue = (req, res, queues, io) => {
-//   console.log('hdgfhdfsgdhgfdhfghgfhgfdhgfdshgfdsh----->')
-//   // io.on('connection', socket => {
-//   //   console.log( 'Socket connected: ?????????' + socket.id);
-//   //   io.to(socket.id).emit('action', {type: 'SET_SOCKET_ID', data: queue});
-//   // });
-// };
 
 module.exports.getPartyInfoCustomer = (req, res) => {
   models.Party.where({id: res.party_id})
@@ -177,23 +99,12 @@ module.exports.getPartyInfoCustomer = (req, res) => {
     });
 };
 
-module.exports.updatePartiesOnDequeue = (req, res) => {
-  if (res.queue) {
-    res.queue.forEach(party => {
-      let profile = party.related('profile');
-      emitSocketMessage(profile.get('socket_id'), 'UPDATE_PARTY_INFO', party);
-    });
-  }
-  res.send(res.queue);
-};
-
 module.exports.getQueueInfoCustomer = (req, res) => {
   models.Queue.where({ id: req.params.queueid }).fetch()
     .then(queue => {
       res.send(queue);
     });
 };
-
 
 module.exports.getQueueInfoHost = (req, res) => {
   models.Queue.where({ id: req.params.queueid })
@@ -208,6 +119,3 @@ module.exports.getQueueInfoHost = (req, res) => {
       res.send(queue);
     });
 };
-
-const emitSocketMessage = require('../app').emitSocketMessage;
-//no rows defaults to catch

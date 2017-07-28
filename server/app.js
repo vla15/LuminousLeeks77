@@ -6,17 +6,9 @@ const io = require('socket.io')(server);
 
 module.exports.io = io;
 
-module.exports.emitSocketMessage = (socketId, action, payload) => {
-  console.log(`***** socket: ${socketId}, action: ${action}, payload: ${payload}`);
-  io.to(socketId).emit('action', {
-    type: action,
-    payload: payload
-  });
-};
-
-
 const path = require('path');
 const middleware = require('./middleware');
+
 
 const routes = require('./routes');
 const twilio = require('./twilio');
@@ -37,7 +29,6 @@ app.use(middleware.flash());
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-middleware.socketIO(io);
 
 app.use('/', routes.auth); 
 app.use('/api', routes.api);
@@ -47,3 +38,7 @@ app.use('/api/partyinfo', routes.partyInfo);
 
 
 module.exports.server = server;
+
+//console.log(sockets);
+//const sockets = require('./sockets/socketIO');
+//sockets.init(io);
