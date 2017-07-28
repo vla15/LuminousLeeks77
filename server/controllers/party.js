@@ -217,11 +217,14 @@ module.exports.dequeue = (req, res, next) => {
     .destroy()
     .then(result => {
       return models.Party.where({queue_id: req.params.queueid})
+        .query((qb) => {
+          qb.orderBy('wait_time', 'ASC');
+        })
         .fetchAll();
     })
     .then(count => {
       var partyLength = count.length || 0;
-      if (partyLength) {
+      if (count) {
         count.forEach((party, index) => {
           models.Party.where({id: party.get('id')})
             .save({wait_time: 
@@ -230,7 +233,7 @@ module.exports.dequeue = (req, res, next) => {
         });
       }
       return models.Queue.where({id: req.params.queueid})
-        .save({queue_size: partyLength, next_wait_time: Math.max((Number(partyLength) + 1) * 10, 10)}, {patch: true});
+        .save({queue_size: partyLength, next_wait_time: Math.max((partyLength + 1) * 10, 10)}, {patch: true});
     })
     .then(complete => {
       Queue.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
