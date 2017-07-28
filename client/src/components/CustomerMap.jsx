@@ -5,7 +5,7 @@ import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 export class CustomerMap extends React.Component {
 
-  constructor(props) { super(props); };
+  constructor(props) { super(props); }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -74,14 +74,14 @@ export class CustomerMap extends React.Component {
             onReady={this.mapReady.bind(this)}
           >
 
-          <Marker name={'Queue'} position={{lat: 37.759703, lng: -122.428093}} />
+            <Marker name={'Queue'} position={{lat: 37.759703, lng: -122.428093}} />
 
-          <Marker
-            title={'Party'}
-            name={'Party'}
-            icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
-            onMarkerClick={this.onMarkerClick.bind(this)}
-          />
+            <Marker
+              title={'Party'}
+              name={'Party'}
+              icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
+              onMarkerClick={this.onMarkerClick.bind(this)}
+            />
           </Map>
         </div>
       );
