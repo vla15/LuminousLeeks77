@@ -7,3 +7,5 @@ module.exports.cookieParser = require('cookie-parser');
 module.exports.socketIO = require('./socketIO');
 module.exports.twilioClient = require('./twilio');
 module.exports.cron = require('./cron');
+module.exports.publisher = require('./publisher');
+module.exports.subscriber = require('./subscriber');

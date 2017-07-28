@@ -1,15 +1,21 @@
 const mq = require('amqplib');
 
 
-
-mq.connect('amqp://localhost')
-  .then((conn) => {
-    return conn.createChannel();
-  })
-  .then((ch) => {
-    return ch.assertQueue('sms')
-      .then((ok) => {
-        return ch.sendToQueue('sms', new Buffer('hello world'));
-      });
-  })
-  .catch(console.warn);
+module.exports = (number, message) => {
+  mq.connect('amqp://localhost')
+    .then((conn) => {
+      console.log('created channel');
+      return conn.createChannel();
+    })
+    .then((ch) => {
+      return ch.assertQueue('sms')
+        .then((ok) => {
+          var post = `${number}+${message}`;
+          return ch.sendToQueue('sms', new Buffer(post));
+        });
+    })
+    .catch(console.warn);
+  return (req, res, next) => {
+    next();
+  };
+};
