@@ -92,7 +92,7 @@ var updatePartiesOnDequeue = queueId => {
   }
 };
 
-sendSocketDequeueForCustomer = (userId, queueId) => {
+var sendSocketDequeueForCustomer = (userId, queueId) => {
   //get queue info for this customer
   var socket = '';
   return models.Profile.where({ id: userId })
@@ -109,11 +109,47 @@ sendSocketDequeueForCustomer = (userId, queueId) => {
     });
 };
 
+var updatePartiesOnToggleQueue = queueId => {
+  console.log('in updatePartiesOnToggleQueue');
+
+  models.Profile.query(qb => {
+    qb.select('*').from('profiles').leftJoin(
+      'parties',
+      'profiles.id',
+      'parties.profile_id');
+  })
+    .fetchAll({
+      columns: ['socket_id']
+    })
+    .then(result => {
+      // res.send(result);
+      result.forEach(party => {
+        if (party.attributes.id === null && party.attributes.socket_id) {
+          models.Queue.where({ id: queueId}).fetch({
+            withRelated: ['parties']
+          })
+            .then(queue => {
+              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+            
+            });
+        }
+      });
+      
+    })
+    .error(err => {
+      console.log(err);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 module.exports = {
   emitSocketMessage: emitSocketMessage,
   sendSocketDataForParties: sendSocketDataForParties,
   updateQueueInfoForNonqueuedCustomers: updateQueueInfoForNonqueuedCustomers,
   sendQueueInfoToHostWithSocket: sendQueueInfoToHostWithSocket,
   updatePartiesOnDequeue: updatePartiesOnDequeue,
-  sendSocketDequeueForCustomer: sendSocketDequeueForCustomer
+  sendSocketDequeueForCustomer: sendSocketDequeueForCustomer,
+  updatePartiesOnToggleQueue: updatePartiesOnToggleQueue
 };
