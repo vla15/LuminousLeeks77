@@ -226,6 +226,7 @@ module.exports.dequeue = (req, res, next) => {
       var partyLength = count.length || 0;
       if (count) {
         count.forEach((party, index) => {
+          console.log(party.get('wait_time'));
           models.Party.where({id: party.get('id')})
             .save({wait_time: 
             moment().add((index + 1) * 10, 'm') < party.get('wait_time') ? moment().add((index + 1) * 10, 'm') : party.get('wait_time')}, 

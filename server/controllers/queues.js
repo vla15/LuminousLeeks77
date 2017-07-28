@@ -196,9 +196,14 @@ module.exports.getQueueInfoCustomer = (req, res) => {
 
 
 module.exports.getQueueInfoHost = (req, res) => {
-  models.Queue.where({ id: req.params.queueid }).fetch({
-    withRelated: ['parties']
-  })
+  models.Queue.where({ id: req.params.queueid })
+    .fetch({
+      withRelated: [{
+        'parties': (qb) => {
+          qb.orderBy('wait_time', 'ASC');
+        }
+      }]
+    })
     .then(queue => {
       res.send(queue);
     });
