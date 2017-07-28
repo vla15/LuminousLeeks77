@@ -8,6 +8,15 @@ var getPartyInfoCustomerQuery = (userId) => {
     .fetch({ require: true });
 };
 
+module.exports.putPartyLocation = (req, res) => {
+  models.Party.where({ id: req.params.partyid })
+    .save({lat: req.params.lat, lng: req.params.lng}, {patch: true})
+    .then(data => {
+      res.status(200).send('successfully saved party location in database');
+      console.log('successfully saved party location in database');
+    });
+};
+
 module.exports.getOne = (req, res) => {
   models.Party.where({id: req.params.partyid})
     .fetch({
