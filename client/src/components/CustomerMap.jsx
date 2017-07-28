@@ -89,7 +89,8 @@ export class CustomerMap extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo'
+  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo',
+  version: '3.27'
 })(CustomerMap);
 
 //extra apiKey just in case:
