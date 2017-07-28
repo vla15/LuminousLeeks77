@@ -37,6 +37,8 @@ exports.up = function (knex, Promise) {
       table.integer('party_size').nullable();
       table.string('first_name', 100).nullable();
       table.string('phone_number', 100).nullable();
+      table.boolean('first_alert').notNullable().defaultTo(false);
+      table.boolean('final_alert').notNullable().defaultTo(false);
       table.decimal('lat', 9, 6).nullable();
       table.decimal('lng', 9, 6).nullable();
     }),
