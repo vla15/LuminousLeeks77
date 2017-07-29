@@ -6,15 +6,13 @@
         <a class="navbar-brand" href="/">Q</a>
         <p class="navbar-text navbar-right">
           <% if (user.phone) { %> <a href="/">See Queues</a> <% } %>
-          <a href="/logout"> Logout </a>
+          <!-- <a href="/logout"> Logout </a> -->
         </p>
       </ul>
     </div>
   </nav>
 
 <div class="container">
-<div class="row">
-  <div class="col-xs-12">
 
     <% if (user.email && !user.phone) { %>
         <h1> Welcome to Queue. </h1>
@@ -52,13 +50,10 @@
           <form action="/phone" method="post" class="form-inline">
             <div class="form-group">
               <div class="input-group">
-                <div class="input-group-addon">
-                  +1
-                </div>
                 <input type="text" class="form-control" id="phone" name="phone" value="<%= user.phone %>" placeholder="Phone number">
                 <div class="input-group-addon">
                   <button type="submit" class="btn-enter-update">
-                    Update
+                    Update Number
                   </button>
                 </div>
               </div>
@@ -66,8 +61,20 @@
           </form>
         </div>
       </div>
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="button" class="btn btn-default btn-block">
+                <a href="/logout">
+                  Logout
+                </a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
       <% } %>
-  </div>
 </div>
 
 <% include foot.ejs%>
