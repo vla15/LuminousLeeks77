@@ -89,9 +89,11 @@ module.exports.enqueue = (req, res, next) => {
           if (!result.get('is_open')) {
             throw result;
           } else {
+            res.nextWaitTimeExpired = moment().diff(moment(result.get('next_wait_time'))) >= 0 ? true : false;
+            res.withinTen = moment(res.nextWaitTime).diff(moment(), 'minutes') > 10 ? moment(res.nextWaitTime) : moment().add(10, 'm');
             return models.Party.forge({
               queue_id: req.params.queueid,
-              wait_time: moment(result.get('next_wait_time')).add(10, 'm'),
+              wait_time: res.nextWaitTimeExpired ? moment().add(10, 'm') : res.withinTen,
               profile_id: req.params.userid,
               party_size: req.params.partysize,
               first_name: user.get('first'),
@@ -109,7 +111,10 @@ module.exports.enqueue = (req, res, next) => {
         })
         .then(count => {
           return models.Queue.where({id: req.params.queueid})
-            .save({queue_size: count, next_wait_time: moment(res.nextWaitTime).add(10, 'm')}, {patch: true});
+            .save({queue_size: count, 
+              next_wait_time: 
+              res.nextWaitTimeExpired ? moment().add(20, 'm') : moment(res.nextWaitTime).add(10, 'm')
+            }, {patch: true});
         })
         .then(success => {
           SocketIO.sendSocketDataForParties(req.params.queueid);
@@ -132,8 +137,9 @@ module.exports.dequeue = (req, res, next) => {
   // if ( req.isAuthenticated()) {
   models.Party.where({id: req.params.partyid})
     .fetch()
-    .then(result =>{
+    .then(result => {
       res.profile_id = result.get('profile_id');
+      res.targetWaitTime = result.get('wait_time');
       SocketIO.sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
     });
   return models.Party.where({ id: req.params.partyid})
@@ -147,12 +153,14 @@ module.exports.dequeue = (req, res, next) => {
     })
     .then(count => {
       res.partyLength = count.length || 0;
-      if (count) {
+      if (res.partyLength) {
         count.forEach((party, index) => {
-          console.log(party.get('wait_time'));
           models.Party.where({id: party.get('id')})
             .save({wait_time: 
-            moment().add((index + 1) * 10, 'm') < party.get('wait_time') ? moment().add((index + 1) * 10, 'm') : party.get('wait_time')}, 
+              moment(res.targetWaitTime).diff(moment(party.get('wait_time'), 'm')) < 0 ? moment(party.get('wait_time')).subtract(10, 'm')
+                : party.get('wait_time')},
+              // moment(party.get('wait_time')).diff(moment(res.targetWaitTime)) < 0 ? party.get('wait_time') 
+              // : moment(party.get('wait_time')).subtract(10, 'm')},
             {patch: true});
         });
       }

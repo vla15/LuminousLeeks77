@@ -13,9 +13,8 @@ export const QueueStats = props => {
         <h6>Next Wait Time</h6>
         <h1>
           {
-            moment(moment.utc(props.redux.store.queue.next_wait_time) - moment())._i < 0 ? 0
-              : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
-                : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') } min(s)
+            moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
+              : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') } min(s)
         </h1>
       </Col>
     </Row>
