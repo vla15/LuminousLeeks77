@@ -9,6 +9,10 @@ import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
 export const QueueOpen = props => {
   return (
     <Grid>
+
+      
+
+
       <QueueStats redux={props.redux}/>
       <QueueList redux={props.redux} />
       <EnqueueFormHost redux={props.redux} />
@@ -27,5 +31,8 @@ export const QueueOpen = props => {
     </Grid>
   );
 };
+
+
+
 
 
