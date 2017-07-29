@@ -19,16 +19,17 @@ const mapStateToProps = state => { return { store: state }; };
 const mapDispatchToProps = dispatch => {
   return {
     dispatch: {
-      enqueueCustomer: (uid, qid, ps, fn, pn) => { dispatch(partyActions.enqueueCustomer(uid, qid, ps, fn, pn)); },
+      enqueueCustomer: (uid, qid, ps, fn, pn, lat, lng) => { dispatch(partyActions.enqueueCustomer(uid, qid, ps, fn, pn, lat, lng)); },
       dequeueCustomer: (queue_id, party_id) => { dispatch(partyActions.dequeueCustomer(queue_id, party_id)); },
       getPartyInfo: (queue_id, user_id) => { dispatch(partyActions.getPartyInfo(queue_id, user_id)); },
       updatePhoneNumber: phoneNumber => { dispatch(partyActions.updatePhoneNumber(phoneNumber)); },
       updatePartySize: partySize => { dispatch(partyActions.updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(partyActions.updateFirstName(firstName)); },
-      updatePartyLocation: (lat, lng) => { dispatch(partyActions.updatePartyLocation(lat, lng)); },
-      putPartyLocation: (party_id, lat, lng) => { dispatch(partyActions.putPartyLocation(party_id, lat, lng)); },
+      setPartyLocation: () => { dispatch(partyActions.setPartyLocation()); },
 
-      enqueueHost: (uid, qid, ps, fn, pn) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn)); },
+      updatePartyLocation: (party_id, lat, lng) => { dispatch(partyActions.updatePartyLocation(party_id, lat, lng)); },
+
+      enqueueHost: (uid, qid, ps, fn, pn, lat, lng) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn, lat, lng)); },
       dequeueHost: (queue_id, party_id) => { dispatch(queueActions.dequeueHost(queue_id, party_id)); },
       getQueueInfoCustomer: queue_id => { dispatch(queueActions.getQueueInfoCustomer(queue_id)); },
       getQueueInfoHost: queue_id => { dispatch(queueActions.getQueueInfoHost(queue_id)); },
@@ -36,6 +37,7 @@ const mapDispatchToProps = dispatch => {
 
       sendUserId: (userId) => { dispatch(userActions.sendUserId(userId)); },
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
+      goToProfile: () => { dispatch(userActions.goToProfile()); },
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
     }

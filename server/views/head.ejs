@@ -1,22 +1,101 @@
 <!doctype html>
 <html>
 <head>
-    <title>Node Authentication</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:500" rel="stylesheet"> <!-- load google font -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        body        { padding-top: 60px; }
-        *           { font-family: 'Rubik', sans-serif !important; }
-        .fa         { font-family: 'FontAwesome' !important }
-        .row        { margin-top: 20px; margin-bottom: 20px; }
-        .btn        { padding: 10px; }
-        .center     { text-align: center; }
-        .number     { font-size: 30px; }
-        .navbar     { padding-left: 15px; padding-right: 15px; }
-        select, input      { margin-top: -10px; padding-left: 0px !important; display: inline-block;}
-    </style>
+  <title>Node Authentication</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Rubik:500" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <style>
+
+      body {
+        padding-top: 60px;
+      }
+
+      * {
+        font-family: 'Rubik', sans-serif !important;
+      }
+
+      .fa {
+        font-family: 'FontAwesome' !important
+      }
+
+      .row {
+        margin-top: 20px; margin-bottom: 20px;
+      }
+
+      .btn {
+         padding: 10px;
+       }
+
+      .center {
+         text-align: center;
+       }
+
+      .number {
+         font-size: 30px;
+       }
+
+      .navbar {
+         padding-left: 15px; padding-right: 15px;
+       }
+
+      /*select, input      {
+       margin-top: -10px; padding-left: 0px !important; display: inline-block;
+     }
+       */
+      .map {
+        position: fixed !important;
+        padding-bottom: 60px !important;
+        padding-top: 6px !important;
+        margin-left: -15px !important;
+      }
+
+      .navbar-right {
+         float: right;
+         padding-right: 15px;
+       }
+
+      a {
+         color: black;
+         border: none;
+       }
+
+      .img-circle {
+         display: inline-block;
+       }
+
+      .user-info {
+         padding-left: 10px; display: inline-block; vertical-align: middle;
+       }
+
+      .user-info-email {
+         color: darkgray
+       }
+
+      .phone-input {
+         width: 160px;
+       }
+
+       .input-group {
+         width: 98%;
+       }
+
+       .input-group * {
+         border: none;
+         border-bottom: 1px solid darkgray;
+         border-radius: 0px;
+         box-shadow: none;
+         background-color: white;
+       }
+
+       .btn-enter-update {
+         border: none;
+         color: black;
+         padding-right: 8px;
+        }
+
+  </style>
 </head>
 <body>
 <div class="container">
