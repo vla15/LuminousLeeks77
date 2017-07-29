@@ -1,33 +1,69 @@
 <% include head.ejs%>
 
-    <div class="col-sm-6 col-sm-offset-3">
+<% if (message.length) { %>
+  <div class="alert alert-danger">
+    <%= message %>
+  </div>
+<% } %>
 
-        <h1><span class="fa fa-sign-in"></span> Login</h1>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <a class="navbar-brand" href="/">Qh</a>
+    </ul>
+  </div>
+</nav>
 
-        <% if (message.length) { %>
-        <div class="alert alert-danger"><%= message %></div>
-        <% } %>
-
-        <!-- LOGIN FORM -->
-        <form action="/host/login" method="post">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" name="email">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
-
-            <button type="submit" class="btn btn-warning btn-lg">Login</button>
-        </form>
-
-        <hr>
-       
-
-        <p>Need to sign up for an account? <a href="/signup">Signup</a></p>
-        
-
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>Welcome to Queue Host</h1>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <h4>Log in to manage your Queue.</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <form action="/host/login" method="post" class="form-inline">
+
+        <div class="form-group login">
+          <div class="input-group">
+            <input type="text" class="form-control email" name="email" placeholder="Email address">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <input type="password" class="form-control password" name="password" placeholder="Password">
+          </div>
+        </div>
+
+
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+          <div class="container">
+            <div class="row">
+              <div class="col-xs-12">
+                <button type="submit" class="btn btn-default btn-block">
+                  Log in
+                </button>
+                <br>
+                <a href="/signup">
+                  <button type="button" class="btn btn-default btn-block">
+                      Sign up
+                  </button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <% include foot.ejs%>
