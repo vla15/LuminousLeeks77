@@ -7,3 +7,5 @@ viewActions.setViewHost = viewOption => {
     payload: viewOption
   };  
 };
+
+module.exports = viewActions;

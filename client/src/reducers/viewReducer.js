@@ -7,3 +7,5 @@ const viewReducer = (state = initial, action) => {
   }
   return state;
 };
+
+export default viewReducer;

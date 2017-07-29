@@ -16,7 +16,7 @@ export const QueueOpen = props => {
             block={true}
             id='viewMap'
             value='Map'
-            // onClick={() => { props.redux.dispatch.setViewHost(document.getElementById('viewMap').value); }}
+            onClick={() => { props.redux.dispatch.setViewHost('Map'); }}
           >
             Map
           </Button>
@@ -27,7 +27,7 @@ export const QueueOpen = props => {
             block={true}
             id='viewQueueInfo'
             value='Queue Info'
-            // onClick={() => { props.redux.dispatch.setViewHost(document.getElementById('viewQueueInfo').value); }}
+            onClick={() => { props.redux.dispatch.setViewHost(document.getElementById('viewQueueInfo').value); }}
           >
             Queue Info
           </Button>
