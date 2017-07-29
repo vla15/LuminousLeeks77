@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import partyActions from '../actions/partyActions.js';
 import queueActions from '../actions/queueActions.js';
 import userActions from '../actions/userActions.js';
+import viewActions from '../actions/viewActions.js';
 
 import testSocketActions from '../actions/testSocketActions.js';
 
@@ -37,6 +38,9 @@ const mapDispatchToProps = dispatch => {
 
       sendUserId: (userId) => { dispatch(userActions.sendUserId(userId)); },
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
+      
+      setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
+
       goToProfile: () => { dispatch(userActions.goToProfile()); },
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
