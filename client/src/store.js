@@ -6,6 +6,7 @@ import userReducer from './reducers/userReducer.js';
 import queueReducer from './reducers/queueReducer.js';
 import partyReducer from './reducers/partyReducer.js';
 import testSocketReducer from './reducers/testSocketReducer.js';
+import viewReducer from './reducers/viewReducer.js';
 
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
@@ -18,7 +19,8 @@ let store = createStore(
     user: userReducer,
     queue: queueReducer,
     party: partyReducer,
-    socket: testSocketReducer
+    socket: testSocketReducer,
+    view: viewReducer
   }),
   applyMiddleware(logger, thunk, socketIoMiddleware)
 );
