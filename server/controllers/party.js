@@ -83,14 +83,15 @@ module.exports.enqueue = (req, res, next) => {
     })
     .catch(user => {
       return models.Queue.where({id: req.params.queueid})
-        .fetch({columns: ['next_wait_time', 'is_open']})
+        .fetch({columns: ['next_wait_time', 'is_open', 'queue_size']})
         .then(result => {
+          res.nextWaitTime = result.get('next_wait_time');
           if (!result.get('is_open')) {
             throw result;
           } else {
             return models.Party.forge({
               queue_id: req.params.queueid,
-              wait_time: moment().add(result.get('next_wait_time'), 'm'),
+              wait_time: moment(result.get('next_wait_time')).add(10, 'm'),
               profile_id: req.params.userid,
               party_size: req.params.partysize,
               first_name: user.get('first'),
@@ -108,7 +109,7 @@ module.exports.enqueue = (req, res, next) => {
         })
         .then(count => {
           return models.Queue.where({id: req.params.queueid})
-            .save({queue_size: count, next_wait_time: Math.max((Number(count) + 1) * 10, 10)}, {patch: true});
+            .save({queue_size: count, next_wait_time: moment(res.nextWaitTime).add(10, 'm')}, {patch: true});
         })
         .then(success => {
           SocketIO.sendSocketDataForParties(req.params.queueid);
@@ -145,7 +146,7 @@ module.exports.dequeue = (req, res, next) => {
         .fetchAll();
     })
     .then(count => {
-      var partyLength = count.length || 0;
+      res.partyLength = count.length || 0;
       if (count) {
         count.forEach((party, index) => {
           console.log(party.get('wait_time'));
@@ -156,7 +157,12 @@ module.exports.dequeue = (req, res, next) => {
         });
       }
       return models.Queue.where({id: req.params.queueid})
-        .save({queue_size: partyLength, next_wait_time: Math.max((partyLength + 1) * 10, 10)}, {patch: true});
+        .fetch()
+        .then((q) => {
+          res.nextWaitTime = q.get('next_wait_time');
+          models.Queue.where({id: req.params.queueid})
+            .save({queue_size: res.partyLength, next_wait_time: moment(res.nextWaitTime).subtract(10, 'm')}, {patch: true});
+        });
     })
     .then(complete => {
       SocketIO.sendSocketDataForParties(req.params.queueid);

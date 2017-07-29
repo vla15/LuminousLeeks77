@@ -24,7 +24,7 @@ exports.up = function (knex, Promise) {
       table.integer('queue_size').nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
       table.integer('organization_id').nullable();
-      table.integer('next_wait_time').nullable();
+      table.dateTime('next_wait_time').nullable();
       table.boolean('is_open').nullable();
       table.decimal('lat', 9, 6).nullable();
       table.decimal('lng', 9, 6).nullable();
