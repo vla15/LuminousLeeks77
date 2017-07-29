@@ -10,30 +10,7 @@ export const QueueOpen = props => {
   return (
     <Grid>
 
-      <Row>
-        <Col xs={2} xsOffset={9}>
-          <Button
-            block={true}
-            id='viewMap'
-            value='Map'
-            onClick={() => { props.redux.dispatch.setViewHost('Map'); }}
-          >
-            Map
-          </Button>
-        </Col>
-
-        <Col xs={2} xsOffset={9}>
-          <Button
-            block={true}
-            id='viewQueueInfo'
-            value='Queue Info'
-            onClick={() => { props.redux.dispatch.setViewHost(document.getElementById('viewQueueInfo').value); }}
-          >
-            Queue Info
-          </Button>
-        </Col>
-
-      </Row>
+      
 
 
       <QueueStats redux={props.redux}/>
