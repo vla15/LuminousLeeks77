@@ -18,5 +18,6 @@ actionTypes.CLEAR_PARTY = 'CLEAR_PARTY';
 actionTypes.SET_USER_LOCATION = 'SET_USER_LOCATION';
 actionTypes.UPDATE_PARTY_LOCATION = 'UPDATE_PARTY_LOCATION';
 actionTypes.PUT_PARTY_LOCATION = 'PUT_PARTY_LOCATION';
+actionTypes.SET_VIEW_HOST = 'SET_VIEW_HOST';
 
 module.exports = actionTypes;
