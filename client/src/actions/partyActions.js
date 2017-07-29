@@ -22,13 +22,17 @@ partyActions.dequeueCustomer = (queue_id, party_id) => {
           type: actionTypes.DEQUEUE_CUSTOMER,
           payload: result.data
         });
+        dispatch({
+          type: actionTypes.CLEAR_PARTY,
+          payload: result.data
+        });
       });
   };
 };
 
-partyActions.enqueueCustomer = (user_id, queue_id, party_size, first_name, phone_number) => {
+partyActions.enqueueCustomer = (user_id, queue_id, party_size, first_name, phone_number, lat, lng) => {
   return dispatch => {
-    axios.put(`/api/partyInfo/add/${queue_id}/${user_id}/${party_size}/${first_name}/${phone_number}`)
+    axios.put(`/api/partyInfo/add/${queue_id}/${user_id}/${party_size}/${first_name}/${phone_number}/${lat}/${lng}`)
       .then(result => {
         dispatch({
           type: actionTypes.ENQUEUE_CUSTOMER,
@@ -62,19 +66,23 @@ partyActions.updatePhoneNumber = phoneNumber => {
   };
 };
 
-partyActions.updatePartyLocation = (lat, lng) => {
-  return {
-    type: actionTypes.UPDATE_PARTY_LOCATION,
-    payload: { lat: lat, lng: lng }
+partyActions.setPartyLocation = () => {
+  return dispatch => {
+    navigator.geolocation.getCurrentPosition(position => {
+      dispatch({
+        type: actionTypes.SET_PARTY_LOCATION,
+        payload: position
+      });
+    });
   };
 };
 
-partyActions.putPartyLocation = (party_id, lat, lng) => {
+partyActions.updatePartyLocation = (party_id, lat, lng) => {
   return dispatch => {
-    axios.put(`/api/partyInfo/putPartyLocation/${party_id}/${lat}/${lng}`)
+    axios.put(`/api/partyInfo/updatePartyLocation/${party_id}/${lat}/${lng}`)
       .then(result => {
         dispatch({
-          type: actionTypes.PUT_PARTY_LOCATION,
+          type: actionTypes.UPDATE_PARTY_LOCATION,
           payload: { lat: lat, lng: lng }
         });
       });

@@ -16,25 +16,15 @@ router.route('/:queueid/:userid')
 //  NonQueued Customer: QueueInfoCustomer
 // --------------------------------------------------------
 
-router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber')
+router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber/:lat/:lng')
   .put(PartyController.enqueue,
-    PartyController.sendSocketDataForParties,
-    PartyController.sendQueueInfoToHostWithSocket,
     PartyController.getPartyInfoCustomer);
-//.put(PartyController.enqueue, PartyController.getPartyInfoCustomer);
 
-// router.route('/rm/:queueid/:partyid')
-//   .delete(PartyController.dequeue, QueueController.getPartyInfoOfQueue);
 router.route('/rm/:queueid/:partyid')
   .delete(PartyController.dequeue,
-    PartyController.sendQueueInfoToHostWithSocket,
-    QueueController.getPartyInfoOfQueue,
-    QueueController.updatePartiesOnDequeue);
+    QueueController.getPartyInfoOfQueue);
 
-router.route('/putPartyLocation/:partyid/:lat/:lng')
-  .put(PartyController.putPartyLocation);
-
-// router.route('/rm/host/:queueid/:partyid')
-//   .delete()
+router.route('/updatePartyLocation/:partyid/:lat/:lng')
+  .put(PartyController.updatePartyLocation);
 
 module.exports = router;

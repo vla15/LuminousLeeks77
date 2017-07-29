@@ -29,7 +29,7 @@ export const EnqueueFormHost = props => {
             id="partySize"
             name="partySize"
             value={props.redux.store.party.party_size}
-            onChange={() => { 
+            onChange={() => {
               props.redux.dispatch.updatePartySize(document.getElementById('partySize').value);
             }}
           >
@@ -69,7 +69,9 @@ export const EnqueueFormHost = props => {
                 1,
                 props.redux.store.party.party_size,
                 props.redux.store.party.first_name,
-                props.redux.store.party.phone_number
+                props.redux.store.party.phone_number,
+                props.redux.store.party.location.lat,
+                props.redux.store.party.location.lng
               );
             }}
           />
