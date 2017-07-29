@@ -12,18 +12,40 @@
     </div>
   </nav>
 
-<div class="container">
-
     <% if (user.email && !user.phone) { %>
-        <h1> Welcome to Queue. </h1>
-        <h3> Please enter your number to get started. </h3>
-        <form action="/phone" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" name="phone">
-            </div>
-            <button type="submit" class="btn btn-warning btn-lg">Enter</button>
-        </form>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1> Welcome to Queue. </h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h4> What's your number?</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <form action="/phone" method="post" class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="phone" name="phone" value="<%= user.phone %>" placeholder="Phone number">
+                  <div class="input-group-addon">
+                    <button type="submit" class="btn-enter-update">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
     <% } else { %>
+      <div class="container">
       <div class="row">
         <div class="col-xs-12">
           <h1> Your account </h1>
@@ -61,20 +83,20 @@
           </form>
         </div>
       </div>
+    </div>
+      <% } %>
       <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <button type="button" class="btn btn-default btn-block">
-                <a href="/logout">
-                  Logout
-                </a>
-              </button>
+              <a href="/logout">
+                <button type="button" class="btn btn-default btn-block">
+                    Logout
+                </button>
+              </a>
             </div>
           </div>
         </div>
       </nav>
-      <% } %>
-</div>
 
 <% include foot.ejs%>
