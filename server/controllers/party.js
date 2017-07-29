@@ -94,7 +94,10 @@ module.exports.enqueue = (req, res, next) => {
               profile_id: req.params.userid,
               party_size: req.params.partysize,
               first_name: user.get('first'),
-              phone_number: user.get('phone')
+              phone_number: user.get('phone'),
+              lat: req.params.lat,
+              lng: req.params.lng
+
             }).save()
               .then(result => { res.party_id = result.get('id'); })
               .error(err => {
