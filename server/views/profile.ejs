@@ -1,47 +1,102 @@
 <% include head.ejs%>
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-rocket"></span> Profile Page</h1>
-        <% if (user.phone) { %>
-        <a href="/" class="btn btn-default btn-sm">Home page</a>
-        <% } %>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <a class="navbar-brand" href="/">Q</a>
+        <p class="navbar-text navbar-right">
+          <% if (user.phone) { %> <a href="/">See Queue</a> <% } %>
+          <!-- <a href="/logout"> Logout </a> -->
+        </p>
+      </ul>
     </div>
+  </nav>
 
-    <div class="row">
-
-        <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                <% if (user.email && user.phone) { %>
-                <p>
-                    <strong>display name</strong>: <%= user.display %><br>
-                    <strong>id</strong>: <%= user.id %><br>
-                    <strong>email</strong>: <%= user.email %><br>
-                    <strong>phone</strong>:
-                    <form action="/phone" method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="phone" value="<%= user.phone %>">
-                        </div>
-                        <button type="submit" class="btn btn-warning btn-lg">Update</button>
-                    </form>
-                </p>
-                <% } else { %>
-                    <strong>display name</strong>: <%= user.display %><br>
-                    <strong>id</strong>: <%= user.id %><br>
-                    <strong>email</strong>: <%= user.email %><br>
-                    <strong>You must provide a phone number <br>
-                    <form action="/phone" method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="phone">
-                        </div>
-                        <button type="submit" class="btn btn-warning btn-lg">Enter</button>
-                    </form>
-                <% } %>
-
-            </div>
+    <% if (user.email && !user.phone) { %>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h1> Welcome to Queue. </h1>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h4> What's your number?</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <form action="/phone" method="post" class="form-inline">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="phone" name="phone" value="<%= user.phone %>" placeholder="Phone number">
+                  <div class="input-group-addon">
+                    <button type="submit" class="btn-enter-update">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    <% } else { %>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1> Your account </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <img
+            class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+            alt="Generic placeholder image"
+            width="60" height="60">
+          <div class="user-info">
+            <div class="user-info-name">
+              <%= user.display %>
+            </div>
+            <div class="user-info-email">
+              <%= user.email %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form action="/phone" method="post" class="form-inline">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" id="phone" name="phone" value="<%= user.phone %>" placeholder="Phone number">
+                <div class="input-group-addon">
+                  <button type="submit" class="btn-enter-update">
+                    Update Number
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+      <% } %>
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <a href="/logout">
+                <button type="button" class="btn btn-default btn-block">
+                    Logout
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
 <% include foot.ejs%>

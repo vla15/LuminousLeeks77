@@ -3,7 +3,7 @@ const moment = require('moment');
 const Queue = require('./queues');
 const SocketIO = require('../sockets/socketIO');
 
-module.exports.putPartyLocation = (req, res) => {
+module.exports.updatePartyLocation = (req, res) => {
   models.Party.where({ id: req.params.partyid })
     .save({lat: req.params.lat, lng: req.params.lng}, {patch: true})
     .then(data => {

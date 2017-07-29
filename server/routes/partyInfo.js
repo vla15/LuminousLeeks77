@@ -17,14 +17,14 @@ router.route('/:queueid/:userid')
 // --------------------------------------------------------
 
 router.route('/add/:queueid/:userid/:partysize/:firstname/:phonenumber/:lat/:lng')
-  .put(PartyController.enqueue, 
+  .put(PartyController.enqueue,
     PartyController.getPartyInfoCustomer);
 
 router.route('/rm/:queueid/:partyid')
-  .delete(PartyController.dequeue, 
+  .delete(PartyController.dequeue,
     QueueController.getPartyInfoOfQueue);
 
-router.route('/putPartyLocation/:partyid/:lat/:lng')
-  .put(PartyController.putPartyLocation);
+router.route('/updatePartyLocation/:partyid/:lat/:lng')
+  .put(PartyController.updatePartyLocation);
 
 module.exports = router;

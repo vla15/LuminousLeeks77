@@ -42,7 +42,9 @@ export const EnqueueFormCustomer = props => {
                 1,
                 props.redux.store.party.party_size,
                 props.redux.store.user.first_name,
-                props.redux.store.user.phone_number
+                props.redux.store.user.phone_number,
+                props.redux.store.party.location.lat,
+                props.redux.store.party.location.lng
               );
             }}
           >
