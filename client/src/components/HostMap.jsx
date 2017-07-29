@@ -15,22 +15,11 @@ export class HostMap extends React.Component {
 
   loadMap() {
     if (this.props && this.props.google) {
-      //google is available
       const {google} = this.props;
       const maps = google.maps;
       const mapRef = this.refs.map;
       const node = ReactDOM.findDOMNode(mapRef);
-      // let zoom = 14;
-      // let lat = 37.774929;
-      // let lng = -122.419416;
-      // const center = new maps.LatLng(lat, lng);
-      // const mapConfig = Object.assign({}, {
-      //   center: center,
-      //   zoom: zoom
-      // });
-      // this.map = new maps.Map(node, mapConfig);
     }
-    // ...
   }
   mapReady(mapProps, map) {
     const {google} = mapProps;
@@ -39,24 +28,6 @@ export class HostMap extends React.Component {
     window.google = google;
     // this.props.updateCenter(this.props.currentCenter);
   }
-
-  onMarkerClick(props, marker, e) {
-    let context = this;
-    context.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-  }
-  onMapClicked (props) {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  }
-
   render() {
 
     let triangleCoords = [
@@ -96,7 +67,6 @@ export class HostMap extends React.Component {
                 title={party.first_name}
                 name={party.first_name}
                 icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
-                onMarkerClick={this.onMarkerClick.bind(this)}
                 position={{lat: party.lat, lng: party.lng}}
               />;
             }) }

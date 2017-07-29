@@ -9,13 +9,8 @@ export class CustomerMap extends React.Component {
   constructor(props) { 
     super(props);
     this.state = {
-      showingInfoWindow: false,
-      activeMarker: {},
-      selectedPlace: {}, 
     };
     this.loadMap = this.loadMap.bind(this);
-    this.onMarkerClick = this.onMarkerClick.bind(this);
-    this.onMapClicked = this.onMapClicked.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -25,7 +20,6 @@ export class CustomerMap extends React.Component {
   }
   loadMap() {
     if (this.props && this.props.google) {
-      //google is available
       const {google} = this.props;
       const maps = google.maps;
       const mapRef = this.refs.map;
@@ -38,22 +32,6 @@ export class CustomerMap extends React.Component {
     window.map = map;
     window.google = google;
     // this.props.updateCenter(this.props.currentCenter);
-  }
-
-  onMarkerClick(props, marker, e) {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-  }
-  onMapClicked (props) {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
   }
 
   render() {
@@ -76,7 +54,6 @@ export class CustomerMap extends React.Component {
             disableDefaultUI={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            onClick={this.onMapClicked}
           >
             <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
 
@@ -84,16 +61,7 @@ export class CustomerMap extends React.Component {
               title={'Party'}
               name={'Party'}
               icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
-              onMarkerClick={this.onMarkerClick.bind(this)}
             />
-            
-            <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}
-            >
-              <div>
-              </div>
-            </InfoWindow>
 
           </Map>
         </div>
