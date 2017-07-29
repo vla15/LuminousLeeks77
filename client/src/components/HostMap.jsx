@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import mapStyles from '../styles/mapStyles.js';
 
 export class HostMap extends React.Component {
 
@@ -21,6 +22,7 @@ export class HostMap extends React.Component {
       const node = ReactDOM.findDOMNode(mapRef);
     }
   }
+
   mapReady(mapProps, map) {
     const {google} = mapProps;
     const service = new google.maps.places.PlacesService(map);
@@ -28,28 +30,13 @@ export class HostMap extends React.Component {
     window.google = google;
     // this.props.updateCenter(this.props.currentCenter);
   }
+
   render() {
-
-    let triangleCoords = [
-      {lat: 25.774, lng: -80.190},
-      {lat: 18.466, lng: -66.118},
-      {lat: 32.321, lng: -64.757},
-      {lat: 25.774, lng: -80.190}
-    ];
-    const style = {
-      width: '100vw',
-      height: '100vh'
-    };
-
     if (!this.props.loaded) {
-      return (
-        <div>
-          Loading Queue App Map ...
-        </div>
-      );
+      return ( <div> Loading Queue App Map... </div> );
     } else {
       return (
-        <div style={style}>
+        <div>
           <Map
             google={this.props.google}
             zoom={13}
@@ -57,9 +44,19 @@ export class HostMap extends React.Component {
             centerAroundCurrentLocation={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
+            style={{ position: "fixed !important", height: "100%" }}
+            styles={this.props.mapStyles}
+            scrollwheel={false}
+            navigationControl={false}
+            mapTypeControl={false}
+            scaleControl={false}
+            zoomControl={false}
+            scaleControl={false}
+            disableDoubleClickZoom={true}
+            className="map"
           >
 
-            <Marker name={'Queue'} position={{lat: 37.759703, lng: -122.428093}} />
+            <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
 
             { this.props.redux.store.queue.parties.map(party => {
               return <Marker
@@ -77,29 +74,9 @@ export class HostMap extends React.Component {
   }
 }
 
+HostMap.defaultProps = { mapStyles: mapStyles };
+
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw',
   version: '3.27'
 })(HostMap);
-
-
-
-/*
-{props.redux.queues.map((marker,i) => (
-  <Marker
-    key={i}
-    position={marker.location}
-    time={marker.time}
-    onClick={() => props.onMarkerClick(marker)}
-  >
-}
-
-*/
-
-
-
-
-
-
-//extra apiKey just in case:
-//AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo

@@ -38,7 +38,7 @@ const mapDispatchToProps = dispatch => {
 
       sendUserId: (userId) => { dispatch(userActions.sendUserId(userId)); },
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
-      
+
       setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
 
       goToProfile: () => { dispatch(userActions.goToProfile()); },
@@ -52,7 +52,6 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header redux={this.props} />
         { this.props.store.user === null
           ? <Loading />
           : this.props.store.user.admin

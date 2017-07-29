@@ -1,5 +1,6 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { ViewToggle } from '../components/ViewToggle.jsx';
 
 export const Header = props => {
   return (
@@ -9,10 +10,11 @@ export const Header = props => {
           <a href="#">Q</a>
         </Navbar.Brand>
         <Navbar.Text pullRight={true}>
-          <a href="/profile">            
-            { props.redux.store.user
-              ? props.redux.store.user.first_name
-              : ''}
+          { props.redux.store.user.admin
+          ? <ViewToggle redux={props.redux}/>
+          : <div></div>}
+          <a href="/profile">
+            Profile
           </a>
         </Navbar.Text>
       </Nav>
