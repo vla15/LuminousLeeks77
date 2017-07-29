@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import partyActions from '../actions/partyActions.js';
 import queueActions from '../actions/queueActions.js';
-import userActions  from '../actions/userActions.js';
+import userActions from '../actions/userActions.js';
 
 import testSocketActions from '../actions/testSocketActions.js';
 
