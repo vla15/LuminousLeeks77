@@ -33,12 +33,11 @@ class Customer extends React.Component {
   componentDidMount() {
     this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
     this.props.redux.dispatch.getQueueInfoCustomer(1);
-    navigator.geolocation.getCurrentPosition(position => {
-      this.props.redux.dispatch.updatePartyLocation( position.coords.latitude, position.coords.longitude );
-    });
+    this.props.redux.dispatch.setPartyLocation();
+
     navigator.geolocation.watchPosition(position => {
       if (this.props.redux.store.party.id !== undefined) {
-        this.props.redux.dispatch.putPartyLocation( this.props.redux.store.party.id, position.coords.latitude, position.coords.longitude );
+        this.props.redux.dispatch.updatePartyLocation( this.props.redux.store.party.id, position.coords.latitude, position.coords.longitude );
       }
     });
     setInterval(() => {

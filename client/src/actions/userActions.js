@@ -18,13 +18,4 @@ userActions.setUserInfo = () => {
   };
 };
 
-// userActions.goToProfile = () => {
-//   return dispatch => {
-//     axios.get('/profile')
-//       .then(result => {
-//         return result
-//       })
-//   }
-// }
-
 module.exports = userActions;
