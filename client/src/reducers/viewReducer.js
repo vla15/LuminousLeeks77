@@ -1,4 +1,4 @@
-let initial = { hostViewOption: ''};
+let initial = 'Queue Info';
 
 const viewReducer = (state = initial, action) => {
   switch (action.type) {
