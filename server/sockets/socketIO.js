@@ -66,10 +66,13 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
 };
 
 var sendQueueInfoToHostWithSocket = queueId => {
-  return models.Queue
-    .where({ id: queueId })
+  return models.Queue.where({ id: queueId })
     .fetch({
-      withRelated: ['parties']
+      withRelated: [{
+        'parties': (qb) => {
+          qb.orderBy('wait_time', 'ASC');
+        }
+      }]
     })
     .then(queue => {
       return models.Profile
