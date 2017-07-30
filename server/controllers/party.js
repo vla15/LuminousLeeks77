@@ -141,48 +141,56 @@ module.exports.dequeue = (req, res, next) => {
       res.profile_id = result.get('profile_id');
       res.targetWaitTime = result.get('wait_time');
       SocketIO.sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
-    });
-  return models.Party.where({ id: req.params.partyid})
-    .destroy()
-    .then(result => {
-      return models.Party.where({queue_id: req.params.queueid})
-        .query((qb) => {
-          qb.orderBy('wait_time', 'ASC');
+      return models.PartyHistory.forge({
+        party_size: result.get('party_size'),
+        wait_time: result.get('wait_time'),
+        seat_time: moment()
+      }).save();
+    })
+    .then(() => {
+      return models.Party.where({ id: req.params.partyid})
+      // return models.Party.where({ id: req.params.partyid})
+        .destroy()
+        .then(result => {
+          return models.Party.where({queue_id: req.params.queueid})
+            .query((qb) => {
+              qb.orderBy('wait_time', 'ASC');
+            })
+            .fetchAll();
         })
-        .fetchAll();
-    })
-    .then(count => {
-      res.partyLength = count.length || 0;
-      if (res.partyLength) {
-        count.forEach((party, index) => {
-          models.Party.where({id: party.get('id')})
-            .save({wait_time: 
-              moment(res.targetWaitTime).diff(moment(party.get('wait_time'), 'm')) < 0 ? moment(party.get('wait_time')).subtract(10, 'm')
-                : party.get('wait_time')},
-              // moment(party.get('wait_time')).diff(moment(res.targetWaitTime)) < 0 ? party.get('wait_time') 
-              // : moment(party.get('wait_time')).subtract(10, 'm')},
-            {patch: true});
+        .then(count => {
+          res.partyLength = count.length || 0;
+          if (res.partyLength) {
+            count.forEach((party, index) => {
+              models.Party.where({id: party.get('id')})
+                .save({wait_time: 
+                  moment(res.targetWaitTime).diff(moment(party.get('wait_time'), 'm')) < 0 ? moment(party.get('wait_time')).subtract(10, 'm')
+                    : party.get('wait_time')},
+                  // moment(party.get('wait_time')).diff(moment(res.targetWaitTime)) < 0 ? party.get('wait_time') 
+                  // : moment(party.get('wait_time')).subtract(10, 'm')},
+                {patch: true});
+            });
+          }
+          return models.Queue.where({id: req.params.queueid})
+            .fetch()
+            .then((q) => {
+              res.nextWaitTime = q.get('next_wait_time');
+              models.Queue.where({id: req.params.queueid})
+                .save({queue_size: res.partyLength, next_wait_time: moment(res.nextWaitTime).subtract(10, 'm')}, {patch: true});
+            });
+        })
+        .then(complete => {
+          SocketIO.sendSocketDataForParties(req.params.queueid);
+          SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
+          SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
+          next();
+        })
+        .error(err => {
+          res.status(305).send(err);
+        })
+        .catch(err => {
+          res.status(415).send('error');
         });
-      }
-      return models.Queue.where({id: req.params.queueid})
-        .fetch()
-        .then((q) => {
-          res.nextWaitTime = q.get('next_wait_time');
-          models.Queue.where({id: req.params.queueid})
-            .save({queue_size: res.partyLength, next_wait_time: moment(res.nextWaitTime).subtract(10, 'm')}, {patch: true});
-        });
-    })
-    .then(complete => {
-      SocketIO.sendSocketDataForParties(req.params.queueid);
-      SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
-      SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
-      next();
-    })
-    .error(err => {
-      res.status(305).send(err);
-    })
-    .catch(err => {
-      res.status(415).send('error');
     });
   // } else {
   //   res.send('you aint authenticated on a dequeue');
