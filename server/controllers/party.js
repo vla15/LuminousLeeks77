@@ -7,6 +7,12 @@ module.exports.updatePartyLocation = (req, res) => {
   models.Party.where({ id: req.params.partyid })
     .save({lat: req.params.lat, lng: req.params.lng}, {patch: true})
     .then(data => {
+      models.Party.where({ id: req.params.partyid })
+        .fetch()
+        .then(party => {
+          console.log('party', party.serialize());
+          SocketIO.sendQueueInfoToHostWithSocket(party.get('queue_id'));
+        });
       res.status(200).send('successfully saved party location in database');
       console.log('successfully saved party location in database');
     });
