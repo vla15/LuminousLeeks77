@@ -26,9 +26,9 @@ queueActions.getQueueInfoHost = queue_id => {
   };
 };
 
-queueActions.enqueueHost = (user_id, queue_id, party_size, first_name, phone_number) => {
+queueActions.enqueueHost = (user_id, queue_id, party_size, first_name, phone_number, lat, lng) => {
   return dispatch => {
-    axios.put(`/api/partyInfo/add/${queue_id}/${user_id}/${party_size}/${first_name}/${phone_number}`)
+    axios.put(`/api/partyInfo/add/${queue_id}/${user_id}/${party_size}/${first_name}/${phone_number}/${lat}/${lng}`)
       .then(() => {
         axios.get(`/api/queueInfo/getQueueInfoHost/${queue_id}`)
           .then(result => {

@@ -46,23 +46,23 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
       'profiles.id',
       'parties.profile_id');
   })
-  .fetchAll({
-    columns: ['socket_id']
-  })
-  .then(result => {
-    // res.send(result);
-    result.forEach(party => {
-      if (party.attributes.id === null && party.attributes.socket_id) {
-        models.Queue.where({ id: queueId }).fetch({
-          withRelated: ['parties']
-        })
-          .then(queue => {
-            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-          
-          });
-      }
+    .fetchAll({
+      columns: ['socket_id']
+    })
+    .then(result => {
+      // res.send(result);
+      result.forEach(party => {
+        if (party.attributes.id === null && party.attributes.socket_id) {
+          models.Queue.where({ id: queueId }).fetch({
+            withRelated: ['parties']
+          })
+            .then(queue => {
+              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+
+            });
+        }
+      });
     });
-  });
 };
 
 var sendQueueInfoToHostWithSocket = queueId => {
@@ -104,7 +104,7 @@ var sendSocketDequeueForCustomer = (userId, queueId) => {
     .then(queue => {
       queue.set('queue_size', queue.get('queue_size') - 1);
       //needs 2 actions: update_queue_info
-      emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '' });
+      emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '', location: { lat: 37.7836676, lng: -122.4090455 } });
       emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
     });
 };
@@ -130,11 +130,11 @@ var updatePartiesOnToggleQueue = queueId => {
           })
             .then(queue => {
               emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-            
+
             });
         }
       });
-      
+
     })
     .error(err => {
       console.log(err);

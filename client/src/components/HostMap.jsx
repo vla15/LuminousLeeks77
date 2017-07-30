@@ -15,22 +15,11 @@ export class HostMap extends React.Component {
 
   loadMap() {
     if (this.props && this.props.google) {
-      //google is available
       const {google} = this.props;
       const maps = google.maps;
       const mapRef = this.refs.map;
       const node = ReactDOM.findDOMNode(mapRef);
-      // let zoom = 14;
-      // let lat = 37.774929;
-      // let lng = -122.419416;
-      // const center = new maps.LatLng(lat, lng);
-      // const mapConfig = Object.assign({}, {
-      //   center: center,
-      //   zoom: zoom
-      // });
-      // this.map = new maps.Map(node, mapConfig);
     }
-    // ...
   }
   mapReady(mapProps, map) {
     const {google} = mapProps;
@@ -39,10 +28,6 @@ export class HostMap extends React.Component {
     window.google = google;
     // this.props.updateCenter(this.props.currentCenter);
   }
-
-  onMarkerClick(props, marker, e) {
-  }
-
   render() {
 
     let triangleCoords = [
@@ -68,6 +53,7 @@ export class HostMap extends React.Component {
           <Map
             google={this.props.google}
             zoom={13}
+            disableDefaultUI={true}
             centerAroundCurrentLocation={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
@@ -81,7 +67,6 @@ export class HostMap extends React.Component {
                 title={party.first_name}
                 name={party.first_name}
                 icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
-                onMarkerClick={this.onMarkerClick.bind(this)}
                 position={{lat: party.lat, lng: party.lng}}
               />;
             }) }
@@ -96,6 +81,25 @@ export default GoogleApiWrapper({
   apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw',
   version: '3.27'
 })(HostMap);
+
+
+
+/*
+{props.redux.queues.map((marker,i) => (
+  <Marker
+    key={i}
+    position={marker.location}
+    time={marker.time}
+    onClick={() => props.onMarkerClick(marker)}
+  >
+}
+
+*/
+
+
+
+
+
 
 //extra apiKey just in case:
 //AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo

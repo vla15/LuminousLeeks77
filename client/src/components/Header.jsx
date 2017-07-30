@@ -8,7 +8,12 @@ export const Header = props => {
         <Navbar.Brand>
           <a href="#">Q</a>
         </Navbar.Brand>
-        <Navbar.Text pullRight>
+        <Navbar.Text pullRight={true}>
+          <a href="/profile">            
+            { props.redux.store.user
+              ? props.redux.store.user.first_name
+              : ''}
+          </a>
         </Navbar.Text>
       </Nav>
     </Navbar>
