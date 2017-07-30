@@ -11,11 +11,11 @@ export class CustomerMap extends React.Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {}, 
-    }
+    };
     this.loadMap = this.loadMap.bind(this);
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onMapClicked = this.onMapClicked.bind(this);
- }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -51,7 +51,7 @@ export class CustomerMap extends React.Component {
   }
 
   onMarkerClick(props, marker, e) {
-    console.log('Marker Clickedd')
+    console.log('Marker Clickedd');
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
