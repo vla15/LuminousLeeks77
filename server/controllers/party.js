@@ -8,11 +8,11 @@ module.exports.updatePartyLocation = (req, res) => {
     .save({lat: req.params.lat, lng: req.params.lng}, {patch: true})
     .then(data => {
       models.Party.where({ id: req.params.partyid })
-      .fetch()
-      .then(party => {
-        console.log('party', party.serialize());
-        SocketIO.sendQueueInfoToHostWithSocket(party.get('queue_id'));
-      });
+        .fetch()
+        .then(party => {
+          console.log('party', party.serialize());
+          SocketIO.sendQueueInfoToHostWithSocket(party.get('queue_id'));
+        });
       res.status(200).send('successfully saved party location in database');
       console.log('successfully saved party location in database');
     });
@@ -89,14 +89,17 @@ module.exports.enqueue = (req, res, next) => {
     })
     .catch(user => {
       return models.Queue.where({id: req.params.queueid})
-        .fetch({columns: ['next_wait_time', 'is_open']})
+        .fetch({columns: ['next_wait_time', 'is_open', 'queue_size']})
         .then(result => {
+          res.nextWaitTime = result.get('next_wait_time');
           if (!result.get('is_open')) {
             throw result;
           } else {
+            res.nextWaitTimeExpired = moment().diff(moment(result.get('next_wait_time'))) >= 0 ? true : false;
+            res.withinTen = moment(res.nextWaitTime).diff(moment(), 'minutes') > 10 ? moment(res.nextWaitTime) : moment().add(10, 'm');
             return models.Party.forge({
               queue_id: req.params.queueid,
-              wait_time: moment().add(result.get('next_wait_time'), 'm'),
+              wait_time: res.nextWaitTimeExpired ? moment().add(10, 'm') : res.withinTen,
               profile_id: req.params.userid,
               party_size: req.params.partysize,
               first_name: user.get('first'),
@@ -117,7 +120,10 @@ module.exports.enqueue = (req, res, next) => {
         })
         .then(count => {
           return models.Queue.where({id: req.params.queueid})
-            .save({queue_size: count, next_wait_time: Math.max((Number(count) + 1) * 10, 10)}, {patch: true});
+            .save({queue_size: count, 
+              next_wait_time: 
+              res.nextWaitTimeExpired ? moment().add(20, 'm') : moment(res.nextWaitTime).add(10, 'm')
+            }, {patch: true});
         })
         .then(success => {
           SocketIO.sendSocketDataForParties(req.params.queueid);
@@ -140,44 +146,60 @@ module.exports.dequeue = (req, res, next) => {
   // if ( req.isAuthenticated()) {
   models.Party.where({id: req.params.partyid})
     .fetch()
-    .then(result =>{
-      res.profile_id = result.get('profile_id');
-      SocketIO.sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
-    });
-  return models.Party.where({ id: req.params.partyid})
-    .destroy()
     .then(result => {
-      return models.Party.where({queue_id: req.params.queueid})
-        .query((qb) => {
-          qb.orderBy('wait_time', 'ASC');
+      res.profile_id = result.get('profile_id');
+      res.targetWaitTime = result.get('wait_time');
+      SocketIO.sendSocketDequeueForCustomer(res.profile_id, req.params.queueid);
+      return models.PartyHistory.forge({
+        party_size: result.get('party_size'),
+        wait_time: result.get('wait_time'),
+        seat_time: moment()
+      }).save();
+    })
+    .then(() => {
+      return models.Party.where({ id: req.params.partyid})
+      // return models.Party.where({ id: req.params.partyid})
+        .destroy()
+        .then(result => {
+          return models.Party.where({queue_id: req.params.queueid})
+            .query((qb) => {
+              qb.orderBy('wait_time', 'ASC');
+            })
+            .fetchAll();
         })
-        .fetchAll();
-    })
-    .then(count => {
-      var partyLength = count.length || 0;
-      if (count) {
-        count.forEach((party, index) => {
-          console.log(party.get('wait_time'));
-          models.Party.where({id: party.get('id')})
-            .save({wait_time: 
-            moment().add((index + 1) * 10, 'm') < party.get('wait_time') ? moment().add((index + 1) * 10, 'm') : party.get('wait_time')}, 
-            {patch: true});
+        .then(count => {
+          res.partyLength = count.length || 0;
+          if (res.partyLength) {
+            count.forEach((party, index) => {
+              models.Party.where({id: party.get('id')})
+                .save({wait_time: 
+                  moment(res.targetWaitTime).diff(moment(party.get('wait_time'), 'm')) < 0 ? moment(party.get('wait_time')).subtract(10, 'm')
+                    : party.get('wait_time')},
+                  // moment(party.get('wait_time')).diff(moment(res.targetWaitTime)) < 0 ? party.get('wait_time') 
+                  // : moment(party.get('wait_time')).subtract(10, 'm')},
+                {patch: true});
+            });
+          }
+          return models.Queue.where({id: req.params.queueid})
+            .fetch()
+            .then((q) => {
+              res.nextWaitTime = q.get('next_wait_time');
+              models.Queue.where({id: req.params.queueid})
+                .save({queue_size: res.partyLength, next_wait_time: moment(res.nextWaitTime).subtract(10, 'm')}, {patch: true});
+            });
+        })
+        .then(complete => {
+          SocketIO.sendSocketDataForParties(req.params.queueid);
+          SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
+          SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
+          next();
+        })
+        .error(err => {
+          res.status(305).send(err);
+        })
+        .catch(err => {
+          res.status(415).send('error');
         });
-      }
-      return models.Queue.where({id: req.params.queueid})
-        .save({queue_size: partyLength, next_wait_time: Math.max((partyLength + 1) * 10, 10)}, {patch: true});
-    })
-    .then(complete => {
-      SocketIO.sendSocketDataForParties(req.params.queueid);
-      SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
-      SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
-      next();
-    })
-    .error(err => {
-      res.status(305).send(err);
-    })
-    .catch(err => {
-      res.status(415).send('error');
     });
   // } else {
   //   res.send('you aint authenticated on a dequeue');

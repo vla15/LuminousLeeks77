@@ -43,7 +43,7 @@ exports.seed = (knex, Promise) => {
         queue_size: 0,
         profile_id: 10,
         organization_id: 1,
-        next_wait_time: 10,
+        next_wait_time: moment().add(10, 'm'),
         is_open: true
       });
     });

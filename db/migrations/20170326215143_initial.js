@@ -24,7 +24,7 @@ exports.up = function (knex, Promise) {
       table.integer('queue_size').nullable();
       table.integer('profile_id').references('profiles.id').onDelete('CASCADE');
       table.integer('organization_id').nullable();
-      table.integer('next_wait_time').nullable();
+      table.dateTime('next_wait_time').nullable();
       table.boolean('is_open').nullable();
       table.decimal('lat', 9, 6).nullable();
       table.decimal('lng', 9, 6).nullable();
@@ -37,6 +37,8 @@ exports.up = function (knex, Promise) {
       table.integer('party_size').nullable();
       table.string('first_name', 100).nullable();
       table.string('phone_number', 100).nullable();
+      table.boolean('first_alert').notNullable().defaultTo(false);
+      table.boolean('final_alert').notNullable().defaultTo(false);
       table.decimal('lat', 9, 6).nullable();
       table.decimal('lng', 9, 6).nullable();
     }),

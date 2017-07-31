@@ -18,13 +18,13 @@ module.exports = () => {
               msg = msg.content.toString().split('+');
               var number = msg[0];
               var message = msg[1];
-              Promise.resolve(twilioClient.phoneLookup(number));
-              // .then((number) => {
-              //   twilioClient.sendSms(number, message);
-              // })
-              // .catch((err) => {
-              //   console.log(err);
-              // });
+              Promise.resolve(twilioClient.phoneLookup(number))
+                .then((number) => {
+                  twilioClient.sendSms(number, message);
+                })
+                .catch((err) => {
+                  console.log('invalid phone number');
+                });
             }
           });
         });
