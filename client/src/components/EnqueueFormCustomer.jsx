@@ -3,7 +3,7 @@ import { Navbar, Row, Col, Button } from 'react-bootstrap';
 
 export const EnqueueFormCustomer = props => {
   return (
-    <Navbar fixedBottom={true}>
+    <Navbar className="enqueue-form-customer" fixedBottom={true}>
       <Row>
         <Col xs={12} className="center">
           <h6>Party size</h6>
@@ -19,7 +19,7 @@ export const EnqueueFormCustomer = props => {
             -
           </Button>
         </Col>
-        <Col xs={8} className="center number">
+        <Col xs={2} className="center number">
           {props.redux.store.party.party_size}
         </Col>
         <Col xs={2}>
@@ -31,9 +31,7 @@ export const EnqueueFormCustomer = props => {
             +
           </Button>
         </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
+        <Col xs={6}>
           <Button
             block={true}
             onClick={() => {

@@ -5,6 +5,7 @@ import { QueueInfo } from '../customerViews/QueueInfo.jsx';
 import { PartyInfo } from '../customerViews/PartyInfo.jsx';
 import { EnqueueFormCustomer } from '../components/EnqueueFormCustomer.jsx';
 import { Header } from '../components/Header.jsx';
+import { QueueStats } from '../components/QueueStats.jsx';
 
 import CustomerMap from '../components/CustomerMap.jsx';
 
@@ -19,12 +20,13 @@ class Customer extends React.Component {
     return (
       <div>
         <Header redux={this.props.redux} />
+        <CustomerMap redux={this.props.redux} />
+        <QueueStats redux={this.props.redux} />
         { this.props.redux.store.queue.is_open === false
           ? <QueueClosed redux={this.props.redux} />
           : this.props.redux.store.party.id === undefined
             ? <QueueInfo redux={this.props.redux} />
             : <PartyInfo redux={this.props.redux}/> }
-        <CustomerMap redux={this.props.redux} />
       </div>
     );
   }

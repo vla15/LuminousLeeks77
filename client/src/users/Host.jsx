@@ -29,7 +29,6 @@ class Host extends React.Component {
 
             : <HostMap redux={this.props.redux} />
         }
-
       </div>
     );
   }
