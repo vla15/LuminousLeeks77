@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { CloseQueueButton } from '../components/CloseQueueButton.jsx';
 import mapStyles from '../styles/mapStyles.js';
 
 export class HostMap extends React.Component {
@@ -68,6 +69,7 @@ export class HostMap extends React.Component {
               />;
             }) }
           </Map>
+          <CloseQueueButton redux={this.props.redux} />
         </div>
       );
     }

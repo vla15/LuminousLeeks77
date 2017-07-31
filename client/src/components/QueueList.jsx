@@ -3,6 +3,7 @@ import React from 'react';
 import { QueueListItem } from '../components/QueueListItem.jsx';
 import { Grid, Row, Col, Panel } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import { EnqueueFormHost } from '../components/EnqueueFormHost.jsx';
 
 
 export const QueueList = props => {

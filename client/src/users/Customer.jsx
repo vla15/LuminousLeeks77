@@ -21,7 +21,6 @@ class Customer extends React.Component {
       <div>
         <Header redux={this.props.redux} />
         <CustomerMap redux={this.props.redux} />
-        <QueueStats redux={this.props.redux} />
         { this.props.redux.store.queue.is_open === false
           ? <QueueClosed redux={this.props.redux} />
           : this.props.redux.store.party.id === undefined
