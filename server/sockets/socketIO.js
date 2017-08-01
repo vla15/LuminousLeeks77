@@ -18,6 +18,7 @@ var emitSocketMessage = (socketId, action, payload) => {
   });
 };
 
+
 var sendSocketDataForParties = queueId => {
   return models.Party.where({queue_id: queueId})
     .query((qb) => {

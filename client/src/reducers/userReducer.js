@@ -29,6 +29,12 @@ const userReducer = (state = null, action) => {
 
   case 'GO_TO_PROFILE':
     return state;
+
+  case 'SET_HAS_PARTY':
+    return {
+      ...state,
+      has_party: action.payload
+    };
   }
 
   return state;

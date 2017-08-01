@@ -12,6 +12,7 @@ import testSocketActions from '../actions/testSocketActions.js';
 import { Header } from '../components/Header.jsx';
 import Host from '../users/Host.jsx';
 import Customer from '../users/Customer.jsx';
+import QueueChoice from '../users/QueueChoice.jsx';
 import { Loading } from '../components/Loading.jsx';
 
 
@@ -48,6 +49,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+//need way to track if customer has already selected a queue
 class App extends React.Component {
   render() {
     return (
@@ -57,9 +59,11 @@ class App extends React.Component {
           ? <Loading />
           : this.props.store.user.admin
             ? <Host redux={this.props} />
-            : <Customer redux={this.props} /> }
+            : this.props.store.user.has_party
+              ? <Customer redux={this.props} />
+              : <QueueChoice redux={this.props} /> }
+              }
       </div>
-
 
     );
   }

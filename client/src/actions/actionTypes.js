@@ -21,5 +21,6 @@ actionTypes.UPDATE_PARTY_LOCATION = 'UPDATE_PARTY_LOCATION';
 actionTypes.PUT_PARTY_LOCATION = 'PUT_PARTY_LOCATION';
 actionTypes.SET_VIEW_HOST = 'SET_VIEW_HOST';
 actionTypes.GO_TO_PROFILE = 'GO_TO_PROFILE';
+actionTypes.SET_HAS_PARTY = 'SET_HAS_PARTY';
 
 module.exports = actionTypes;

@@ -32,6 +32,7 @@ module.exports.getOne = (req, res) => {
     });
 };
 
+
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
