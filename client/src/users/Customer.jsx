@@ -12,6 +12,9 @@ class Customer extends React.Component {
 
   constructor(props) {
     super(props);
+    // this.state = {
+    //   seconds: (new Date().getSeconds()) * 1000
+    // }
   }
 
   generateRandomLongitutde() {
@@ -26,6 +29,14 @@ class Customer extends React.Component {
 
     return (Math.random() * (max - min) + min).toFixed(6);
   }
+
+  // decrementTime() {
+  //   setInterval(() => {
+  //     this.setState({
+  //       seconds: 60000
+  //     })
+  //   }, this.state.seconds)
+  // }
 
   render() {
     return (
@@ -52,6 +63,7 @@ class Customer extends React.Component {
         this.props.redux.dispatch.updatePartyLocation( this.props.redux.store.party.id, position.coords.latitude, position.coords.longitude );
       }
     });
+    // this.decrementTime();
     setInterval(() => {
       // this.props.redux.dispatch.updatePartyLocation ( this.props.redux.store.party.id, Number(this.generateRandomLatitude()), Number(this.generateRandomLongitutde()))
       this.forceUpdate();

@@ -111,6 +111,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 };
 
 module.exports.getQueueInfoCustomer = (req, res) => {
+  console.log(req.params.queueid);
   models.Queue.where({ id: req.params.queueid }).fetch()
     .then(queue => {
       res.send(queue);

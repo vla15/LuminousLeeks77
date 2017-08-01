@@ -37,8 +37,7 @@ module.exports.getQueueIdBasedOnUserId = (req, res) => {
   models.Party.where({ profile_id: req.params.userid })
     .fetch({ require: true})
     .then(party => {
-      var has_party = {queue_id: party.get('queue_id')};
-      res.send(has_party);
+      res.send({queue_id: party.get('queue_id')});
     })
     .catch(err => {
       res.send(null);
@@ -76,7 +75,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
       res.send(targetCustomer);
     })
     .catch(err => {
-      res.sendStatus(404);
+      res.send('no party info');
     });
 };
 
