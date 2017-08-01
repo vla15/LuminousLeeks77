@@ -60,7 +60,6 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
           })
             .then(queue => {
               emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-
             });
         }
       });
