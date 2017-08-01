@@ -8,13 +8,21 @@ class QueueChoice extends React.Component {
   }
 
   componentDidMount() {
+    //axios request out
+    //build out a 
     console.log('hi'); 
   }
 
   render() {
     console.log('does queueChoice render?');
     return (
-      <QueueChoiceList />
+      <div>
+        <QueueChoiceList />
+        <QueueChoiceList />
+        <QueueChoiceList />
+        <QueueChoiceList />
+        <QueueChoiceList />
+      </div>
     );
   }
 }

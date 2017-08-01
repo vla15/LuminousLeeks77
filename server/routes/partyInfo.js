@@ -7,8 +7,8 @@ const QueueController = require('../controllers').Queues;
 router.route('/:queueid/:userid')
   .get(PartyController.getPartyInfoCustomer);
 
-router.route('/hasparty/:userid')
-  .get(PartyController.getPartyStuff);
+// router.route('/hasparty/:userid')
+//   .get(PartyController.getPartyStuff);
 
 // Queues a customer
 // Sends QueueInfoHost back as Res
