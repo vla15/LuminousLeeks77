@@ -175,8 +175,6 @@ module.exports.dequeue = (req, res, next) => {
                 .save({wait_time: 
                   moment(res.targetWaitTime).diff(moment(party.get('wait_time'), 'm')) < 0 ? moment(party.get('wait_time')).subtract(10, 'm')
                     : party.get('wait_time')},
-                  // moment(party.get('wait_time')).diff(moment(res.targetWaitTime)) < 0 ? party.get('wait_time') 
-                  // : moment(party.get('wait_time')).subtract(10, 'm')},
                 {patch: true});
             });
           }

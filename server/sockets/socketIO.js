@@ -39,6 +39,7 @@ var sendSocketDataForParties = queueId => {
       });
     });
 };
+
 var updateQueueInfoForNonqueuedCustomers = queueId => {
   models.Profile.query(qb => {
     qb.select('*').from('profiles').leftJoin(
@@ -113,9 +114,6 @@ var sendSocketDequeueForCustomer = (userId, queueId) => {
 };
 
 var updatePartiesOnToggleQueue = queueId => {
-  //need to update all customers online that queue is closed
-  //query all customers online based on socketid
-  //generate resu
   var queueData;
   models.Queue.where({id: queueId}).fetch({
     withRelated: ['parties']
@@ -129,12 +127,12 @@ var updatePartiesOnToggleQueue = queueId => {
           'parties.profile_id')
           .whereNotNull('profiles.socket_id');
       })
-        .fetchAll({
-          columns: ['socket_id']
-        });
+        .fetchAll();
     })
     .then(result => {
       result.forEach(party => {
+
+        console.log(party.attributes);
         if (party.attributes.id === null && party.attributes.socket_id) {
           emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queueData);
         }

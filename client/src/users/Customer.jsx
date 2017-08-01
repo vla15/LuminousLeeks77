@@ -44,7 +44,7 @@ class Customer extends React.Component {
 
 
   componentDidMount() {
-    this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
+    // this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
     this.props.redux.dispatch.getQueueInfoCustomer(1);
     this.props.redux.dispatch.setPartyLocation();
 
@@ -54,7 +54,6 @@ class Customer extends React.Component {
       }
     });
     setInterval(() => {
-      console.log('counter');
       // this.props.redux.dispatch.updatePartyLocation ( this.props.redux.store.party.id, Number(this.generateRandomLatitude()), Number(this.generateRandomLongitutde()))
       this.forceUpdate();
     }, 60000);

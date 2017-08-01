@@ -44,32 +44,34 @@ module.exports.getQueueByUser = (req, res) => {
 //grabs all parties info, for example: http://localhost:3000/api/queueinfo/host/1
 //add parties: http://localhost:3000/api/partyinfo/add/1/1/4
 module.exports.getPartyInfoOfQueue = (req, res, next) => {
-  models.Party.where({queue_id: req.params.queueid})
-    .query((qb) => {
-      qb.orderBy('wait_time', 'ASC');
-    })
-    .fetchAll({
-      withRelated: ['queue', 'profile'],
-      columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
-    })
-    .then(queue => {
+  SocketIO.sendSocketDataForParties(req.params.queueid);
+  res.send('success');
+  // models.Party.where({queue_id: req.params.queueid})
+  //   .query((qb) => {
+  //     qb.orderBy('wait_time', 'ASC');
+  //   })
+  //   .fetchAll({
+  //     withRelated: ['queue', 'profile'],
+  //     columns: ['id', 'queue_id', 'wait_time', 'profile_id', 'party_size', 'first_name', 'phone_number']
+  //   })
+  //   .then(queue => {
 
-      var length = queue.length;
+  //     var length = queue.length;
 
-      var targetCustomer = queue.map((customer, index) => {
-        customer.set({parties_ahead: index});
-        customer.set({parties_behind: length - (index + 1)});
-        return customer;
-      });
+  //     var targetCustomer = queue.map((customer, index) => {
+  //       customer.set({parties_ahead: index});
+  //       customer.set({parties_behind: length - (index + 1)});
+  //       return customer;
+  //     });
 
-      res.send(queue);
-    })
-    .error(err => {
-      res.status(500).send(err);
-    })
-    .catch(err => {
-      res.status(404).send(err);
-    });
+  //     res.send(queue);
+  //   })
+  //   .error(err => {
+  //     res.status(500).send(err);
+  //   })
+  //   .catch(err => {
+  //     res.status(404).send(err);
+  //   });
 };
 
 module.exports.getPartyInfoCustomer = (req, res) => {

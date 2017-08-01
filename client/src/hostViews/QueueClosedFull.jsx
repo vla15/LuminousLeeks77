@@ -35,7 +35,7 @@ export const QueueClosedFull = props => {
           <Col xs={12} className="center">
             <Button
               block={true}
-              onClick={() => { props.redux.dispatch.toggleQueue(1); }}
+              onClick={() => { props.redux.dispatch.toggleQueue(props.redux.store.queue.id); }}
             >
               Open Queue
             </Button>
