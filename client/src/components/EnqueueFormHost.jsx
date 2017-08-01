@@ -3,7 +3,6 @@ import { Row, Col } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
 export const EnqueueFormHost = props => {
-  console.log('check this', props.redux);
   return (
     <Row>
       <Col xs={2}>

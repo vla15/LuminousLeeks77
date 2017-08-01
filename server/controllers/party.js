@@ -74,7 +74,7 @@ module.exports.enqueue = (req, res, next) => {
   models.Profile.where({ id: req.params.userid })
     .fetch()
     .then(user => {
-      if (user && user.get('admin') !== '1') {
+      if (user && user.get('admin') === null) {
         throw user;
       } else {
         return models.Profile.forge({
