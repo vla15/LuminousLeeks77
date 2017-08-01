@@ -3,10 +3,10 @@ const queueChoiceReducer = (state = {queueList: [], isEnqueued: null}, action) =
   case 'GET_QUEUE_CHOICE_LIST':
     return {
       ...state, 
-      queueslist: action.payload
+      queueList: action.payload
     };
 
-  case 'SET_HAS_PARTY':
+  case 'SET_IS_ENQUEUED':
     return {
       ...state, 
       isEnqueued: action.payload

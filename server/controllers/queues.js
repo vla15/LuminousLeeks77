@@ -41,6 +41,16 @@ module.exports.getQueueByUser = (req, res) => {
 };
 
 
+module.exports.getAll = (req, res) => {
+  models.Queue.fetchAll()
+    .then(queues => {
+      res.send(queues);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+};
+
 //grabs all parties info, for example: http://localhost:3000/api/queueinfo/host/1
 //add parties: http://localhost:3000/api/partyinfo/add/1/1/4
 module.exports.getPartyInfoOfQueue = (req, res, next) => {

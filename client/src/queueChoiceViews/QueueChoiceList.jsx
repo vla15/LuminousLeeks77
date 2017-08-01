@@ -5,10 +5,9 @@ import { QueueChoiceListItem } from './QueueChoiceListItem.jsx';
 export const QueueChoiceList = props => {
   return (
     <div>
-      <QueueChoiceListItem redux={props.redux}/>
-      <QueueChoiceListItem redux={props.redux}/>
-      <QueueChoiceListItem redux={props.redux}/>
-      <QueueChoiceListItem redux={props.redux}/>
+      {props.redux.store.queueChoice.queueList.map(queue => {
+        return <QueueChoiceListItem queue={queue} redux={props.redux} key={queue.id} />;
+      })}
     </div>
   );
 };

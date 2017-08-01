@@ -1,33 +1,43 @@
 import React from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
-
+import { Grid, Row, Col, Button } from 'react-bootstrap';
+import moment from 'moment';
+import FontAwesome from 'react-fontawesome';
 
 export const QueueChoiceListItem = props => {
   return (
     <Row>
       <Col xs={2}>
-        <h6>
-          Queue Name
-        </h6>
+        <h5>
+          Queue Id
+          {props.queue.id}
+        </h5>
       </Col>
       <Col xs={2}>
-        <h6>
-        </h6>
-      </Col>
-      <Col xs={2}>
-        <h6>
-        Queue Next Wait Time
-        </h6>
+        <h5>
+        Next Wait Time
+          {
+            moment.utc(props.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
+              : moment.utc(props.queue.next_wait_time).diff(moment(), 'minutes')
+          } min(s)
+        </h5>
       </Col>
       <Col xs={4}>
-        <h6>
-        Queue Size
-        </h6>
+        <h5>
+          Queue Size
+          {props.queue.queue_size}
+        </h5>
       </Col>
       <Col xs={1}>
-        <h6>
-        JOIN
-        </h6>
+        <h5>
+          <Button
+            block={true}
+            onClick={() => {
+              props.redux.dispatch.setIsEnqueued(props.queue.id);
+            }}
+          >
+            View
+          </Button>
+        </h5>
       </Col>
     </Row>
   );

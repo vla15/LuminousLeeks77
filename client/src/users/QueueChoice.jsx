@@ -7,11 +7,9 @@ class QueueChoice extends React.Component {
     super(props);
   }
 
-  // componentDidMount() {
-  //   //axios request out
-  //   //build out a 
-  //   console.log(''); 
-  // }
+  componentDidMount() {
+    this.props.redux.dispatch.getQueueChoiceList();
+  }
 
   render() {
     return (

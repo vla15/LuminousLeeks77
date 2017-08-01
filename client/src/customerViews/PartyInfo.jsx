@@ -34,7 +34,7 @@ export const PartyInfo = props => {
           <Col xs={12}>
             <Button
               block={true}
-              onClick={() => { props.redux.dispatch.dequeueCustomer(props.redux.store.queue_id, props.redux.store.party.id); }}
+              onClick={() => { props.redux.dispatch.dequeueCustomer(props.redux.store.queueChoice.isEnqueued, props.redux.store.party.id); }}
             >
               Dequeue
             </Button>

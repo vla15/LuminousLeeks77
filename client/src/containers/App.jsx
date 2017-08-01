@@ -29,7 +29,6 @@ const mapDispatchToProps = dispatch => {
       updatePartySize: partySize => { dispatch(partyActions.updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(partyActions.updateFirstName(firstName)); },
       setPartyLocation: () => { dispatch(partyActions.setPartyLocation()); },
-      getQueueChoiceList: () => { dispatch(queueChoiceActions.setHasParty()); },
       updatePartyLocation: (party_id, lat, lng) => { dispatch(partyActions.updatePartyLocation(party_id, lat, lng)); },
 
       enqueueHost: (uid, qid, ps, fn, pn, lat, lng) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn, lat, lng)); },
@@ -45,13 +44,15 @@ const mapDispatchToProps = dispatch => {
       setHasParty: (userId) => { dispatch(userActions.setHasParty(userId)); },
       goToProfile: () => { dispatch(userActions.goToProfile()); },
 
+      getQueueChoiceList: () => { dispatch(queueChoiceActions.getQueueChoiceList()); },
+      setIsEnqueued: (queueId) => { dispatch(queueChoiceActions.setIsEnqueued(queueId)); },
+
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
     }
   };
 };
 
 
-//need way to track if customer has already selected a queue
 class App extends React.Component {
   render() {
     return (
@@ -71,7 +72,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.dispatch.setUserInfo();
-    // this.props.dispatch.setHasParty(this.props.user.profile_id);
     this.props.dispatch.testSocketConnect();
   }
 }
