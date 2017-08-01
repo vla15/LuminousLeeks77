@@ -1,20 +1,31 @@
 const mapStyles = [
   {
-    "featureType": "landscape.man_made",
+    "featureType": "administrative",
+    "elementType": "geometry",
     "stylers": [
       {
-        "color": "#faf5ed"
-      },
-      {
-        "lightness": "0"
-      },
-      {
-        "gamma": "1"
+        "visibility": "off"
       }
     ]
   },
   {
-    "featureType": "poi.business",
+    "featureType": "administrative.land_parcel",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "stylers": [
+      {
+        "color": "#faf5ed"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
     "stylers": [
       {
         "visibility": "off"
@@ -23,10 +34,10 @@ const mapStyles = [
   },
   {
     "featureType": "poi.park",
-    "elementType": "geometry.fill",
+    "elementType": "geometry",
     "stylers": [
       {
-        "color": "#bae5a6"
+        "visibility": "on"
       }
     ]
   },

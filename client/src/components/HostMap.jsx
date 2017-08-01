@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
-import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { InfoWindow, Marker, GoogleApiWrapper, Circle } from 'google-maps-react';
 import { CloseQueueButton } from '../components/CloseQueueButton.jsx';
 import mapStyles from '../styles/mapStyles.js';
 
@@ -42,7 +42,7 @@ export class HostMap extends React.Component {
             google={this.props.google}
             zoom={13}
             disableDefaultUI={true}
-            centerAroundCurrentLocation={true}
+            centerAroundCurrentLocation={false}
             visible={true}
             onReady={this.mapReady.bind(this)}
             style={{ position: "fixed !important", height: "100%" }}
@@ -55,6 +55,7 @@ export class HostMap extends React.Component {
             scaleControl={false}
             disableDoubleClickZoom={true}
             className="map"
+            defaultCenter={{ lat: '-25.363882', lng: '131.044922' }}
           >
 
             <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
@@ -64,7 +65,7 @@ export class HostMap extends React.Component {
                 key={party.id}
                 title={party.first_name}
                 name={party.first_name}
-                icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
+                icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: 'red', fillOpacity: 1, scale: 1, strokeColor: 'red' }}
                 position={{lat: party.lat, lng: party.lng}}
               />;
             }) }
