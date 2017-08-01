@@ -4,6 +4,7 @@ import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper, Circle } from 'google-maps-react';
 import { CloseQueueButton } from '../components/CloseQueueButton.jsx';
 import mapStyles from '../styles/mapStyles.js';
+import { colors } from '../colors/colors.jsx';
 
 export class HostMap extends React.Component {
 
@@ -65,7 +66,7 @@ export class HostMap extends React.Component {
                 key={party.id}
                 title={party.first_name}
                 name={party.first_name}
-                icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: 'red', fillOpacity: 1, scale: 1, strokeColor: 'red' }}
+                icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: colors(party.first_name), fillOpacity: 1, scale: 1, strokeColor: colors(party.first_name) }}
                 position={{lat: party.lat, lng: party.lng}}
               />;
             }) }
