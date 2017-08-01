@@ -6,6 +6,7 @@ import partyActions from '../actions/partyActions.js';
 import queueActions from '../actions/queueActions.js';
 import userActions from '../actions/userActions.js';
 import viewActions from '../actions/viewActions.js';
+import queueChoiceActions from '../actions/queueChoiceActions.js';
 
 import testSocketActions from '../actions/testSocketActions.js';
 
@@ -28,7 +29,7 @@ const mapDispatchToProps = dispatch => {
       updatePartySize: partySize => { dispatch(partyActions.updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(partyActions.updateFirstName(firstName)); },
       setPartyLocation: () => { dispatch(partyActions.setPartyLocation()); },
-
+      getQueueChoiceList: () => { dispatch(queueChoiceActions.setHasParty()); },
       updatePartyLocation: (party_id, lat, lng) => { dispatch(partyActions.updatePartyLocation(party_id, lat, lng)); },
 
       enqueueHost: (uid, qid, ps, fn, pn, lat, lng) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn, lat, lng)); },
@@ -53,7 +54,6 @@ const mapDispatchToProps = dispatch => {
 //need way to track if customer has already selected a queue
 class App extends React.Component {
   render() {
-    console.log(this.props.store);
     return (
       <div>
         <Header redux={this.props} />
@@ -61,7 +61,7 @@ class App extends React.Component {
           ? <Loading />
           : this.props.store.user.admin
             ? <Host redux={this.props} />
-            : 0
+            : this.props.store.queueChoice.isEnqueued
               ? <Customer redux={this.props} />
               : <QueueChoice redux={this.props} /> }
       </div>
@@ -71,7 +71,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.dispatch.setUserInfo();
-    // this.props.dispatch.setHasParty(this.props.user.admin);
+    // this.props.dispatch.setHasParty(this.props.user.profile_id);
     this.props.dispatch.testSocketConnect();
   }
 }

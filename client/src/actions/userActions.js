@@ -14,20 +14,18 @@ userActions.setUserInfo = () => {
           type: 'server/SEND_USER_ID',
           payload: result.data.id
         });
+        return result;
+      })
+      .then(user => {
+        axios.get(`/api/partyinfo/hasparty/${user.data.id}`)
+          .then(party => {
+            dispatch({
+              type: actionTypes.SET_HAS_PARTY,
+              payload: party.data.queue_id
+            });
+          });
       });
   };
 };
-
-// userActions.setPartyInfo = userId => {
-//   return dispatch => {
-//     axios.get(`/api/partyInfo/hasparty${userId}`)
-//       .then(result => {
-//         dispatch({
-//           type: actionTypes.SET_HAS_PARTY,
-//           payload: result.data.id
-//         });
-//       });
-//   };
-// };
 
 module.exports = userActions;

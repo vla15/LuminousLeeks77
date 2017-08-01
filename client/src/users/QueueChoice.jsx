@@ -7,22 +7,15 @@ class QueueChoice extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    //axios request out
-    //build out a 
-    console.log('hi'); 
-  }
+  // componentDidMount() {
+  //   //axios request out
+  //   //build out a 
+  //   console.log(''); 
+  // }
 
   render() {
-    console.log('does queueChoice render?');
     return (
-      <div>
-        <QueueChoiceList />
-        <QueueChoiceList />
-        <QueueChoiceList />
-        <QueueChoiceList />
-        <QueueChoiceList />
-      </div>
+      <QueueChoiceList redux={this.props.redux}/>
     );
   }
 }

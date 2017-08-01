@@ -4,11 +4,16 @@ const router = express.Router();
 const PartyController = require('../controllers').Party;
 const QueueController = require('../controllers').Queues;
 
+
+
+
+router.route('/hasparty/:userid')
+  .get(PartyController.getQueueIdBasedOnUserId);
+
+  
 router.route('/:queueid/:userid')
   .get(PartyController.getPartyInfoCustomer);
 
-// router.route('/hasparty/:userid')
-//   .get(PartyController.getPartyStuff);
 
 // Queues a customer
 // Sends QueueInfoHost back as Res
