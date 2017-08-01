@@ -27,6 +27,11 @@ export const QueueChoiceListItem = props => {
           {props.queue.queue_size}
         </h5>
       </Col>
+      <Col xs={2}>
+        <h5>
+          {props.queue.is_open ? 'OPEN' : 'CLOSED'}
+        </h5>
+      </Col>
       <Col xs={1}>
         <h5>
           <Button

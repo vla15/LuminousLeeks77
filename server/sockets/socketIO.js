@@ -132,8 +132,6 @@ var updatePartiesOnToggleQueue = queueId => {
     })
     .then(result => {
       result.forEach(party => {
-
-        console.log(party.attributes);
         if (party.attributes.id === null && party.attributes.socket_id) {
           emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queueData);
         }
