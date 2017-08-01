@@ -1,5 +1,5 @@
 import React from 'react';
-
+import moment from 'moment';
 import { QueueList } from '../components/QueueList.jsx';
 
 import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
@@ -14,7 +14,12 @@ export const QueueClosedFull = props => {
         </Col>
         <Col xs={6}>
           <h6>Next Wait Time</h6>
-          <h1>{props.redux.store.queue.next_wait_time} min</h1>
+          <h1>
+            {
+              moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
+                : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') 
+            } min(s)
+          </h1>
         </Col>
       </Row>
       <QueueList redux={props.redux} />
@@ -30,7 +35,7 @@ export const QueueClosedFull = props => {
           <Col xs={12} className="center">
             <Button
               block={true}
-              onClick={() => { props.redux.dispatch.toggleQueue(1); }}
+              onClick={() => { props.redux.dispatch.toggleQueue(props.redux.store.queue.id); }}
             >
               Open Queue
             </Button>

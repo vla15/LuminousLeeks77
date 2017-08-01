@@ -9,6 +9,9 @@ const QueueController = require('../controllers').Queues;
 // router.route('/test')
 //   .get(QueueController.isOpenStatus);
 
+router.route('/queuechoice')
+  .get(QueueController.getAll);
+
 router.route('/getQueueInfoCustomer/:queueid')
   .get(QueueController.getQueueInfoCustomer);
 

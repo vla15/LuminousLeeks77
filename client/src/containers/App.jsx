@@ -6,12 +6,14 @@ import partyActions from '../actions/partyActions.js';
 import queueActions from '../actions/queueActions.js';
 import userActions from '../actions/userActions.js';
 import viewActions from '../actions/viewActions.js';
+import queueChoiceActions from '../actions/queueChoiceActions.js';
 
 import testSocketActions from '../actions/testSocketActions.js';
 
 import { Header } from '../components/Header.jsx';
 import Host from '../users/Host.jsx';
 import Customer from '../users/Customer.jsx';
+import QueueChoice from '../users/QueueChoice.jsx';
 import { Loading } from '../components/Loading.jsx';
 
 
@@ -27,7 +29,6 @@ const mapDispatchToProps = dispatch => {
       updatePartySize: partySize => { dispatch(partyActions.updatePartySize(partySize)); },
       updateFirstName: firstName => { dispatch(partyActions.updateFirstName(firstName)); },
       setPartyLocation: () => { dispatch(partyActions.setPartyLocation()); },
-
       updatePartyLocation: (party_id, lat, lng) => { dispatch(partyActions.updatePartyLocation(party_id, lat, lng)); },
 
       enqueueHost: (uid, qid, ps, fn, pn, lat, lng) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn, lat, lng)); },
@@ -40,13 +41,16 @@ const mapDispatchToProps = dispatch => {
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
       
       setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
-
       goToProfile: () => { dispatch(userActions.goToProfile()); },
+
+      getQueueChoiceList: () => { dispatch(queueChoiceActions.getQueueChoiceList()); },
+      setIsEnqueued: (queueId) => { dispatch(queueChoiceActions.setIsEnqueued(queueId)); },
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
     }
   };
 };
+
 
 class App extends React.Component {
   render() {
@@ -57,9 +61,10 @@ class App extends React.Component {
           ? <Loading />
           : this.props.store.user.admin
             ? <Host redux={this.props} />
-            : <Customer redux={this.props} /> }
+            : this.props.store.queueChoice.isEnqueued
+              ? <Customer redux={this.props} />
+              : <QueueChoice redux={this.props} /> }
       </div>
-
 
     );
   }
