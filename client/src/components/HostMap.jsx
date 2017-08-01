@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
-import { InfoWindow, Marker, GoogleApiWrapper, Circle } from 'google-maps-react';
+import { InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import { CloseQueueButton } from '../components/CloseQueueButton.jsx';
+import { OpenQueueButton } from '../components/OpenQueueButton.jsx';
 import mapStyles from '../styles/mapStyles.js';
 import { colors } from '../colors/colors.jsx';
 
@@ -51,12 +52,11 @@ export class HostMap extends React.Component {
             scrollwheel={false}
             navigationControl={false}
             mapTypeControl={false}
-            scaleControl={false}
-            zoomControl={false}
-            scaleControl={false}
+            zoomControl={true}
+            scaleControl={true}
             disableDoubleClickZoom={true}
             className="map"
-            defaultCenter={{ lat: '-25.363882', lng: '131.044922' }}
+            defaultCenter={{ lat: '37.759703', lng: '-122.428093' }}
           >
 
             <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
@@ -71,7 +71,9 @@ export class HostMap extends React.Component {
               />;
             }) }
           </Map>
-          <CloseQueueButton redux={this.props.redux} />
+          { this.props.redux.store.queue.is_open
+          ? <CloseQueueButton redux={this.props.redux} />
+          : <OpenQueueButton redux={this.props.redux} /> }
         </div>
       );
     }

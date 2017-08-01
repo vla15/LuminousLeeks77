@@ -1,6 +1,6 @@
 export const colors = first_name => {
 
-  var initial = first_name.split('').shift();
+  var initial = first_name.split('').shift().toUpperCase();
 
   if (initial === 'A') {
     var color = 'aqua'

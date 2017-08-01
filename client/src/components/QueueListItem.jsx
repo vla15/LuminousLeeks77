@@ -4,10 +4,11 @@ import { Row, Col } from 'react-bootstrap';
 
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
+import { colors } from '../colors/colors.jsx';
 
 export const QueueListItem = props => {
   return (
-    <Row>
+    <Row style={{"border-left": `10px solid ${colors(props.party.first_name)}`}}>
       <Col xs={3}>
         <h6>
           {props.party.first_name}

@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import {Polygon} from 'google-maps-react';
 import mapStyles from '../styles/mapStyles.js';
+import { colors } from '../colors/colors.jsx';
 
 export class CustomerMap extends React.Component {
 
@@ -50,7 +50,6 @@ export class CustomerMap extends React.Component {
             scrollwheel={false}
             navigationControl={false}
             mapTypeControl={false}
-            scaleControl={false}
             zoomControl={false}
             scaleControl={false}
             disableDoubleClickZoom={true}
@@ -61,7 +60,7 @@ export class CustomerMap extends React.Component {
             <Marker
               title={'Party'}
               name={'Party'}
-              icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
+              icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: colors(this.props.redux.store.user.first_name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.user.first_name) }}
             />
 
           </Map>
