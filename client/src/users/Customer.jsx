@@ -12,8 +12,31 @@ class Customer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.now = (60 - new Date().getSeconds());
+    // this.state = {
+    //   seconds: (new Date().getSeconds()) * 1000
+    // }
   }
+
+  generateRandomLongitutde() {
+    var max = -122.51000;
+    var min = -122.38000;
+
+    return (Math.random() * (max - min) + min).toFixed(6);
+  }
+  generateRandomLatitude() {
+    var max = 37.80778;
+    var min = 37.71000;
+
+    return (Math.random() * (max - min) + min).toFixed(6);
+  }
+
+  // decrementTime() {
+  //   setInterval(() => {
+  //     this.setState({
+  //       seconds: 60000
+  //     })
+  //   }, this.state.seconds)
+  // }
 
   render() {
     return (
@@ -31,8 +54,8 @@ class Customer extends React.Component {
 
 
   componentDidMount() {
-    this.props.redux.dispatch.getPartyInfo(1, this.props.redux.store.user.profile_id);
-    this.props.redux.dispatch.getQueueInfoCustomer(1);
+    this.props.redux.dispatch.getPartyInfo(this.props.redux.store.queueChoice.isEnqueued, this.props.redux.store.user.profile_id);
+    this.props.redux.dispatch.getQueueInfoCustomer(this.props.redux.store.queueChoice.isEnqueued);
     this.props.redux.dispatch.setPartyLocation();
 
     navigator.geolocation.watchPosition(position => {
@@ -40,8 +63,9 @@ class Customer extends React.Component {
         this.props.redux.dispatch.updatePartyLocation( this.props.redux.store.party.id, position.coords.latitude, position.coords.longitude );
       }
     });
+    // this.decrementTime();
     setInterval(() => {
-      console.log('counter');
+      // this.props.redux.dispatch.updatePartyLocation ( this.props.redux.store.party.id, Number(this.generateRandomLatitude()), Number(this.generateRandomLongitutde()))
       this.forceUpdate();
     }, 60000);
   }

@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
       table.string('display', 100).nullable();
       table.string('email', 100).nullable().unique();
       table.string('phone', 100).nullable();
-      table.string('admin', 100).nullable();
+      table.integer('admin').nullable();
       table.string('socket_id', 100).nullable();
       table.timestamps(true, true);
     }),

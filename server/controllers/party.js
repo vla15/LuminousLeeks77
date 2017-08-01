@@ -32,9 +32,24 @@ module.exports.getOne = (req, res) => {
     });
 };
 
+
+module.exports.getQueueIdBasedOnUserId = (req, res) => {
+  models.Party.where({ profile_id: req.params.userid })
+    .fetch({ require: true})
+    .then(party => {
+      res.send({queue_id: party.get('queue_id')});
+    })
+    .catch(err => {
+      res.send(null);
+    });
+};
+
+
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
+  console.log('what is happening in getPartyInfoCustomer', req.params.queueid);
+  console.log('req.params.userid', req.params.userid);
   return models.Party
     .where({ profile_id: req.params.userid })
     .fetch({ require: true })
@@ -62,7 +77,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
       res.send(targetCustomer);
     })
     .catch(err => {
-      res.sendStatus(404);
+      res.send(null);
     });
 };
 
@@ -74,7 +89,7 @@ module.exports.enqueue = (req, res, next) => {
   models.Profile.where({ id: req.params.userid })
     .fetch()
     .then(user => {
-      if (user && user.get('admin') !== '1') {
+      if (user && user.get('admin') === null) {
         throw user;
       } else {
         return models.Profile.forge({
@@ -175,8 +190,6 @@ module.exports.dequeue = (req, res, next) => {
                 .save({wait_time: 
                   moment(res.targetWaitTime).diff(moment(party.get('wait_time'), 'm')) < 0 ? moment(party.get('wait_time')).subtract(10, 'm')
                     : party.get('wait_time')},
-                  // moment(party.get('wait_time')).diff(moment(res.targetWaitTime)) < 0 ? party.get('wait_time') 
-                  // : moment(party.get('wait_time')).subtract(10, 'm')},
                 {patch: true});
             });
           }

@@ -66,7 +66,7 @@ export const EnqueueFormHost = props => {
             onClick={() => {
               props.redux.dispatch.enqueueHost(
                 props.redux.store.user.profile_id,
-                1,
+                props.redux.store.user.admin,
                 props.redux.store.party.party_size,
                 props.redux.store.party.first_name,
                 props.redux.store.party.phone_number,

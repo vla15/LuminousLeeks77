@@ -41,9 +41,20 @@ module.exports.getQueueByUser = (req, res) => {
 };
 
 
-//grabs all parties info, for example: http://localhost:3000/api/queueinfo/host/1
-//add parties: http://localhost:3000/api/partyinfo/add/1/1/4
+module.exports.getAll = (req, res) => {
+  models.Queue.fetchAll()
+    .then(queues => {
+      res.send(queues);
+    })
+    .catch(err => {
+      res.send(err);
+    });
+};
+
+
 module.exports.getPartyInfoOfQueue = (req, res, next) => {
+  // SocketIO.sendSocketDataForParties(req.params.queueid);
+  // res.send('success');
   models.Party.where({queue_id: req.params.queueid})
     .query((qb) => {
       qb.orderBy('wait_time', 'ASC');
@@ -100,6 +111,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 };
 
 module.exports.getQueueInfoCustomer = (req, res) => {
+  console.log(req.params.queueid);
   models.Queue.where({ id: req.params.queueid }).fetch()
     .then(queue => {
       res.send(queue);

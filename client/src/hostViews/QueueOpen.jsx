@@ -9,10 +9,6 @@ import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
 export const QueueOpen = props => {
   return (
     <Grid>
-
-      
-
-
       <QueueStats redux={props.redux}/>
       <QueueList redux={props.redux} />
       <EnqueueFormHost redux={props.redux} />
@@ -21,7 +17,7 @@ export const QueueOpen = props => {
           <Col xs={12}>
             <Button
               block={true}
-              onClick={() => { props.redux.dispatch.toggleQueue(1); }}
+              onClick={() => { props.redux.dispatch.toggleQueue(props.redux.store.queue.id); }}
             >
               Close Queue
             </Button>
