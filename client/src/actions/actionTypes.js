@@ -23,5 +23,6 @@ actionTypes.SET_VIEW_HOST = 'SET_VIEW_HOST';
 actionTypes.GO_TO_PROFILE = 'GO_TO_PROFILE';
 actionTypes.SET_IS_ENQUEUED = 'SET_IS_ENQUEUED';
 actionTypes.GET_QUEUE_CHOICE_LIST = 'GET_QUEUE_CHOICE_LIST';
+actionTypes.SET_VIEW_QUEUE_CHOICE = 'SET_VIEW_QUEUE_CHOICE';
 
 module.exports = actionTypes;

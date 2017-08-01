@@ -43,7 +43,7 @@ class Host extends React.Component {
         </div>
 
         { 
-          this.props.redux.store.view === 'Queue Info'
+          this.props.redux.store.view.host === 'Queue Info'
 
             ? (this.props.redux.store.queue.is_open === true
               ? <QueueOpen redux={this.props.redux} />

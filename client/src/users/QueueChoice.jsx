@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueueChoiceList } from '../queueChoiceViews/QueueChoiceList.jsx';
-
+import { QueueChoiceMap } from '../components/QueueChoiceMap.jsx';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
 class QueueChoice extends React.Component {
   constructor(props) {

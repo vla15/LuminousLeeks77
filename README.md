@@ -1,18 +1,23 @@
-# Project Name
+# nQu
 
-The project description
+An application that enables business owners to monitor customers who are currently waiting in the queue through a real time, intuitive and clean UI.  In addition, it will allow business owners to track the location of customers who have added themselves to the queue list.  After customers have surpassed a certain time threshold, the application will also automatically alert customers via SMS.
+
+Customers can also utilize this application to enqueue themselves to available wait lists within their proximity. It also enables the customer to actively monitor their expected wait times and the number of parties ahead of them.
 
 ## Team
 
-- teamMember
-- teamMember
-- teamMember
-- teamMember
+- Shyan Kashani
+- Sheyda Rezaei
+- Michael Clausen
+- Vincent La
 
 ## Roadmap
 
-View the project roadmap [here](LINK_TO_DOC)
+View the project roadmap:
 
+System Architecture [Here](https://drive.google.com/open?id=0B2MVZ2bkuc1oMDljVm5VdXlQTzg)
+Host Wireframe[Host](https://drive.google.com/open?id=0B2MVZ2bkuc1ocFVSajlpV01WSDg)
+Customer Wireframe [Customer](https://drive.google.com/open?id=0B2MVZ2bkuc1oQnRkbFFuS3FHTk0)
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
@@ -34,7 +39,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 - Node 6.9.x
 - Redis 3.2.x
 - Postgresql 9.6.x
-- etc
+- Socket.IO 2.0.x
+- Redux 3.7.x
+- RabbitMQ 3.6.x
 
 ## Development
 
@@ -44,6 +51,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 brew install yarn
 brew install redis
 brew install postgresql
+brew install rabbitmq
 ```
 
 Yarn is a replacement for npm. It's faster and *guarantees* consistency -- as you deploy your code in various environments, you won't run the risk of slight variations in what gets installed.
@@ -97,7 +105,7 @@ Note: `--env NODE_ENV` may be omitted for development. For example, `knex migrat
 
 To run webpack build: `yarn run build`
 
-To run server: `yarn run start`
+To run server: `yarn run server-dev`
 
 To run tests: `yarn run test`
 

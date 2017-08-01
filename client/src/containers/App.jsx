@@ -41,6 +41,7 @@ const mapDispatchToProps = dispatch => {
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
       
       setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
+      setViewQueueChoiceList: (viewOption) => { dispatch(viewActions.setViewQueueChoiceList(viewOption)); },
       goToProfile: () => { dispatch(userActions.goToProfile()); },
 
       getQueueChoiceList: () => { dispatch(queueChoiceActions.getQueueChoiceList()); },
