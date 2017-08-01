@@ -1,28 +1,22 @@
 <% include head.ejs%>
 
-<% if (message.length) { %>
-  <div class="alert alert-danger">
-    <%= message %>
-  </div>
-<% } %>
-
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <ul class="nav navbar-nav">
-      <a class="navbar-brand" href="/">Qh</a>
-    </ul>
-  </div>
-</nav>
+<div class="header">
+  <nav class="navbar navbar-default">
+    <div class="container">
+        <p class="navbar-text"> <a href="/">Q</a> </p>
+    </div>
+  </nav>
+</div>
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 text-center">
       <h1>Welcome to Queue Host</h1>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-12 text-center">
       <h4>Sign up to open your Queue.</h4>
     </div>
   </div>
@@ -30,16 +24,22 @@
   <div class="row">
     <div class="col-xs-12">
       <form action="/signup" method="post" class="form-inline">
-        <div class="form-group login">
-          <div class="input-group">
-            <input type="text" class="form-control email" name="email" placeholder="Email address">
+        <div class="row text-center">
+          <div class="col-xs-12">
+            <div class="form-group login">
+              <div class="input-group">
+                <input type="text" class="form-control text-center email" name="email" placeholder="Email address">
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="input-group">
-            <input type="password" class="form-control password" name="password" placeholder="Password">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="password" class="form-control text-center password" name="password" placeholder="Password">
+              </div>
+            </div>
           </div>
-        </div>
+
         <nav class="navbar navbar-default navbar-fixed-bottom">
           <div class="container">
             <div class="row">
@@ -49,11 +49,37 @@
                 </button>
               </div>
             </div>
+            <div class="row">
+              <div class="col-xs-6 left-align">
+                <a href="/host">
+                  <h6>Have an account?</h6>
+                </a>
+              </div>
+              <div class="col-xs-6 right-align">
+                <a href="/">
+                  <h6>Looking for Queue?</h6>
+                </a>
+              </div>
+            </div>
+            </div>
           </div>
         </nav>
       </form>
     </div>
   </div>
+</div>
+
+<% if (message.length) { %>
+  <div class="row text-center">
+    <div class="col-xs-12">
+      <div class="alert alert-danger">
+        <%= message %>
+      </div>
+    </div>
+  </div>
+<% } %>
+
+
 </div>
 
 <% include foot.ejs%>
