@@ -34,7 +34,7 @@ export class HostMap extends React.Component {
 
   render() {
     if (!this.props.loaded) {
-      return ( <div> Loading Queue App Map... </div> );
+      return ( <div></div> );
     } else {
       return (
         <div>

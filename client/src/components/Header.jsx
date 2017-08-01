@@ -16,9 +16,7 @@ export const Header = props => {
           { props.redux.store.user.admin
             ? <ViewToggle redux={props.redux}/>
           : <div></div>}
-          <a href="/profile">
-            <FontAwesome name="user-o" />
-          </a>
+          <a href="/profile"><FontAwesome name="user-o" /></a>
         </Navbar.Text>
       </Navbar>
       { !props.redux.store.user.admin && props.redux.store.party.id

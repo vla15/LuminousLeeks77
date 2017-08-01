@@ -10,7 +10,7 @@ export const EnqueueFormHost = props => {
           <input
             id="firstName"
             name="firstName"
-            placeholder="First name"
+            placeholder="Name"
             value={props.redux.store.party.first_name}
             onChange={() => {
               props.redux.dispatch.updateFirstName(document.getElementById('firstName').value);
@@ -51,7 +51,7 @@ export const EnqueueFormHost = props => {
           <input
             id='phoneNumber'
             name='phoneNumber'
-            placeholder='Tel number'
+            placeholder='Phone'
             value={props.redux.store.party.phone_number}
             onChange={() => {
               props.redux.dispatch.updatePhoneNumber(document.getElementById('phoneNumber').value);

@@ -27,7 +27,7 @@ export const QueueList = props => {
         </Col>
         <Col xs={4}>
           <h6>
-            Tele
+            Phone
           </h6>
         </Col>
       </Row>

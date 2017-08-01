@@ -1,19 +1,28 @@
 <% include head.ejs%>
 
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <ul class="nav navbar-nav">
-        <a class="navbar-brand" href="/">Q</a>
-        <p class="navbar-text navbar-right">
-          <% if (user.phone) { %> <a href="/">See Queue</a> <% } %>
-          <!-- <a href="/logout"> Logout </a> -->
-        </p>
-      </ul>
-    </div>
-  </nav>
+  <div class="header">
+    <nav class="navbar navbar-default">
+      <div class="container">
+          <p class="navbar-text"> <a href="/">Q</a> </p>
+          <p class="navbar-text navbar-right">
+            <% if (user.phone) { %> <a href="/">
+              <i class="fa fa-list-ol" aria-hidden="true"></i>
+            </a> <% } %>
+          </p>
+      </div>
+    </nav>
+    <nav class="queue-stats profile-stats navbar navbar-default">
+      <div class="container">
+          <p class="navbar-text">
+             <%= user.display %>
+          </p>
+      </div>
+    </nav>
+  </div>
 
     <% if (user.email && !user.phone) { %>
       <div class="container">
+
         <div class="row">
           <div class="col-xs-12">
             <h1> Welcome to Queue. </h1>
@@ -21,7 +30,7 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <h4> What's your number?</h4>
+            <h4> Whats your number?</h4>
           </div>
         </div>
 
@@ -45,44 +54,42 @@
       </div>
 
     <% } else { %>
-      <div class="container">
-      <div class="row">
-        <div class="col-xs-12">
-          <h1> Your account </h1>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <img
-            class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-            alt="Generic placeholder image"
-            width="60" height="60">
-          <div class="user-info">
-            <div class="user-info-name">
+      <div class="container account">
+
+        <div class="row">
+          <div class="col-xs-8">
+            <h6>
               <%= user.display %>
-            </div>
-            <div class="user-info-email">
-              <%= user.email %>
-            </div>
+            </h6>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <form action="/phone" method="post" class="form-inline">
-            <div class="form-group">
-              <div class="input-group">
-                <input type="text" class="form-control" id="phone" name="phone" value="<%= user.phone %>" placeholder="Phone number">
-                <div class="input-group-addon">
-                  <button type="submit" class="btn-enter-update">
-                    Update Number
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
+
+        <div class="row">
+          <div class="col-xs-8">
+            <h6>
+              <%= user.email %>
+            </h6>
+          </div>
         </div>
+
+      <div class="row">
+        <form action="/phone" method="post" class="form-inline">
+            <div class="col-xs-8">
+              <h6>
+                <input type="text" class="phone-input" id="phone" name="phone" value="<%= user.phone %>" placeholder="Phone number">
+              </h6>
+            </div>
+            <div class="col-xs-4">
+              <h6>
+                <button type="submit" class="btn-enter-update">Update</button>
+              </h6>
+            </div>
+        </form>
       </div>
+
+
+
+
     </div>
       <% } %>
       <nav class="navbar navbar-default navbar-fixed-bottom">
