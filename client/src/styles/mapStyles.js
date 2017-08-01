@@ -28,14 +28,14 @@ const mapStyles = [
     "featureType": "poi",
     "stylers": [
       {
-        "visibility": "off"
+        'visibility': 'off'
       }
     ]
   },
   {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
+    'featureType': 'poi.park',
+    'elementType': 'geometry',
+    'stylers': [
       {
         "visibility": "on"
       }

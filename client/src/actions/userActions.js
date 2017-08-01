@@ -14,6 +14,16 @@ userActions.setUserInfo = () => {
           type: 'server/SEND_USER_ID',
           payload: result.data.id
         });
+        return result;
+      })
+      .then(user => {
+        axios.get(`/api/partyinfo/hasparty/${user.data.id}`)
+          .then(party => {
+            dispatch({
+              type: actionTypes.SET_IS_ENQUEUED,
+              payload: party.data.queue_id
+            });
+          });
       });
   };
 };

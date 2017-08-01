@@ -29,7 +29,7 @@ export const EnqueueFormCustomer = props => {
             onClick={() => {
               props.redux.dispatch.enqueueCustomer(
                 props.redux.store.user.profile_id,
-                1,
+                props.redux.store.queueChoice.isEnqueued,
                 props.redux.store.party.party_size,
                 props.redux.store.user.first_name,
                 props.redux.store.user.phone_number,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import moment from 'moment';
 
 export const EnqueueFormHost = props => {
   return (
@@ -21,7 +22,8 @@ export const EnqueueFormHost = props => {
       </Col>
       <Col xs={2}>
         <h6>
-          {props.redux.store.queue.next_wait_time} m
+          { moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
+            : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') } m
         </h6>
       </Col>
       <Col xs={2}>
@@ -67,7 +69,7 @@ export const EnqueueFormHost = props => {
             onClick={() => {
               props.redux.dispatch.enqueueHost(
                 props.redux.store.user.profile_id,
-                1,
+                props.redux.store.user.admin,
                 props.redux.store.party.party_size,
                 props.redux.store.party.first_name,
                 props.redux.store.party.phone_number,
