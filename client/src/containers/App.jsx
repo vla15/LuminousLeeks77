@@ -41,7 +41,7 @@ const mapDispatchToProps = dispatch => {
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
       
       setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
-
+      setHasParty: (userId) => { dispatch(userActions.setHasParty(userId)); },
       goToProfile: () => { dispatch(userActions.goToProfile()); },
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
@@ -49,9 +49,11 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
+
 //need way to track if customer has already selected a queue
 class App extends React.Component {
   render() {
+    console.log(this.props.store);
     return (
       <div>
         <Header redux={this.props} />
@@ -59,10 +61,9 @@ class App extends React.Component {
           ? <Loading />
           : this.props.store.user.admin
             ? <Host redux={this.props} />
-            : this.props.store.user.has_party
+            : 0
               ? <Customer redux={this.props} />
               : <QueueChoice redux={this.props} /> }
-              }
       </div>
 
     );
@@ -70,6 +71,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.dispatch.setUserInfo();
+    // this.props.dispatch.setHasParty(this.props.user.admin);
     this.props.dispatch.testSocketConnect();
   }
 }

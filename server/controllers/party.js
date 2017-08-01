@@ -33,6 +33,17 @@ module.exports.getOne = (req, res) => {
 };
 
 
+// module.exports.getPartyStuff = (req, res) => {
+//   models.Party.where({ profile_id: req.params.userid })
+//     .fetch({ require: true})
+//     .then(party => {
+//       res.send(party.get('queue_id'));
+//     })
+//     .catch(err => {
+//       res.send(null);
+//     });
+// };
+
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {

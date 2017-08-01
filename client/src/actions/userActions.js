@@ -18,4 +18,16 @@ userActions.setUserInfo = () => {
   };
 };
 
+// userActions.setPartyInfo = userId => {
+//   return dispatch => {
+//     axios.get(`/api/partyInfo/hasparty${userId}`)
+//       .then(result => {
+//         dispatch({
+//           type: actionTypes.SET_HAS_PARTY,
+//           payload: result.data.id
+//         });
+//       });
+//   };
+// };
+
 module.exports = userActions;
