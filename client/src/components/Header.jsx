@@ -7,8 +7,8 @@ import { PartyStats } from '../components/PartyStats.jsx';
 
 export const Header = props => {
   let photoSyle = {
-    width: '40',
-    height: '40'
+    width: '45',
+    height: '45'
   };
   return (
     <div className="header">
@@ -21,7 +21,7 @@ export const Header = props => {
             ? <ViewToggle redux={props.redux}/>
             : <div></div>}
           <a href="/profile">
-            <img src={props.redux.store.user.photo} style={photoSyle} />
+            <img src={props.redux.store.user.photo} style={photoSyle} className='img-circle'/>
           </a>
         </Navbar.Text>
       </Navbar>
