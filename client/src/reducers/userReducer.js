@@ -10,6 +10,7 @@ const userReducer = (state = null, action) => {
       phone_number: action.payload.phone,
       email: action.payload.email,
       admin: action.payload.admin,
+      photo: action.payload.photo
     };
 
   case 'SET_SOCKET_ID':
