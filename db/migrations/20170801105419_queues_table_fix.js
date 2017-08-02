@@ -3,8 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.table('profiles', t => {
       t.integer('queue_view').nullable();
     }),
-    knex.schema.createTableIfNotExists('organization', function(table) {
-      table.increments('id').unsigned().primary();
+    knex.schema.table('queues', function(table) {
       table.string('name', 100).nullable();
       table.string('address', 100).nullable();
       table.string('city', 100).nullable();

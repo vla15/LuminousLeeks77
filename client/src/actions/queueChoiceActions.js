@@ -3,7 +3,7 @@ import actionTypes from './actionTypes';
 
 const queueChoiceActions = {};
 
-queueChoiceActions.getQueueChoiceList = () => {
+queueChoiceActions.getQueueChoiceList = (user_id) => {
   return dispatch => {
     axios.get('/api/queueinfo/queuechoice')
       .then(result => {
@@ -11,6 +11,9 @@ queueChoiceActions.getQueueChoiceList = () => {
           type: actionTypes.GET_QUEUE_CHOICE_LIST,
           payload: result.data
         });
+      });
+    axios.put(`api/profiles/viewing/${user_id}/0`)
+      .then (() => {
       });
   };
 };

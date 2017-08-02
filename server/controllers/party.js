@@ -48,8 +48,6 @@ module.exports.getQueueIdBasedOnUserId = (req, res) => {
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
-  console.log('what is happening in getPartyInfoCustomer', req.params.queueid);
-  console.log('req.params.userid', req.params.userid);
   return models.Party
     .where({ profile_id: req.params.userid })
     .fetch({ require: true })

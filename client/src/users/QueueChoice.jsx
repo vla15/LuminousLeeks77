@@ -9,7 +9,7 @@ class QueueChoice extends React.Component {
   }
 
   componentDidMount() {
-    this.props.redux.dispatch.getQueueChoiceList();
+    this.props.redux.dispatch.getQueueChoiceList(this.props.redux.store.user.profile_id);
   }
 
   render() {

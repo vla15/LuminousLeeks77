@@ -35,7 +35,7 @@ export const QueueListItem = props => {
           <FontAwesome
             name="times"
             onClick={() => {
-              props.redux.dispatch.dequeueHost(props.party.queue_id, props.party.id);
+              props.redux.dispatch.dequeueHost(props.party.queue_id, props.party.id, props.party.profile_id);
             }}
           />
         </h6>
