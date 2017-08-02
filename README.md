@@ -1,6 +1,6 @@
 # nQu
 
-An application that enables business owners to monitor customers who are currently waiting in the queue through a real time, intuitive and clean UI.  In addition, it will allow business owners to track the location of customers who have added themselves to the queue list.  After customers have surpassed a certain time threshold, the application will also automatically alert customers via SMS.
+An application that enables business owners to monitor customers who are currently waiting in the queue through a real time, intuitive and clean UI.  In addition, it will allow business owners to track the location of customers who have added themselves to the queue list and automatically send an SMS alert after a predefined time.
 
 Customers can also utilize this application to enqueue themselves to available wait lists within their proximity. It also enables the customer to actively monitor their expected wait times and the number of parties ahead of them.
 
@@ -33,6 +33,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 ## Usage
 
 > Some usage instructions
+How to use this thing
+Screencast of adding to queue
+Pictures
+Get Shyan on this
+
+
 
 ## Requirements
 
