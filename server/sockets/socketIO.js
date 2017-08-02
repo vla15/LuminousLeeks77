@@ -54,7 +54,7 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
     .then(result => {
       // res.send(result);
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.socket_id) {
+        if (party.attributes.id === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
           models.Queue.where({ id: queueId }).fetch({
             withRelated: ['parties']
           })
@@ -80,6 +80,7 @@ var sendQueueInfoToHostWithSocket = queueId => {
         .where({ admin: queueId })
         .fetchAll({ withRelated: ['queue']})
         .then(profiles => {
+          console.log('profiles', profiles);
           profiles.forEach(profile => {
             emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', queue);
           });
@@ -107,7 +108,6 @@ var sendSocketDequeueForCustomer = (userId, queueId) => {
     })
     .then(queue => {
       queue.set('queue_size', queue.get('queue_size') - 1);
-      //needs 2 actions: update_queue_info
       emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '', location: { lat: 37.7836676, lng: -122.4090455 } });
       emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
     });
@@ -131,7 +131,7 @@ var updatePartiesOnToggleQueue = queueId => {
     })
     .then(result => {
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.socket_id) {
+        if (party.attributes.id === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
           emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queueData);
         }
       });
