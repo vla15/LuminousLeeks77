@@ -1,0 +1,65 @@
+# version: '3.3'
+# services: 
+#   queue-app: 
+#     image: sheydarezaee/queue-docker:queue-latest1
+#     depends_on: 
+#       - redis
+#       - postgres
+#     ports: 
+#       - 8080:3000
+#     links:
+#       - postgres
+#       - redis
+#   redis:
+#     image: redis:4.0.1
+#   postgres: 
+#     image: postgres:9.6.3
+#     ports: 
+#       - 5432:5432
+#     environment: 
+#       POSTGRES_USER: sheydarezaei
+#       POSTGRES_PASSWORD: ""
+#       POSTGRES_DB: thesis_devel
+version: '3'
+services:
+  redis:
+    image: "redis:alpine"
+    expose:
+      - 6379
+    networks:
+      - webnet
+  postgres:
+    environment:
+      POSTGRES_USER: sheydarezaei
+      POSTGRES_PASSWORD: ''
+      POSTGRES_DB: thesis_devel
+    expose:
+      - 5432
+    image: "postgres:9.6.3"
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - webnet
+  web:
+    build: .
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      NODE_ENV: development
+    networks:
+      - webnet
+    ports:
+     - "3000:3000"
+    volumes:
+     - .:/opt/app
+    #command: yarn run dockerInit
+networks:
+  webnet:
+
+
+
+
+
+
+    

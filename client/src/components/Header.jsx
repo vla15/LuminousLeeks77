@@ -7,6 +7,10 @@ import { PartyStats } from '../components/PartyStats.jsx';
 import { QueueChoiceStats } from '../components/QueueChoiceStats.jsx';
 
 export const Header = props => {
+  let photoStyle = {
+    width: '19',
+    height: '19'
+  };
   return (
     <div className="header">
       <Navbar>
@@ -18,8 +22,12 @@ export const Header = props => {
         <Navbar.Text pullRight={true}>
           { props.redux.store.user.admin
             ? <ViewToggle redux={props.redux}/>
-          : <div></div>}
-          <a href="/profile"><FontAwesome name="user-o" /></a>
+            : <div></div>}
+          <a href="/profile">
+            { props.redux.store.user.photo
+            ? <img src={props.redux.store.user.photo} style={photoStyle} className="img-circle"/>
+          : <FontAwesome name="user-o"/> }
+          </a>
         </Navbar.Text>
       </Navbar>
       { !props.redux.store.user.admin && props.redux.store.party.id

@@ -56,7 +56,10 @@ export class CustomerMap extends React.Component {
             disableDoubleClickZoom={true}
             className='map'
           >
-            <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
+          <Marker
+            name={'Queue'}
+            position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
+          />
 
             <Marker
               title={'Party'}
