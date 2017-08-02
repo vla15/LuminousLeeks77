@@ -18,6 +18,7 @@ var emitSocketMessage = (socketId, action, payload) => {
   });
 };
 
+
 var sendSocketDataForParties = queueId => {
   return models.Party.where({queue_id: queueId})
     .query((qb) => {
@@ -39,6 +40,7 @@ var sendSocketDataForParties = queueId => {
       });
     });
 };
+
 var updateQueueInfoForNonqueuedCustomers = queueId => {
   models.Profile.query(qb => {
     qb.select('*').from('profiles').leftJoin(
@@ -46,36 +48,39 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
       'profiles.id',
       'parties.profile_id');
   })
-  .fetchAll({
-    columns: ['socket_id']
-  })
-  .then(result => {
-    // res.send(result);
-    result.forEach(party => {
-      if (party.attributes.id === null && party.attributes.socket_id) {
-        models.Queue.where({ id: queueId }).fetch({
-          withRelated: ['parties']
-        })
-          .then(queue => {
-            emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-
-          });
-      }
+    .fetchAll({
+      columns: ['socket_id']
+    })
+    .then(result => {
+      // res.send(result);
+      result.forEach(party => {
+        if (party.attributes.id === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
+          models.Queue.where({ id: queueId }).fetch({
+            withRelated: ['parties']
+          })
+            .then(queue => {
+              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
+            });
+        }
+      });
     });
-  });
 };
 
 var sendQueueInfoToHostWithSocket = queueId => {
-  return models.Queue
-    .where({ id: queueId })
+  return models.Queue.where({ id: queueId })
     .fetch({
-      withRelated: ['parties']
+      withRelated: [{
+        'parties': (qb) => {
+          qb.orderBy('wait_time', 'ASC');
+        }
+      }]
     })
     .then(queue => {
       return models.Profile
         .where({ admin: queueId })
         .fetchAll({ withRelated: ['queue']})
         .then(profiles => {
+          console.log('profiles', profiles);
           profiles.forEach(profile => {
             emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', queue);
           });
@@ -103,35 +108,31 @@ var sendSocketDequeueForCustomer = (userId, queueId) => {
     })
     .then(queue => {
       queue.set('queue_size', queue.get('queue_size') - 1);
-      //needs 2 actions: update_queue_info
       emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '', location: { lat: 37.7836676, lng: -122.4090455 } });
       emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
     });
 };
 
 var updatePartiesOnToggleQueue = queueId => {
-  console.log('in updatePartiesOnToggleQueue');
-
-  models.Profile.query(qb => {
-    qb.select('*').from('profiles').leftJoin(
-      'parties',
-      'profiles.id',
-      'parties.profile_id');
+  var queueData;
+  models.Queue.where({id: queueId}).fetch({
+    withRelated: ['parties']
   })
-    .fetchAll({
-      columns: ['socket_id']
+    .then(data => {
+      queueData = data;
+      return models.Profile.query(qb => {
+        qb.select('*').from('profiles').leftJoin(
+          'parties',
+          'profiles.id',
+          'parties.profile_id')
+          .whereNotNull('profiles.socket_id');
+      })
+        .fetchAll();
     })
     .then(result => {
-      // res.send(result);
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.socket_id) {
-          models.Queue.where({ id: queueId}).fetch({
-            withRelated: ['parties']
-          })
-            .then(queue => {
-              emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queue);
-
-            });
+        if (party.attributes.id === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
+          emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queueData);
         }
       });
 

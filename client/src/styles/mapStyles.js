@@ -1,13 +1,71 @@
 const mapStyles = [
   {
+    "featureType": "administrative",
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#f5f5f5"
+        "visibility": "off"
       }
     ]
   },
   {
+    "featureType": "administrative.land_parcel",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "landscape.man_made",
+    "stylers": [
+      {
+        "color": "#faf5ed"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "stylers": [
+      {
+        'visibility': 'off'
+      }
+    ]
+  },
+  {
+    'featureType': 'poi.park',
+    'elementType': 'geometry',
+    'stylers': [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "stylers": [
+      {
+        "saturation": "0"
+      },
+      {
+        "gamma": "1.8"
+      },
+      {
+        "weight": "1.00"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry.fill",
+    "stylers": [
+      {
+        "hue": "#ffb200"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
     "elementType": "labels.icon",
     "stylers": [
       {
@@ -16,161 +74,47 @@ const mapStyles = [
     ]
   },
   {
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#bdbdbd"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.business",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#ffffff"
-      }
-    ]
-  },
-  {
     "featureType": "road.arterial",
-    "elementType": "labels.text.fill",
+    "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#757575"
+        "lightness": "0"
+      },
+      {
+        "gamma": "1"
       }
     ]
   },
   {
-    "featureType": "road.highway",
-    "elementType": "geometry",
+    "featureType": "transit",
     "stylers": [
       {
-        "color": "#dadada"
+        "visibility": "off"
       }
     ]
   },
   {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
+    "featureType": "transit.station.airport",
     "stylers": [
       {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
+        "hue": "#b000ff"
+      },
       {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
+        "saturation": "23"
+      },
       {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
+        "lightness": "-4"
+      },
       {
-        "color": "#eeeeee"
+        "gamma": "0.80"
       }
     ]
   },
   {
     "featureType": "water",
-    "elementType": "geometry",
     "stylers": [
       {
-        "color": "#c9c9c9"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
+        "color": "#a0daf2"
       }
     ]
   }

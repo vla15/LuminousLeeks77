@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import {Polygon} from 'google-maps-react';
 import mapStyles from '../styles/mapStyles.js';
+import { colors } from '../colors/colors.jsx';
 
 export class CustomerMap extends React.Component {
 
   constructor(props) { super(props); }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.google !== this.props.google) { 
-      this.loadMap(); 
+    if (prevProps.google !== this.props.google) {
+      this.loadMap();
     }
   }
 
@@ -23,16 +23,18 @@ export class CustomerMap extends React.Component {
       const node = ReactDOM.findDOMNode(mapRef);
     }
   }
+
   mapReady(mapProps, map) {
     const {google} = mapProps;
     const service = new google.maps.places.PlacesService(map);
     window.map = map;
     window.google = google;
+    // this.props.updateCenter(this.props.currentCenter);
   }
 
   render() {
-    if (!this.props.loaded) { 
-      return ( <div> Loading Queue App Map... </div> ); 
+    if (!this.props.loaded) {
+      return ( <div> Loading Queue App Map... </div> );
     } else {
       return (
         <div>
@@ -43,23 +45,22 @@ export class CustomerMap extends React.Component {
             centerAroundCurrentLocation={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            style={{ position: "fixed !important", height: "100%" }}
+            style={{ position: 'fixed !important', height: '100%' }}
             styles={this.props.mapStyles}
             scrollwheel={false}
             navigationControl={false}
             mapTypeControl={false}
-            scaleControl={false}
             zoomControl={false}
             scaleControl={false}
             disableDoubleClickZoom={true}
-            className="map"
+            className='map'
           >
             <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
 
             <Marker
               title={'Party'}
               name={'Party'}
-              icon={{url: 'http://www.2273records.com/wp-content/uploads/2016/07/svg-icon-small.png'}}
+              icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: colors(this.props.redux.store.user.first_name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.user.first_name) }}
             />
 
           </Map>
@@ -75,6 +76,3 @@ export default GoogleApiWrapper({
   apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo',
   version: '3.27'
 })(CustomerMap);
-
-//extra apiKey just in case:
-//AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo
