@@ -151,19 +151,18 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     })
     .then(profile => {
 
-      console.log('oauthProfile.photos[0].value --------', oauthProfile.photos[0].value)
-
+      console.log('oauthProfile.photos[0].value', oauthProfile.photos[0].value);
       let profileInfo = {
         first: oauthProfile.name.givenName,
         last: oauthProfile.name.familyName,
         display: oauthProfile.displayName || `${oauthProfile.name.givenName} ${oauthProfile.name.familyName}`,
         email: oauthProfile.emails[0].value,
-        // photo: oauthProfile.photos[0].value
+        photo: oauthProfile.photos[0].value
       };
 
-      // if (oauthProfile.photos[0].value) {
-      //   profileInfo.photo = oauthProfile.photos[0].value;
-      // }
+      if (oauthProfile.photos[0].value) {
+        profileInfo.photo = oauthProfile.photos[0].value;
+      }
 
       if (profile) {
         //update profile with info from oauth
