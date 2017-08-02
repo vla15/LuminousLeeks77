@@ -141,6 +141,7 @@ module.exports.enqueue = (req, res, next) => {
             }, {patch: true});
         })
         .then(success => {
+          SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
           SocketIO.sendSocketDataForParties(req.params.queueid);
           SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
           return next();
