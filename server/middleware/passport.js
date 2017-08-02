@@ -7,11 +7,11 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
-passport.serializeUser((profile, done) => { 
+passport.serializeUser((profile, done) => {
   done(null, profile.id);
 });
 
-passport.deserializeUser((id, done) => { 
+passport.deserializeUser((id, done) => {
   return models.Profile.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -124,7 +124,7 @@ passport.use('facebook', new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENTID || config.Facebook.clientID,
   clientSecret: process.env.FACEBOOK_CLIENTSECRET || config.Facebook.clientSecret,
   callbackURL: process.env.FACEBOOK_URL || config.Facebook.callbackURL,
-  profileFields: ['id', 'emails', 'name']
+  profileFields: ['id', 'emails', 'name', 'photos']
 },
 (accessToken, refreshToken, profile, done) => {
 
@@ -157,7 +157,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         last: oauthProfile.name.familyName,
         display: oauthProfile.displayName || `${oauthProfile.name.givenName} ${oauthProfile.name.familyName}`,
         email: oauthProfile.emails[0].value,
-        photo: oauthProfile.photos[0].value
+        photo: oauthProfile.photos[0].value || null
       };
 
       if (oauthProfile.photos[0].value) {
@@ -199,7 +199,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         'message': 'Signing up requires an email address, \
           please be sure there is an email address associated with your Facebook account \
           and grant access when you register.' });
-    }); 
+    });
 };
 
 module.exports = passport;

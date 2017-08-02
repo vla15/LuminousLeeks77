@@ -3,7 +3,7 @@ const moment = require('moment');
 const faker = require('faker');
 
 //inserts a bunch of fake users
-    
+
 let createProfileRecord = (knex, id) => {
   return knex('profiles').insert({
     first: faker.name.firstName(),
@@ -95,6 +95,7 @@ exports.seed = (knex, Promise) => {
     })
     .then(()=> {
       return knex('queues').insert({
+        name: 'Burma Superstar',
         queue_size: 0,
         organization_id: 1,
         profile_id: 1,
@@ -106,6 +107,7 @@ exports.seed = (knex, Promise) => {
     })
     .then(()=> {
       return knex('queues').insert({
+        name: 'Tokyo Express',
         queue_size: 0,
         organization_id: 2,
         profile_id: 2,
@@ -117,6 +119,7 @@ exports.seed = (knex, Promise) => {
     })
     .then(()=> {
       return knex('queues').insert({
+        name: 'Share Tea',
         queue_size: 0,
         organization_id: 3,
         profile_id: 3,
@@ -128,6 +131,7 @@ exports.seed = (knex, Promise) => {
     })
     .then(()=> {
       return knex('queues').insert({
+        name: 'Taqueria Castillo',
         queue_size: 0,
         organization_id: 4,
         profile_id: 4,
@@ -139,6 +143,7 @@ exports.seed = (knex, Promise) => {
     })
     .then(()=> {
       return knex('queues').insert({
+        name: 'Chai Bar',
         queue_size: 0,
         organization_id: 5,
         profile_id: 5,
@@ -164,5 +169,5 @@ exports.seed = (knex, Promise) => {
 
 
 // return knex('queues').del()
-    
+
 //     });

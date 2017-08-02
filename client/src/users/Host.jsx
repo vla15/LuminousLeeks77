@@ -15,7 +15,7 @@ class Host extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="host">
         <Header redux={this.props.redux} />
         {
           this.props.redux.store.view === 'Queue Info'
