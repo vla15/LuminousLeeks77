@@ -94,6 +94,25 @@ module.exports.updateSocketId = (userId, socketId) => {
     });
 };
 
+module.exports.updateViewing = (req, res) => {
+  let queue;
+  parseInt(req.params.queueid) !== 0 ? queue = req.params.queueid : queue = null;
+  models.Profile.where({ id: req.params.userid }).fetch()
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      //profile.set('socket_id', socketId);
+      return profile.save('queue_view', queue , { method: 'update' });
+    })
+    .then(result => {
+      res.sendStatus(304);
+    })
+    .catch(err => {
+      console.log('no profile found');
+    });
+};
+
 // module.exports.deleteOne = (req, res) => {
 //   models.Profile.where({ id: req.params.id }).fetch()
 //     .then(profile => {
