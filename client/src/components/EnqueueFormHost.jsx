@@ -1,16 +1,17 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import moment from 'moment';
 
 export const EnqueueFormHost = props => {
   return (
-    <Row>
-      <Col xs={2}>
+    <Row className="enqueue-form-host">
+      <Col xs={3}>
         <h6>
           <input
             id="firstName"
             name="firstName"
-            placeholder="First name"
+            placeholder="Name"
             value={props.redux.store.party.first_name}
             onChange={() => {
               props.redux.dispatch.updateFirstName(document.getElementById('firstName').value);
@@ -21,6 +22,8 @@ export const EnqueueFormHost = props => {
       </Col>
       <Col xs={2}>
         <h6>
+          { moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
+            : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') } m
         </h6>
       </Col>
       <Col xs={2}>
@@ -50,7 +53,7 @@ export const EnqueueFormHost = props => {
           <input
             id='phoneNumber'
             name='phoneNumber'
-            placeholder='Phone number'
+            placeholder='Phone'
             value={props.redux.store.party.phone_number}
             onChange={() => {
               props.redux.dispatch.updatePhoneNumber(document.getElementById('phoneNumber').value);
