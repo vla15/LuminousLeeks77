@@ -1,5 +1,6 @@
 import React from 'react';
 import { QueueChoiceList } from '../queueChoiceViews/QueueChoiceList.jsx';
+import { Header } from '../components/Header.jsx';
 
 
 class QueueChoice extends React.Component {
@@ -13,7 +14,10 @@ class QueueChoice extends React.Component {
 
   render() {
     return (
-      <QueueChoiceList redux={this.props.redux}/>
+      <div>
+        <Header redux={this.props.redux}/>
+        <QueueChoiceList redux={this.props.redux}/>
+      </div>
     );
   }
 }
