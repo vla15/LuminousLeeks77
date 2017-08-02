@@ -11,7 +11,9 @@ export const Header = props => {
     <div className="header">
       <Navbar>
         <Navbar.Text>
-          <a href="#">Q</a>
+          { !props.redux.store.user.admin && props.redux.store.queueChoice.queue_view && !props.redux.store.party.id
+          ? <FontAwesome name="chevron-left" onClick={() => { props.redux.dispatch.setQueueView(null); }} />
+          : <a id="brand" href="#">Q</a> }
         </Navbar.Text>
         <Navbar.Text pullRight={true}>
           { props.redux.store.user.admin
@@ -22,7 +24,7 @@ export const Header = props => {
       </Navbar>
       { !props.redux.store.user.admin && props.redux.store.party.id
       ? <PartyStats redux={props.redux} />
-      : !props.redux.store.user.admin && !props.redux.store.queueChoice.isEnqueued
+      : !props.redux.store.user.admin && !props.redux.store.queueChoice.queue_view
       ? <QueueChoiceStats redux={props.redux} />
       : <QueueStats redux={props.redux} /> }
     </div>

@@ -8,11 +8,6 @@ export const QueueInfo = props => {
   return (
     <Grid>
       <EnqueueFormCustomer redux={props.redux} />
-      <Row>
-        <Button onClick={ () => { props.redux.dispatch.setIsEnqueued(null); } }>
-          Back
-        </Button>
-      </Row>
     </Grid>
   );
 };
