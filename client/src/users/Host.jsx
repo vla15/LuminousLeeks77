@@ -3,7 +3,9 @@ import { Grid, Row, Col, Navbar, Button } from 'react-bootstrap';
 import { QueueOpen } from '../hostViews/QueueOpen.jsx';
 import { QueueClosedEmpty } from '../hostViews/QueueClosedEmpty.jsx';
 import { QueueClosedFull } from '../hostViews/QueueClosedFull.jsx';
+import { ViewToggle } from '../components/ViewToggle.jsx';
 import HostMap from '../components/HostMap.jsx';
+import { Header } from '../components/Header.jsx';
 
 class Host extends React.Component {
 
@@ -14,46 +16,16 @@ class Host extends React.Component {
   render() {
     return (
       <div>
-
-        <div>
-          <Row>
-            <Col xs={2} xsOffset={9}>
-              <Button
-                block={true}
-                id='viewMap'
-                value='Map'
-                onClick={() => { this.props.redux.dispatch.setViewHost(document.getElementById('viewMap').value); }}
-              >
-              Map
-              </Button>
-            </Col>
-
-            <Col xs={2} xsOffset={9}>
-              <Button
-                block={true}
-                id='viewQueueInfo'
-                value='Queue Info'
-                onClick={() => { this.props.redux.dispatch.setViewHost(document.getElementById('viewQueueInfo').value); }}
-              >
-              Queue Info
-              </Button>
-            </Col>
-
-          </Row>
-        </div>
-
-        { 
-          this.props.redux.store.view.host === 'Queue Info'
-
+        <Header redux={this.props.redux} />
+        {
+          this.props.redux.store.view === 'Queue Info'
             ? (this.props.redux.store.queue.is_open === true
               ? <QueueOpen redux={this.props.redux} />
               : this.props.redux.store.queue.parties.length === 0
                 ? <QueueClosedEmpty redux={this.props.redux} />
                 : <QueueClosedFull redux={this.props.redux} />)
-
             : <HostMap redux={this.props.redux} />
         }
-
       </div>
     );
   }

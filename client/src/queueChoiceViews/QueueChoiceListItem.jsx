@@ -37,7 +37,7 @@ export const QueueChoiceListItem = props => {
           <Button
             block={true}
             onClick={() => {
-              props.redux.dispatch.setIsEnqueued(props.queue.id);
+              props.redux.dispatch.setQueueView(props.queue.id, props.redux.store.user.profile_id);
             }}
           >
             View

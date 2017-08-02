@@ -7,10 +7,9 @@ export const Loading = props => {
       <Row>
         <Col xs={12}>
           <h1>
-            Loading...
           </h1>
         </Col>
       </Row>
     </Grid>
-  )
-}
+  );
+};

@@ -1,22 +1,23 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Row, Col, Grid, NavDropdown, MenuItem } from 'react-bootstrap';
+import { ViewToggle } from '../components/ViewToggle.jsx';
+import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 
 export const QueueStats = props => {
   return (
-    <Row>
-      <Col xs={4}>
-        <h6>Queue Size</h6>
-        <h1>{props.redux.store.queue.queue_size}</h1>
-      </Col>
-      <Col xs={6}>
-        <h6>Next Wait Time</h6>
-        <h1>
-          {
-            moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
-              : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') } min(s)
-        </h1>
-      </Col>
-    </Row>
+    <Navbar className="queue-stats">
+      <Navbar.Text>
+        <h6>{props.redux.store.queue.is_open ? 'Open' : 'Closed'}</h6>
+      </Navbar.Text>
+      <Navbar.Text pullRight={true}>
+        <h6>{
+          moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') < 10 ? 10
+            : moment.utc(props.redux.store.queue.next_wait_time).diff(moment(), 'minutes') } m</h6>
+      </Navbar.Text>
+      <Navbar.Text pullRight={true}>
+        <h6>{props.redux.store.queue.queue_size} parties</h6>
+      </Navbar.Text>
+    </Navbar>
   );
 };

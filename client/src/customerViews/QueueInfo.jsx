@@ -8,7 +8,7 @@ export const QueueInfo = props => {
   return (
     <Grid>
       <Row>
-        <Button onClick={ () => { props.redux.dispatch.setIsEnqueued(null); } }>
+        <Button onClick={ () => { props.redux.dispatch.setQueueView(null); } }>
           Back
         </Button>
         <Col xs={12}>

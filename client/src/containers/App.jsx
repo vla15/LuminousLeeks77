@@ -39,13 +39,13 @@ const mapDispatchToProps = dispatch => {
 
       sendUserId: (userId) => { dispatch(userActions.sendUserId(userId)); },
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
-      
+
       setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
       setViewQueueChoiceList: (viewOption) => { dispatch(viewActions.setViewQueueChoiceList(viewOption)); },
       goToProfile: () => { dispatch(userActions.goToProfile()); },
 
       getQueueChoiceList: () => { dispatch(queueChoiceActions.getQueueChoiceList()); },
-      setIsEnqueued: (queueId) => { dispatch(queueChoiceActions.setIsEnqueued(queueId)); },
+      setQueueView: (queueId, userId) => { dispatch(queueChoiceActions.setQueueView(queueId, userId)); },
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
     }
@@ -57,12 +57,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header redux={this.props} />
         { this.props.store.user === null
           ? <Loading />
           : this.props.store.user.admin
             ? <Host redux={this.props} />
-            : this.props.store.queueChoice.isEnqueued
+            : this.props.store.queueChoice.queue_view
               ? <Customer redux={this.props} />
               : <QueueChoice redux={this.props} /> }
       </div>

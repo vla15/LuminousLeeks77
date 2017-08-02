@@ -16,4 +16,7 @@ router.route('/:id')
 // router.route('/setUserLocation/:userid/:lat/:lng')
 //   .put(ProfileController.setUserLocation);
 
+router.route('/viewing/:userid/:queueid')
+  .put(ProfileController.updateViewing);
+
 module.exports = router;

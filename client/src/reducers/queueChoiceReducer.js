@@ -1,4 +1,4 @@
-const queueChoiceReducer = (state = {queueList: [], isEnqueued: null}, action) => {
+const queueChoiceReducer = (state = {queueList: [], queue_view: null}, action) => {
   switch (action.type) {
   case 'GET_QUEUE_CHOICE_LIST':
     return {
@@ -6,10 +6,10 @@ const queueChoiceReducer = (state = {queueList: [], isEnqueued: null}, action) =
       queueList: action.payload
     };
 
-  case 'SET_IS_ENQUEUED':
+  case 'SET_QUEUE_VIEW':
     return {
-      ...state, 
-      isEnqueued: action.payload
+      ...state,
+      queue_view: action.payload
     };
   }
 

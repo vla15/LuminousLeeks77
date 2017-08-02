@@ -4,11 +4,12 @@ import { Row, Col } from 'react-bootstrap';
 
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
+import { colors } from '../colors/colors.jsx';
 
 export const QueueListItem = props => {
   return (
-    <Row>
-      <Col xs={2}>
+    <Row style={{'border-left': `10px solid ${colors(props.party.first_name)}`}}>
+      <Col xs={3}>
         <h6>
           {props.party.first_name}
         </h6>
@@ -16,12 +17,12 @@ export const QueueListItem = props => {
       <Col xs={2}>
         <h6>
           {moment(moment.utc(props.party.wait_time) - moment())._i < 0 ? 0
-            : moment.utc(props.party.wait_time).diff(moment(), 'minutes')} min(s)
+            : moment.utc(props.party.wait_time).diff(moment(), 'minutes')} m
         </h6>
       </Col>
       <Col xs={2}>
         <h6>
-          {props.party.party_size}ppl
+          {props.party.party_size}
         </h6>
       </Col>
       <Col xs={4}>

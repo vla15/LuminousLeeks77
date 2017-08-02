@@ -15,10 +15,15 @@ queueChoiceActions.getQueueChoiceList = () => {
   };
 };
 
-queueChoiceActions.setIsEnqueued = (queueId) => {
-  return {
-    type: actionTypes.SET_IS_ENQUEUED,
-    payload: queueId
+queueChoiceActions.setQueueView = (queueId, userId) => {
+  return dispatch => {
+    axios.put(`api/profiles/viewing/${userId}/${queueId}`)
+      .then(result => {
+        dispatch({
+          type: actionTypes.SET_QUEUE_VIEW,
+          payload: queueId
+        });
+      });
   };
 };
 
