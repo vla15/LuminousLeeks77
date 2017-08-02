@@ -12,7 +12,7 @@ export const Header = props => {
       <Navbar>
         <Navbar.Text>
           { !props.redux.store.user.admin && props.redux.store.queueChoice.queue_view && !props.redux.store.party.id
-          ? <FontAwesome name="chevron-left" onClick={() => { props.redux.dispatch.setQueueView(null); }} />
+          ? <div><FontAwesome name="chevron-left" onClick={() => { props.redux.dispatch.setQueueView(null); }} /></div>
           : <a id="brand" href="#">Q</a> }
         </Navbar.Text>
         <Navbar.Text pullRight={true}>

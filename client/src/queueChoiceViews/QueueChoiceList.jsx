@@ -7,7 +7,7 @@ export const QueueChoiceList = props => {
     <Grid className="queue-list-container">
       <div className="queue-list">
         <Row className="queue-list-header">
-          <Col xs={3}>
+          <Col xs={4}>
             <h6>
               Name
             </h6>
@@ -22,7 +22,7 @@ export const QueueChoiceList = props => {
               Size
             </h6>
           </Col>
-          <Col xs={3}>
+          <Col xs={2}>
             <h6>
               Status
             </h6>

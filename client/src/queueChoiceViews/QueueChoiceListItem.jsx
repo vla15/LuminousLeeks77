@@ -6,7 +6,7 @@ import FontAwesome from 'react-fontawesome';
 export const QueueChoiceListItem = props => {
   return (
     <Row onClick={() => { props.redux.dispatch.setQueueView(props.queue.id);}}>
-      <Col xs={3}>
+      <Col xs={4}>
         <h6>
           {props.queue.name}
         </h6>
@@ -24,9 +24,11 @@ export const QueueChoiceListItem = props => {
           {props.queue.queue_size} parties
         </h6>
       </Col>
-      <Col xs={3}>
-        <h6>
-          {props.queue.is_open?'Open':'Closed'}
+      <Col xs={2}>
+        <h6 className="text-center">
+          { props.queue.is_open
+          ? <FontAwesome name="check-circle" className="green" />
+          : <FontAwesome name="plus-circle" className="red" />}
         </h6>
       </Col>
     </Row>
