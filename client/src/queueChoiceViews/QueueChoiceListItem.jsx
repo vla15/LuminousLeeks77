@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 
 export const QueueChoiceListItem = props => {
   return (
-    <Row onClick={ () => { props.redux.dispatch.setQueueView(props.queue.id); }}>
+    <Row onClick={ () => { props.redux.dispatch.setQueueView(props.queue.id, props.redux.store.user.profile_id); }}>
       <Col xs={4}>
         <h6>
           {props.queue.name}
