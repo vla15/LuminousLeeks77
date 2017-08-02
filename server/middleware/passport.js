@@ -36,7 +36,7 @@ passport.use('local-signup', new LocalStrategy({
     // check to see if there is any account with this email address
     return models.Profile.where({ email }).fetch()
       .then(profile => {
-        console.log(profile);
+        // console.log('profile', profile);
         // create a new profile if a profile does not exist
         if (!profile) {
           return models.Profile.forge({ email: email, admin: '1'}).save();
@@ -50,7 +50,7 @@ passport.use('local-signup', new LocalStrategy({
       })
       .tap(profile => {
         // create a new local auth account with the user's profile id
-        console.log(profile);
+        // console.log(profile);
         return models.Auth.forge({
           password,
           type: 'local',
@@ -114,8 +114,11 @@ passport.use('google', new GoogleStrategy({
   clientSecret: process.env.GOOGLE_CLIENTSECRET || config.Google.clientSecret,
   callbackURL: process.env.GOOGLE_URL || config.Google.callbackURL,
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
-);
+(accessToken, refreshToken, profile, done) => {
+
+  console.log('google profile', profile);
+  getOrCreateOAuthProfile('google', profile, done);
+}));
 
 passport.use('facebook', new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENTID || config.Facebook.clientID,
@@ -123,11 +126,14 @@ passport.use('facebook', new FacebookStrategy({
   callbackURL: process.env.FACEBOOK_URL || config.Facebook.callbackURL,
   profileFields: ['id', 'emails', 'name']
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
-);
+(accessToken, refreshToken, profile, done) => {
+
+  console.log('facebook profile', profile);
+  getOrCreateOAuthProfile('facebook', profile, done);
+}));
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  console.log(oauthProfile);
+  // console.log('oauthProfile', oauthProfile);
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
@@ -145,12 +151,18 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     })
     .then(profile => {
 
+      console.log('oauthProfile.photos[0].value', oauthProfile.photos[0].value);
       let profileInfo = {
         first: oauthProfile.name.givenName,
         last: oauthProfile.name.familyName,
         display: oauthProfile.displayName || `${oauthProfile.name.givenName} ${oauthProfile.name.familyName}`,
-        email: oauthProfile.emails[0].value
+        email: oauthProfile.emails[0].value,
+        photo: oauthProfile.photos[0].value
       };
+
+      if (oauthProfile.photos[0].value) {
+        profileInfo.photo = oauthProfile.photos[0].value;
+      }
 
       if (profile) {
         //update profile with info from oauth

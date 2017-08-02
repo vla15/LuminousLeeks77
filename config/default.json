@@ -3,7 +3,7 @@
     "client": "postgresql",
     "connection": {
       "database": "thesis_devel",
-      "user": "michaeljclausen",
+      "user": "sheydarezaei",
       "password": "",
       "host": "localhost",
       "port": 5432
@@ -32,3 +32,20 @@
     "number": "+14159686722"
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
