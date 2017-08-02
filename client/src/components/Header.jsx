@@ -4,6 +4,7 @@ import { ViewToggle } from '../components/ViewToggle.jsx';
 import FontAwesome from 'react-fontawesome';
 import { QueueStats } from '../components/QueueStats.jsx';
 import { PartyStats } from '../components/PartyStats.jsx';
+import { QueueChoiceStats } from '../components/QueueChoiceStats.jsx';
 
 export const Header = props => {
   return (
@@ -21,6 +22,8 @@ export const Header = props => {
       </Navbar>
       { !props.redux.store.user.admin && props.redux.store.party.id
       ? <PartyStats redux={props.redux} />
+      : !props.redux.store.user.admin && !props.redux.store.queueChoice.isEnqueued
+      ? <QueueChoiceStats redux={props.redux} />
       : <QueueStats redux={props.redux} /> }
     </div>
   );

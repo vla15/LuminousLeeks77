@@ -7,17 +7,12 @@ import { QueueStats } from '../components/QueueStats.jsx';
 export const QueueInfo = props => {
   return (
     <Grid>
+      <EnqueueFormCustomer redux={props.redux} />
       <Row>
         <Button onClick={ () => { props.redux.dispatch.setIsEnqueued(null); } }>
           Back
         </Button>
-        <Col xs={12}>
-          <h1>The queue is open.</h1>
-        </Col>
       </Row>
-      <QueueStats redux={props.redux} />
-      <EnqueueFormCustomer redux={props.redux} />
-      {/*<MapContainer />*/}
     </Grid>
   );
 };

@@ -4,10 +4,34 @@ import { QueueChoiceListItem } from './QueueChoiceListItem.jsx';
 
 export const QueueChoiceList = props => {
   return (
-    <div>
-      {props.redux.store.queueChoice.queueList.map(queue => {
-        return <QueueChoiceListItem queue={queue} redux={props.redux} key={queue.id} />;
-      })}
-    </div>
+    <Grid className="queue-list-container">
+      <div className="queue-list">
+        <Row className="queue-list-header">
+          <Col xs={3}>
+            <h6>
+              Id
+            </h6>
+          </Col>
+          <Col xs={2}>
+            <h6>
+              Wait
+            </h6>
+          </Col>
+          <Col xs={3}>
+            <h6>
+              Size
+            </h6>
+          </Col>
+          <Col xs={3}>
+            <h6>
+              Status
+            </h6>
+          </Col>
+        </Row>
+        {props.redux.store.queueChoice.queueList.map(queue => {
+          return <QueueChoiceListItem queue={queue} redux={props.redux} key={queue.id} />;
+        })}
+      </div>
+    </Grid>
   );
 };

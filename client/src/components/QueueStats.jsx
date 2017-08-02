@@ -8,7 +8,10 @@ export const QueueStats = props => {
   return (
     <Navbar className="queue-stats">
       <Navbar.Text>
-        <h6>{props.redux.store.queue.is_open?'Open':'Closed'}</h6>
+        <h6>
+          <FontAwesome name="chevron-circle-left" onClick={() => { props.redux.dispatch.setIsEnqueued(null); }}></FontAwesome>
+          &nbsp;&nbsp;{props.redux.store.queue.is_open?'Open':'Closed'}
+        </h6>
       </Navbar.Text>
       <Navbar.Text pullRight={true}>
         <h6>{
