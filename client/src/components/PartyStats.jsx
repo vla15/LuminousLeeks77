@@ -3,12 +3,14 @@ import { Navbar, Nav, NavItem, Row, Col, Grid, NavDropdown, MenuItem } from 'rea
 import { ViewToggle } from '../components/ViewToggle.jsx';
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
+import { colors } from '../colors/colors.jsx';
+
 
 export const PartyStats = props => {
   return (
     <Navbar className="party-stats">
       <Navbar.Text>
-        <h6>You're queued</h6>
+        <h6>{props.redux.store.queue.name}&nbsp;&nbsp;<FontAwesome name="circle" className="green blink" /></h6>
       </Navbar.Text>
       <Navbar.Text pullRight={true}>
         <h6>{moment(moment.utc(props.redux.store.party.wait_time) - moment())._i < 0 ? 0

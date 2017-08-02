@@ -45,6 +45,7 @@ export class HostMap extends React.Component {
             zoom={13}
             disableDefaultUI={true}
             centerAroundCurrentLocation={false}
+            center={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
             visible={true}
             onReady={this.mapReady.bind(this)}
             style={{ position: "fixed !important", height: "100%" }}
@@ -59,7 +60,10 @@ export class HostMap extends React.Component {
             defaultCenter={{ lat: '37.759703', lng: '-122.428093' }}
           >
 
-            <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
+            <Marker
+              name={'Queue'}
+              position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
+            />
 
             { this.props.redux.store.queue.parties.map(party => {
               return <Marker

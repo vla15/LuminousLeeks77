@@ -56,8 +56,8 @@ class Customer extends React.Component {
 
 
   componentDidMount() {
-    this.props.redux.dispatch.getPartyInfo(this.props.redux.store.queueChoice.isEnqueued, this.props.redux.store.user.profile_id);
-    this.props.redux.dispatch.getQueueInfoCustomer(this.props.redux.store.queueChoice.isEnqueued);
+    this.props.redux.dispatch.getPartyInfo(this.props.redux.store.queueChoice.queue_view, this.props.redux.store.user.profile_id);
+    this.props.redux.dispatch.getQueueInfoCustomer(this.props.redux.store.queueChoice.queue_view);
     this.props.redux.dispatch.setPartyLocation();
 
     navigator.geolocation.watchPosition(position => {
