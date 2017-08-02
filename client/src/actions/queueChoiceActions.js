@@ -20,6 +20,9 @@ queueChoiceActions.getQueueChoiceList = (user_id) => {
 
 queueChoiceActions.setQueueView = (queueId, userId) => {
   return dispatch => {
+    if (!queueId) {
+      axios.put(`api/profiles/viewing/${userId}/0`);
+    }
     axios.put(`api/profiles/viewing/${userId}/${queueId}`)
       .then(result => {
         dispatch({

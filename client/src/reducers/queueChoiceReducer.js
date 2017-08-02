@@ -8,7 +8,7 @@ const queueChoiceReducer = (state = {queueList: [], queue_view: null}, action) =
 
   case 'SET_QUEUE_VIEW':
     return {
-      ...state,
+      ...state, 
       queue_view: action.payload
     };
   }

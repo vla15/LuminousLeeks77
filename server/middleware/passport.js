@@ -7,11 +7,11 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
-passport.serializeUser((profile, done) => { 
+passport.serializeUser((profile, done) => {
   done(null, profile.id);
 });
 
-passport.deserializeUser((id, done) => { 
+passport.deserializeUser((id, done) => {
   return models.Profile.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -32,42 +32,42 @@ passport.use('local-signup', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 },
-  (req, email, password, done) => {
-    // check to see if there is any account with this email address
-    return models.Profile.where({ email }).fetch()
-      .then(profile => {
-        console.log(profile);
-        // create a new profile if a profile does not exist
-        if (!profile) {
-          return models.Profile.forge({ email: email, admin: '1'}).save();
-        }
-        // throw if any auth account already exists
-        if (profile) {
-          throw profile;
-        }
+(req, email, password, done) => {
+  // check to see if there is any account with this email address
+  return models.Profile.where({ email }).fetch()
+    .then(profile => {
+      // console.log('profile', profile);
+      // create a new profile if a profile does not exist
+      if (!profile) {
+        return models.Profile.forge({ email: email, admin: '1'}).save();
+      }
+      // throw if any auth account already exists
+      if (profile) {
+        throw profile;
+      }
 
-        return profile;
-      })
-      .tap(profile => {
-        // create a new local auth account with the user's profile id
-        console.log(profile);
-        return models.Auth.forge({
-          password,
-          type: 'local',
-          profile_id: profile.get('id')
-        }).save();
-      })
-      .then(profile => {
-        // serialize profile for session
-        done(null, profile.serialize());
-      })
-      .error(error => {
-        done(error, null);
-      })
-      .catch(() => {
-        done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
-      });
-  }));
+      return profile;
+    })
+    .tap(profile => {
+      // create a new local auth account with the user's profile id
+      // console.log(profile);
+      return models.Auth.forge({
+        password,
+        type: 'local',
+        profile_id: profile.get('id')
+      }).save();
+    })
+    .then(profile => {
+      // serialize profile for session
+      done(null, profile.serialize());
+    })
+    .error(error => {
+      done(error, null);
+    })
+    .catch(() => {
+      done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
+    });
+}));
 
 passport.use('local-login', new LocalStrategy({
   usernameField: 'email',
@@ -114,20 +114,26 @@ passport.use('google', new GoogleStrategy({
   clientSecret: process.env.GOOGLE_CLIENTSECRET || config.Google.clientSecret,
   callbackURL: process.env.GOOGLE_URL || config.Google.callbackURL,
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('google', profile, done))
-);
+(accessToken, refreshToken, profile, done) => {
+
+  console.log('google profile', profile);
+  getOrCreateOAuthProfile('google', profile, done);
+}));
 
 passport.use('facebook', new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENTID || config.Facebook.clientID,
   clientSecret: process.env.FACEBOOK_CLIENTSECRET || config.Facebook.clientSecret,
   callbackURL: process.env.FACEBOOK_URL || config.Facebook.callbackURL,
-  profileFields: ['id', 'emails', 'name']
+  profileFields: ['id', 'emails', 'name', 'photos']
 },
-(accessToken, refreshToken, profile, done) => getOrCreateOAuthProfile('facebook', profile, done))
-);
+(accessToken, refreshToken, profile, done) => {
+
+  console.log('facebook profile', profile);
+  getOrCreateOAuthProfile('facebook', profile, done);
+}));
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  console.log(oauthProfile);
+  // console.log('oauthProfile', oauthProfile);
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
@@ -145,12 +151,18 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
     })
     .then(profile => {
 
+      console.log('oauthProfile.photos[0].value', oauthProfile.photos[0].value);
       let profileInfo = {
         first: oauthProfile.name.givenName,
         last: oauthProfile.name.familyName,
         display: oauthProfile.displayName || `${oauthProfile.name.givenName} ${oauthProfile.name.familyName}`,
-        email: oauthProfile.emails[0].value
+        email: oauthProfile.emails[0].value,
+        photo: oauthProfile.photos[0].value || null
       };
+
+      if (oauthProfile.photos[0].value) {
+        profileInfo.photo = oauthProfile.photos[0].value;
+      }
 
       if (profile) {
         //update profile with info from oauth
@@ -187,7 +199,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         'message': 'Signing up requires an email address, \
           please be sure there is an email address associated with your Facebook account \
           and grant access when you register.' });
-    }); 
+    });
 };
 
 module.exports = passport;
