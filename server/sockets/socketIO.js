@@ -80,7 +80,7 @@ var sendQueueInfoToHostWithSocket = queueId => {
         .where({ admin: queueId })
         .fetchAll({ withRelated: ['queue']})
         .then(profiles => {
-          console.log('profiles --------->', profiles);
+          //console.log('profiles --------->', profiles);
           profiles.forEach(profile => {
             emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_INFO_HOST', queue);
           });
@@ -115,6 +115,28 @@ var sendSocketDequeueForCustomer = (userId, queueId) => {
 
 var updateQueueList = () => {
   // sends GET_QUEUE_CHOICE_LIST
+  // get all the customers viewing the queue list
+  var queues;
+  models.Queue.fetchAll()
+  .then(result => {
+    queues = result;
+  })
+  .then(() => {
+    return models.Profile.query(qb => {
+      qb.select('*')
+        .from('profiles')
+        .whereNotNull('socket_id')
+        .whereNull('admin')
+        .whereNull('queue_view');
+    })
+    .fetchAll();
+  })
+  .then(profiles => {
+    //console.log(profiles);
+    profiles.forEach(profile => {
+      emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_CHOICE_LIST', queues);
+    });
+  });
 };
 
 var updatePartiesOnToggleQueue = queueId => {
@@ -156,5 +178,6 @@ module.exports = {
   sendQueueInfoToHostWithSocket: sendQueueInfoToHostWithSocket,
   updatePartiesOnDequeue: updatePartiesOnDequeue,
   sendSocketDequeueForCustomer: sendSocketDequeueForCustomer,
-  updatePartiesOnToggleQueue: updatePartiesOnToggleQueue
+  updatePartiesOnToggleQueue: updatePartiesOnToggleQueue,
+  updateQueueList: updateQueueList
 };
