@@ -9,7 +9,10 @@ if (process.env.REDISTOGO_URL) {
   client = redis.createClient(rtg.port, rtg.hostname);
   client.auth(rtg.auth.split(':')[1]);
 } else {
-  client = redis.createClient();
+  client = redis.createClient({
+    port: 6379,
+    host: process.env.REDIS_HOST || 'localhost'
+  });
 }
 
 module.exports.verify = (req, res, next) => {
@@ -21,7 +24,9 @@ module.exports.verify = (req, res, next) => {
 
 module.exports.session = session({
   store: new RedisStore({
-    client: client
+    client: client,
+    // host: 'redis',
+    // port: 6379
   }),
   secret: 'more laughter, more love, more life',
   resave: false,
