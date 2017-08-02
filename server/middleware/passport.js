@@ -7,11 +7,11 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 const config = require('config')['passport'];
 const models = require('../../db/models');
 
-passport.serializeUser((profile, done) => { 
+passport.serializeUser((profile, done) => {
   done(null, profile.id);
 });
 
-passport.deserializeUser((id, done) => { 
+passport.deserializeUser((id, done) => {
   return models.Profile.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -196,7 +196,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         'message': 'Signing up requires an email address, \
           please be sure there is an email address associated with your Facebook account \
           and grant access when you register.' });
-    }); 
+    });
 };
 
 module.exports = passport;

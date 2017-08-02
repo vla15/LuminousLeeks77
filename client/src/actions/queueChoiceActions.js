@@ -15,7 +15,7 @@ queueChoiceActions.getQueueChoiceList = () => {
   };
 };
 
-queueChoiceActions.setIsEnqueued = (queueId) => {
+queueChoiceActions.setQueueView = (queueId) => {
   return {
     type: actionTypes.SET_IS_ENQUEUED,
     payload: queueId

@@ -4,6 +4,7 @@ import Map from 'google-maps-react';
 import { InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import mapStyles from '../styles/mapStyles.js';
 import { colors } from '../colors/colors.jsx';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 export class CustomerMap extends React.Component {
 
@@ -34,7 +35,7 @@ export class CustomerMap extends React.Component {
 
   render() {
     if (!this.props.loaded) {
-      return ( <div> Loading Queue App Map... </div> );
+      return ( <div></div> );
     } else {
       return (
         <div>
@@ -55,7 +56,10 @@ export class CustomerMap extends React.Component {
             disableDoubleClickZoom={true}
             className='map'
           >
-            <Marker name={'Queue'} position={{lat: '37.759703', lng: '-122.428093'}} />
+          <Marker
+            name={'Queue'}
+            position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
+          />
 
             <Marker
               title={'Party'}
