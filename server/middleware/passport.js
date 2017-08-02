@@ -36,7 +36,6 @@ passport.use('local-signup', new LocalStrategy({
     // check to see if there is any account with this email address
     return models.Profile.where({ email }).fetch()
       .then(profile => {
-        // console.log('profile', profile);
         // create a new profile if a profile does not exist
         if (!profile) {
           return models.Profile.forge({ email: email, admin: '1'}).save();
@@ -50,7 +49,6 @@ passport.use('local-signup', new LocalStrategy({
       })
       .tap(profile => {
         // create a new local auth account with the user's profile id
-        // console.log(profile);
         return models.Auth.forge({
           password,
           type: 'local',
@@ -124,7 +122,7 @@ passport.use('facebook', new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENTID || config.Facebook.clientID,
   clientSecret: process.env.FACEBOOK_CLIENTSECRET || config.Facebook.clientSecret,
   callbackURL: process.env.FACEBOOK_URL || config.Facebook.callbackURL,
-  profileFields: ['id', 'emails', 'name']
+  profileFields: ['id', 'emails', 'name', 'photos']
 },
 (accessToken, refreshToken, profile, done) => {
 
@@ -133,7 +131,6 @@ passport.use('facebook', new FacebookStrategy({
 }));
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  // console.log('oauthProfile', oauthProfile);
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
@@ -157,7 +154,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         last: oauthProfile.name.familyName,
         display: oauthProfile.displayName || `${oauthProfile.name.givenName} ${oauthProfile.name.familyName}`,
         email: oauthProfile.emails[0].value,
-        photo: oauthProfile.photos[0].value
+        photo: oauthProfile.photos[0].value || null
       };
 
       if (oauthProfile.photos[0].value) {
