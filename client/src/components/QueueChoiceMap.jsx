@@ -41,7 +41,7 @@ export class QueueChoiceMap extends React.Component {
         <div>
           <Map
             google={this.props.google}
-            zoom={12}
+            zoom={13}
             disableDefaultUI={true}
             centerAroundCurrentLocation={true}
             visible={true}
@@ -72,10 +72,11 @@ export class QueueChoiceMap extends React.Component {
               title={'Party'}
               name={'Party'}
               icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: colors(this.props.redux.store.user.first_name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.user.first_name) }}
+              position={{lat: '37.7836676', lng: '-122.4090455'}}
             />
 
           </Map>
-  
+
         </div>
       );
     }

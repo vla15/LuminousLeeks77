@@ -8,6 +8,7 @@ export const QueueClosedEmpty = props => {
         <Row>
           <Col xs={12}>
             <Button
+              className="positive"
               block={true}
               onClick={() => { props.redux.dispatch.toggleQueue(props.redux.store.queue.id); }}
             >

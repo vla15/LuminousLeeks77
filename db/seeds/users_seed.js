@@ -16,14 +16,14 @@ let createProfileRecord = (knex, id) => {
 };
 
 var generateRandomLongitutde = () => {
-  var max = -122.51000;
-  var min = -122.38000;
+  var max = -122.44572;
+  var min = -122.39868;
   return (Math.random() * (max - min) + min).toFixed(6);
 };
 
 var generateRandomLatitude = () => {
-  var max = 37.80778;
-  var min = 37.71000;
+  var max = 37.79678;
+  var min = 37.78486;
   return (Math.random() * (max - min) + min).toFixed(6);
 };
 
@@ -131,7 +131,7 @@ exports.seed = (knex, Promise) => {
     })
     .then(()=> {
       return knex('queues').insert({
-        name: 'Taqueria Castillo',
+        name: 'Amber',
         queue_size: 0,
         organization_id: 4,
         profile_id: 4,

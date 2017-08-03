@@ -5,21 +5,17 @@ import { Navbar, Row, Col, Button, Modal } from 'react-bootstrap';
 export const EnqueueFormCustomer = props => {
   return (
     <Navbar className="enqueue-form-customer" fixedBottom={true}>
-      <Modal 
-        bsSize="small" 
+      <Modal
+        bsSize="small"
         show={props.redux.store.view.modalState}
         onHide={ () => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}
         keyboard={true}
       >
         <Modal.Body bsClass="modal-body">
-          <br></br>
-          <br></br>
-          You've been dequeued
-          <br></br>
-          <br></br>
+          <h3>You've been dequeued.</h3>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="modal-body-btn" onClick={() => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}>
+          <Button block={true} className="modal-body-btn neutral" onClick={() => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}>
               OK
           </Button>
         </Modal.Footer>

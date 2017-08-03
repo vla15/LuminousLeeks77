@@ -41,7 +41,7 @@ export class HostMap extends React.Component {
         <div>
           <Map
             google={this.props.google}
-            zoom={12}
+            zoom={13}
             disableDefaultUI={true}
             centerAroundCurrentLocation={false}
             visible={true}
