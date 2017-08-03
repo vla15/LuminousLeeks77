@@ -109,7 +109,7 @@ module.exports.enqueue = (req, res, next) => {
             throw result;
           } else {
             res.nextWaitTimeExpired = moment().diff(moment(result.get('next_wait_time'))) >= 0 ? true : false;
-            res.withinTen = moment(res.nextWaitTime).diff(moment(), 'minutes') > 10 ? moment(res.nextWaitTime) : moment().add(10, 'm');
+            res.withinTen = moment(res.nextWaitTime).diff(moment(), 'minutes') >= 10 ? moment(res.nextWaitTime) : moment().add(10, 'm');
             return models.Party.forge({
               queue_id: req.params.queueid,
               wait_time: res.nextWaitTimeExpired ? moment().add(10, 'm') : res.withinTen,
@@ -121,7 +121,10 @@ module.exports.enqueue = (req, res, next) => {
               lng: req.params.lng
 
             }).save()
-              .then(result => { res.party_id = result.get('id'); })
+              .then(result => { 
+                res.party_id = result.get('id');
+                res.latestWaitTime = result.get('wait_time');
+              })
               .error(err => {
                 res.send(err);
               });
@@ -135,7 +138,7 @@ module.exports.enqueue = (req, res, next) => {
           return models.Queue.where({id: req.params.queueid})
             .save({queue_size: count, 
               next_wait_time: 
-              res.nextWaitTimeExpired ? moment().add(20, 'm') : moment(res.nextWaitTime).add(10, 'm')
+              moment(res.latestWaitTime).add(10, 'm')
             }, {patch: true});
         })
         .then(success => {
@@ -183,8 +186,12 @@ module.exports.dequeue = (req, res, next) => {
             .fetchAll();
         })
         .then(count => {
+          var mins = 10;
           res.partyLength = count.length || 0;
-          if (res.partyLength) {
+          if (moment(res.targetWaitTime).diff(moment(), 'm') < 0) {
+            mins = 0;
+          }
+          if (res.partyLength && mins !== 0) {
             count.forEach((party, index) => {
               models.Party.where({id: party.get('id')})
                 .save({wait_time: 
@@ -198,7 +205,7 @@ module.exports.dequeue = (req, res, next) => {
             .then((q) => {
               res.nextWaitTime = q.get('next_wait_time');
               models.Queue.where({id: req.params.queueid})
-                .save({queue_size: res.partyLength, next_wait_time: moment(res.nextWaitTime).subtract(10, 'm')}, {patch: true});
+                .save({queue_size: res.partyLength, next_wait_time: moment(res.nextWaitTime).subtract(mins, 'm')}, {patch: true});
             });
         })
         .then(complete => {

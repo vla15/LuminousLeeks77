@@ -47,7 +47,9 @@ const mapDispatchToProps = dispatch => {
       getQueueChoiceList: (user_id) => { dispatch(queueChoiceActions.getQueueChoiceList(user_id)); },
       setQueueView: (queue_id, user_id) => { dispatch(queueChoiceActions.setQueueView(queue_id, user_id)); },
 
-      testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
+      testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); },
+
+      toggleModal: () => { dispatch(viewActions.toggleModal()); }
     }
   };
 };

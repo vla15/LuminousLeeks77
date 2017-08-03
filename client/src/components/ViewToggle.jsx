@@ -8,7 +8,7 @@ export const ViewToggle = props => {
   return (
     <ButtonGroup className="view-toggle">
 
-      { props.redux.store.view === 'Queue Info'
+      { props.redux.store.view.hostView === 'Queue Info'
         ? <Button
           className="view-toggle-button"
           id='viewMap'

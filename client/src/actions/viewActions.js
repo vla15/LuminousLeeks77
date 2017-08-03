@@ -15,4 +15,10 @@ viewActions.setViewQueueChoiceList = viewOption => {
   };  
 };
 
+viewActions.toggleModal = () => {
+  return {
+    
+  };
+};
+
 module.exports = viewActions;
