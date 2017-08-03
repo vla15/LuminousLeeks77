@@ -4,7 +4,7 @@ import { QueueListItem } from '../components/QueueListItem.jsx';
 import { Row, Col, Button, ButtonGroup, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
-export const ViewToggle = props => {
+export const QueueChoiceToggle = props => {
   return (
     <ButtonGroup className="view-toggle">
 
@@ -13,7 +13,7 @@ export const ViewToggle = props => {
           className="view-toggle-button"
           id='viewMap'
           value='Map'
-          onClick={() => { props.redux.dispatch.setViewHost(document.getElementById('viewMap').value); }}
+          onClick={() => { props.redux.dispatch.setViewCustomer(document.getElementById('viewMap').value); }}
         >
           <FontAwesome name="map-o" />
         </Button>
@@ -22,7 +22,7 @@ export const ViewToggle = props => {
           className="view-toggle-button"
           id='viewQueueInfo'
           value='Queue Info'
-          onClick={() => { props.redux.dispatch.setViewHost(document.getElementById('viewQueueInfo').value); }}
+          onClick={() => { props.redux.dispatch.setViewCustomer(document.getElementById('viewQueueInfo').value); }}
         >
           <FontAwesome name="list-ul" />
         </Button>

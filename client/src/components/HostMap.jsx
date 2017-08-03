@@ -31,7 +31,6 @@ export class HostMap extends React.Component {
     const service = new google.maps.places.PlacesService(map);
     window.map = map;
     window.google = google;
-    // this.props.updateCenter(this.props.currentCenter);
   }
 
   render() {
