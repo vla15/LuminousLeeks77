@@ -54,7 +54,7 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
     .then(result => {
       // res.send(result);
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.queue_view === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
+        if (party.attributes.id === null && party.attributes.queue_view === parsaeInt(queueId) && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
           models.Queue.where({ id: queueId }).fetch({
             withRelated: ['parties']
           })
@@ -133,7 +133,7 @@ var updateQueueList = () => {
     })
     .then(profiles => { 
       profiles.forEach(profile => {
-        console.log(profile);
+        //console.log(profile);
         emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_CHOICE_LIST', queues);
       });
     });
@@ -157,7 +157,8 @@ var updatePartiesOnToggleQueue = queueId => {
     })
     .then(result => {
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.queue_view === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
+        console.log(party.attributes.id, party.attributes.queue_view, party.attributes.socket_id);
+        if (party.attributes.id === null && party.attributes.queue_view === parseInt(queueId) && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
           emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queueData);
         }
       });
