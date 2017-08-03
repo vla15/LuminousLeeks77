@@ -45,7 +45,7 @@ queueActions.enqueueHost = (user_id, queue_id, party_size, first_name, phone_num
   };
 };
 
-queueActions.dequeueHost = (queue_id, party_id) => {
+queueActions.dequeueHost = (queue_id, party_id, user_id) => {
   return dispatch => {
     axios.delete(`/api/partyInfo/rm/${queue_id}/${party_id}`)
       .then(() => {
@@ -57,6 +57,7 @@ queueActions.dequeueHost = (queue_id, party_id) => {
             });
           });
       });
+    axios.put(`api/profiles/viewing/${user_id}/${queue_id}`);
   };
 };
 

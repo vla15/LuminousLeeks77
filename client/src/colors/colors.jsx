@@ -3,56 +3,56 @@ export const colors = first_name => {
   var initial = first_name.split('').shift().toUpperCase();
 
   if (initial === 'A') {
-    var color = 'aqua'
+    var color = 'aqua';
   } else if (initial === 'B') {
-    var color = 'blue'
+    var color = 'blue';
   } else if (initial === 'C') {
-    var color = 'cyan'
+    var color = 'cyan';
   } else if (initial === 'D') {
-    var color = 'dodgerblue'
+    var color = 'dodgerblue';
   } else if (initial === 'E') {
-    var color = 'seagreen'
+    var color = 'seagreen';
   } else if (initial === 'F') {
-    var color = 'fuchsia'
+    var color = 'fuchsia';
   } else if (initial === 'G') {
-    var color = 'green'
+    var color = 'green';
   } else if (initial === 'H') {
-    var color = 'hotpink'
+    var color = 'hotpink';
   } else if (initial === 'I') {
-    var color = 'indianred'
+    var color = 'indianred';
   } else if (initial === 'J') {
-    var color = 'royalblue'
+    var color = 'royalblue';
   } else if (initial === 'K') {
-    var color = 'khaki'
+    var color = 'khaki';
   } else if (initial === 'L') {
-    var color = 'limegreen'
+    var color = 'limegreen';
   } else if (initial === 'M') {
-    var color = 'midnightblue'
+    var color = 'midnightblue';
   } else if (initial === 'O') {
-    var color = 'orange'
+    var color = 'orange';
   } else if (initial === 'P') {
-    var color = 'purple'
+    var color = 'purple';
   } else if (initial === 'Q') {
-    var color = 'turqoise'
+    var color = 'turqoise';
   } else if (initial === 'R') {
-    var color = 'red'
+    var color = 'red';
   } else if (initial === 'S') {
-    var color = 'silver'
+    var color = 'silver';
   } else if (initial === 'T') {
-    var color = 'teal'
+    var color = 'teal';
   } else if (initial === 'U') {
-    var color = 'peru'
+    var color = 'peru';
   } else if (initial === 'V') {
-    var color = 'violet'
+    var color = 'violet';
   } else if (initial === 'W') {
-    var color = 'wheat'
+    var color = 'wheat';
   } else if (initial === 'X') {
-    var color = 'dimgray'
+    var color = 'dimgray';
   } else if (initial === 'Y') {
-    var color = 'yellowgreen'
+    var color = 'yellowgreen';
   } else if (initial === 'Z') {
-    var color = 'black'
+    var color = 'black';
   }
 
   return color;
-}
+};

@@ -11,5 +11,5 @@ export const Loading = props => {
         </Col>
       </Row>
     </Grid>
-  )
-}
+  );
+};

@@ -32,42 +32,42 @@ passport.use('local-signup', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 },
-  (req, email, password, done) => {
-    // check to see if there is any account with this email address
-    return models.Profile.where({ email }).fetch()
-      .then(profile => {
-        // console.log('profile', profile);
-        // create a new profile if a profile does not exist
-        if (!profile) {
-          return models.Profile.forge({ email: email, admin: '1'}).save();
-        }
-        // throw if any auth account already exists
-        if (profile) {
-          throw profile;
-        }
+(req, email, password, done) => {
+  // check to see if there is any account with this email address
+  return models.Profile.where({ email }).fetch()
+    .then(profile => {
+      // console.log('profile', profile);
+      // create a new profile if a profile does not exist
+      if (!profile) {
+        return models.Profile.forge({ email: email, admin: '1'}).save();
+      }
+      // throw if any auth account already exists
+      if (profile) {
+        throw profile;
+      }
 
-        return profile;
-      })
-      .tap(profile => {
-        // create a new local auth account with the user's profile id
-        // console.log(profile);
-        return models.Auth.forge({
-          password,
-          type: 'local',
-          profile_id: profile.get('id')
-        }).save();
-      })
-      .then(profile => {
-        // serialize profile for session
-        done(null, profile.serialize());
-      })
-      .error(error => {
-        done(error, null);
-      })
-      .catch(() => {
-        done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
-      });
-  }));
+      return profile;
+    })
+    .tap(profile => {
+      // create a new local auth account with the user's profile id
+      // console.log(profile);
+      return models.Auth.forge({
+        password,
+        type: 'local',
+        profile_id: profile.get('id')
+      }).save();
+    })
+    .then(profile => {
+      // serialize profile for session
+      done(null, profile.serialize());
+    })
+    .error(error => {
+      done(error, null);
+    })
+    .catch(() => {
+      done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
+    });
+}));
 
 passport.use('local-login', new LocalStrategy({
   usernameField: 'email',

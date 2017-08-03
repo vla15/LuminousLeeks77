@@ -32,7 +32,7 @@ export const QueueList = props => {
         </Col>
       </Row>
       {props.redux.store.queue.parties.map(party => {
-        return <QueueListItem key={party.id} party={party} redux={props.redux} />
+        return <QueueListItem key={party.id} party={party} redux={props.redux} />;
       })}
     </div>
   );

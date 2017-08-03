@@ -8,7 +8,7 @@ import { colors } from '../colors/colors.jsx';
 
 export const QueueListItem = props => {
   return (
-    <Row style={{"border-left": `10px solid ${colors(props.party.first_name)}`}}>
+    <Row style={{'border-left': `10px solid ${colors(props.party.first_name)}`}}>
       <Col xs={3}>
         <h6>
           {props.party.first_name}
@@ -35,7 +35,7 @@ export const QueueListItem = props => {
           <FontAwesome
             name="times"
             onClick={() => {
-              props.redux.dispatch.dequeueHost(props.party.queue_id, props.party.id);
+              props.redux.dispatch.dequeueHost(props.party.queue_id, props.party.id, props.party.profile_id);
             }}
           />
         </h6>
