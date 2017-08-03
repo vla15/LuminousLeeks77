@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Row, Col, Button } from 'react-bootstrap';
 
 export const EnqueueFormCustomer = props => {
+  console.log('------EnqueueFormCustomer props', props)
   return (
     <Navbar className="enqueue-form-customer" fixedBottom={true}>
       <Row>

@@ -12,9 +12,12 @@ module.exports = function(grunt) {
     mochaTest: {
       test: {
         options: {
+          require: 'babel-register',
           reporter: 'spec'
         },
-        src: ['server/test/**/*.js']
+        src: ['server/test/**/*.js','client/test/**/*.js'] 
+        // server/test/**/*.js',
+        // "test": "mocha --compilers js:babel-core/register -r jsdom-global/register"
       }
     },
 
