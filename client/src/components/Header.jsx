@@ -24,8 +24,8 @@ export const Header = props => {
           { props.redux.store.user.admin
             ? <ViewToggle redux={props.redux}/>
             : !props.redux.store.user.admin && !props.redux.store.queueChoice.queue_view
-            ? <QueueChoiceToggle redux={props.redux} />
-            : <div></div> }
+              ? <QueueChoiceToggle redux={props.redux} />
+              : <div></div> }
           <a href="/profile">
             { props.redux.store.user.photo
               ? <img src={props.redux.store.user.photo} style={photoStyle} className="img-circle"/>
