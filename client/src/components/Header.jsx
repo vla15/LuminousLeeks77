@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, Row, Col, Grid, NavDropdown, MenuItem } from 'react-bootstrap';
 import { ViewToggle } from '../components/ViewToggle.jsx';
+import { QueueChoiceToggle } from '../components/QueueChoiceToggle.jsx';
 import FontAwesome from 'react-fontawesome';
 import { QueueStats } from '../components/QueueStats.jsx';
 import { PartyStats } from '../components/PartyStats.jsx';
@@ -22,7 +23,9 @@ export const Header = props => {
         <Navbar.Text pullRight={true}>
           { props.redux.store.user.admin
             ? <ViewToggle redux={props.redux}/>
-            : <div></div>}
+            : !props.redux.store.user.admin && !props.redux.store.queueChoice.queue_view
+            ? <QueueChoiceToggle redux={props.redux} />
+            : <div></div> }
           <a href="/profile">
             { props.redux.store.user.photo
               ? <img src={props.redux.store.user.photo} style={photoStyle} className="img-circle"/>
