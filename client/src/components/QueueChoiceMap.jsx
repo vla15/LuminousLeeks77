@@ -75,9 +75,7 @@ export class QueueChoiceMap extends React.Component {
             />
 
           </Map>
-          { this.props.redux.store.queue.is_open
-          ? <CloseQueueButton redux={this.props.redux} />
-          : <OpenQueueButton redux={this.props.redux} /> }
+  
         </div>
       );
     }
