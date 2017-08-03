@@ -1,6 +1,6 @@
 let initial = 'Queue Info';
 
-const viewReducer = (state = {setView: initial}, action) => {
+const viewReducer = (state = {setView: initial, modalState: false}, action) => {
   switch (action.type) {
   case 'SET_VIEW_HOST':
     return {
@@ -11,7 +11,13 @@ const viewReducer = (state = {setView: initial}, action) => {
   case 'SET_VIEW_QUEUE_CHOICE':
     return {
       ...state,
-      queueList: action.payload
+      setView: action.payload
+    };
+      
+  case 'TOGGLE_MODAL':
+    return {
+      ...state,
+      modalState: action.payload 
     };
 
   case 'SET_VIEW_CUSTOMER':
@@ -19,7 +25,6 @@ const viewReducer = (state = {setView: initial}, action) => {
       ...state,
       setView: action.payload
     };
-
   }
 
   return state;

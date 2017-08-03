@@ -47,10 +47,10 @@ class Customer extends React.Component {
 
         { 
           this.props.redux.store.queue.is_open === false
-          ? <QueueClosed redux={this.props.redux} />
-          : this.props.redux.store.party.id === undefined
-            ? <QueueInfo redux={this.props.redux} />
-            : <PartyInfo redux={this.props.redux}/> 
+            ? <QueueClosed redux={this.props.redux} />
+            : this.props.redux.store.party.id === undefined
+              ? <QueueInfo redux={this.props.redux} />
+              : <PartyInfo redux={this.props.redux}/> 
         }
 
       </div>

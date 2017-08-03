@@ -20,7 +20,7 @@ class QueueChoice extends React.Component {
         {
           this.props.redux.store.view.setView === 'Queue Info'
             ? <QueueChoiceList redux={this.props.redux}/>
-              : <QueueChoiceMap redux={this.props.redux} />
+            : <QueueChoiceMap redux={this.props.redux} />
         }
         
       </div>
