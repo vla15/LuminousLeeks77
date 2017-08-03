@@ -7,7 +7,7 @@ import { OpenQueueButton } from '../components/OpenQueueButton.jsx';
 import mapStyles from '../styles/mapStyles.js';
 import { colors } from '../colors/colors.jsx';
 
-export class HostMap extends React.Component {
+export class QueueChoiceMap extends React.Component {
 
   constructor(props) { super(props); }
 
@@ -31,7 +31,6 @@ export class HostMap extends React.Component {
     const service = new google.maps.places.PlacesService(map);
     window.map = map;
     window.google = google;
-    // this.props.updateCenter(this.props.currentCenter);
   }
 
   render() {
@@ -44,7 +43,7 @@ export class HostMap extends React.Component {
             google={this.props.google}
             zoom={12}
             disableDefaultUI={true}
-            centerAroundCurrentLocation={false}
+            centerAroundCurrentLocation={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
             style={{ position: "fixed !important", height: "100%" }}
@@ -59,21 +58,22 @@ export class HostMap extends React.Component {
             defaultCenter={{lat: -33, lng: 151}}
           >
 
-            <Marker
-              name={'Queue'}
-              position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
-              icon={{ path: 'M0,0 0,16 16,16 16,0z', fillColor: colors(this.props.redux.store.queue.name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.queue.name) }}
-            />
-
-            { this.props.redux.store.queue.parties.map(party => {
+          { this.props.redux.store.queueChoice.queueList.map(queue => {
               return <Marker
-                key={party.id}
-                title={party.first_name}
-                name={party.first_name}
-                icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: colors(party.first_name), fillOpacity: 1, scale: 1, strokeColor: colors(party.first_name) }}
-                position={{lat: party.lat, lng: party.lng}}
+                key={queue.id}
+                title={queue.name}
+                name={queue.name}
+                icon={{ path: 'M0,0 0,16 16,16 16,0z', fillColor: colors(queue.name), fillOpacity: 1, scale: 1, strokeColor: colors(queue.name) }}
+                position={{lat: queue.lat, lng: queue.lng}}
               />;
             }) }
+
+            <Marker
+              title={'Party'}
+              name={'Party'}
+              icon={{ path: 'M-9,0a9,9 0 1,0 18,0a9,9 0 1,0 -18,0', fillColor: colors(this.props.redux.store.user.first_name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.user.first_name) }}
+            />
+
           </Map>
           { this.props.redux.store.queue.is_open
           ? <CloseQueueButton redux={this.props.redux} />
@@ -84,9 +84,9 @@ export class HostMap extends React.Component {
   }
 }
 
-HostMap.defaultProps = { mapStyles: mapStyles };
+QueueChoiceMap.defaultProps = { mapStyles: mapStyles };
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw',
   version: '3.27'
-})(HostMap);
+})(QueueChoiceMap);

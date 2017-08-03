@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueueChoiceList } from '../queueChoiceViews/QueueChoiceList.jsx';
 import { Header } from '../components/Header.jsx';
+import { QueueChoiceMap } from '../components/QueueChoiceMap.jsx';
 
 
 class QueueChoice extends React.Component {
