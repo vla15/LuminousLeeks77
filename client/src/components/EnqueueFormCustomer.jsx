@@ -1,9 +1,20 @@
 import React from 'react';
-import { Navbar, Row, Col, Button } from 'react-bootstrap';
+import CustomerDequeueAlert from './CustomerDequeueAlert.jsx';
+import { Navbar, Row, Col, Button, Modal } from 'react-bootstrap';
+
 
 export const EnqueueFormCustomer = props => {
   return (
     <Navbar className="enqueue-form-customer" fixedBottom={true}>
+      <Modal show={props.redux.store.view.modalState}>
+        <Modal.Body>
+          You've been dequeued by the host.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => { props.redux.dispatch.toggleModal(props.redux.view.modalState); }}>Ok</Button>
+        </Modal.Footer>
+      </Modal>
+      
       <Row>
         <Col xs={2}>
           <Button

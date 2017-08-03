@@ -49,7 +49,7 @@ const mapDispatchToProps = dispatch => {
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); },
 
-      toggleModal: () => { dispatch(viewActions.toggleModal()); }
+      toggleModal: (modalState) => { dispatch(viewActions.toggleModal(modalState)); }
     }
   };
 };

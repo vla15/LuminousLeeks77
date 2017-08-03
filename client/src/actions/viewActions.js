@@ -15,9 +15,10 @@ viewActions.setViewQueueChoiceList = viewOption => {
   };  
 };
 
-viewActions.toggleModal = () => {
+viewActions.toggleModal = modalState => {
   return {
-    
+    type: actionTypes.TOGGLE_MODAL,
+    payload: !modalState
   };
 };
 
