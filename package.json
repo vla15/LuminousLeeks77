@@ -46,6 +46,8 @@
     "grunt-mocha-test": "^0.13.2",
     "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "ioredis": "^3.1.1",
+    "jsdom": "^11.1.0",
+    "jsdom-global": "^3.0.2",
     "knex": "^0.12.9",
     "knex-postgis": "^0.2.2",
     "mocha": "^3.2.0",
