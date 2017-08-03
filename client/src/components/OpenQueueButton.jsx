@@ -7,6 +7,7 @@ export const OpenQueueButton = props => {
       <Row>
         <Col xs={12} className="center">
           <Button
+            className="positive"
             block={true}
             onClick={() => { props.redux.dispatch.toggleQueue(props.redux.store.user.admin); }}
           >
