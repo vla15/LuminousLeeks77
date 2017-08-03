@@ -15,8 +15,9 @@ module.exports = function(grunt) {
           require: 'babel-register',
           reporter: 'spec'
         },
-        src: ['client/test/**/*.js'] 
+        src: ['server/test/**/*.js','client/test/**/*.js'] 
         // server/test/**/*.js',
+        // "test": "mocha --compilers js:babel-core/register -r jsdom-global/register"
       }
     },
 
