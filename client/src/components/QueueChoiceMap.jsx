@@ -46,7 +46,7 @@ export class QueueChoiceMap extends React.Component {
             centerAroundCurrentLocation={true}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            style={{ position: "fixed !important", height: "100%" }}
+            style={{ position: 'fixed !important', height: '100%' }}
             styles={this.props.mapStyles}
             scrollwheel={false}
             navigationControl={false}
@@ -58,7 +58,7 @@ export class QueueChoiceMap extends React.Component {
             defaultCenter={{lat: -33, lng: 151}}
           >
 
-          { this.props.redux.store.queueChoice.queueList.map(queue => {
+            { this.props.redux.store.queueChoice.queueList.map(queue => {
               return <Marker
                 key={queue.id}
                 title={queue.name}

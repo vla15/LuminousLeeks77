@@ -110,6 +110,7 @@ var sendSocketDequeueForCustomer = (userId, queueId) => {
       queue.set('queue_size', queue.get('queue_size') - 1);
       emitSocketMessage(socket, 'UPDATE_PARTY_INFO', { party_size: 1, first_name: '', phone_number: '', location: { lat: 37.7836676, lng: -122.4090455 } });
       emitSocketMessage(socket, 'GET_QUEUE_INFO_CUSTOMER', queue);
+      emitSocketMessage(socket, 'TOGGLE_MODAL', true);
     });
 };
 

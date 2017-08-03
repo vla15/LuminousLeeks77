@@ -57,10 +57,10 @@ export class CustomerMap extends React.Component {
             className='map'
           >
 
-          <Marker
-            name={'Queue'}
-            position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
-            icon={{ path: 'M0,0 0,16 16,16 16,0z', fillColor: colors(this.props.redux.store.queue.name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.queue.name) }}
+            <Marker
+              name={'Queue'}
+              position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
+              icon={{ path: 'M0,0 0,16 16,16 16,0z', fillColor: colors(this.props.redux.store.queue.name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.queue.name) }}
             />
 
             <Marker

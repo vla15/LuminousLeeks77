@@ -22,4 +22,11 @@ viewActions.setViewQueueChoiceList = viewOption => {
   };  
 };
 
+viewActions.toggleModal = modalState => {
+  return {
+    type: actionTypes.TOGGLE_MODAL,
+    payload: !modalState
+  };
+};
+
 module.exports = viewActions;

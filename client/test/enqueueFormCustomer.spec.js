@@ -6,7 +6,7 @@ import EnqueueFormCustomer from '../src/components/EnqueueFormCustomer.jsx';
 
 const setup = function () {
   const props = {
-  	redux: {}
+    redux: {}
   };
   return shallow(<EnqueueFormCustomer {...props}/>);
 };
