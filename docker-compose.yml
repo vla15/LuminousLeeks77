@@ -1,25 +1,3 @@
-# version: '3.3'
-# services: 
-#   queue-app: 
-#     image: sheydarezaee/queue-docker:queue-latest1
-#     depends_on: 
-#       - redis
-#       - postgres
-#     ports: 
-#       - 8080:3000
-#     links:
-#       - postgres
-#       - redis
-#   redis:
-#     image: redis:4.0.1
-#   postgres: 
-#     image: postgres:9.6.3
-#     ports: 
-#       - 5432:5432
-#     environment: 
-#       POSTGRES_USER: sheydarezaei
-#       POSTGRES_PASSWORD: ""
-#       POSTGRES_DB: thesis_devel
 version: '3'
 services:
   redis:

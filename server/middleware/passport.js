@@ -32,6 +32,7 @@ passport.use('local-signup', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 },
+
 (req, email, password, done) => {
   // check to see if there is any account with this email address
   return models.Profile.where({ email }).fetch()
@@ -133,7 +134,6 @@ passport.use('facebook', new FacebookStrategy({
 }));
 
 const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
-  // console.log('oauthProfile', oauthProfile);
   return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
     withRelated: ['profile']
   })
