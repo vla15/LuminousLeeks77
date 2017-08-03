@@ -7,6 +7,7 @@ export const EnqueueFormCustomer = props => {
       <Row>
         <Col xs={2}>
           <Button
+            className="neutral"
             onClick={() => {
               props.redux.dispatch.updatePartySize(props.redux.store.party.party_size - 1);
             }}
@@ -19,12 +20,18 @@ export const EnqueueFormCustomer = props => {
 
         </Col>
         <Col xs={2}>
-          <Button onClick={() => { props.redux.dispatch.updatePartySize(props.redux.store.party.party_size + 1); }}>
+          <Button
+            className="neutral"
+            onClick={() => {
+              props.redux.dispatch.updatePartySize(props.redux.store.party.party_size + 1);
+            }}
+            >
             +
           </Button>
         </Col>
         <Col xs={6}>
           <Button
+            className="positive"
             block={true}
             onClick={() => {
               props.redux.dispatch.enqueueCustomer(

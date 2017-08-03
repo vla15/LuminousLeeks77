@@ -11,14 +11,7 @@ export const PartyStats = props => {
     <Navbar className="party-stats">
       <Navbar.Text>
         <h6>
-          <span
-            style={{
-              "color":colors(props.redux.store.queue.name),
-              "font-size":"9px"
-            }}
-            >
-            &#9660;
-          </span>
+          <span style={{ "color":colors(props.redux.store.queue.name), "vertical-align":"middle" }}> &#9724;</span>
           &nbsp;&nbsp;
           {props.redux.store.queue.name}
           &nbsp;&nbsp;

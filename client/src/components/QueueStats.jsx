@@ -11,7 +11,7 @@ export const QueueStats = props => {
       <Navbar.Text>
         <h6>
           { props.redux.store.queue.name
-          ? <span style={{ "color":colors(props.redux.store.queue.name), "font-size":"9px" }}> &#9660;</span>
+          ? <span style={{ "color":colors(props.redux.store.queue.name), "vertical-align":"middle" }}> &#9724;</span>
           : <span></span> }
           &nbsp;&nbsp;
           {props.redux.store.queue.name}

@@ -9,6 +9,7 @@ export const PartyInfo = props => {
         <Row>
           <Col xs={12}>
             <Button
+              className="neutral"
               block={true}
               onClick={() => { props.redux.dispatch.dequeueCustomer(props.redux.store.queueChoice.queue_view, props.redux.store.party.id); }}
             >

@@ -17,7 +17,7 @@ export const Header = props => {
         <Navbar.Text>
           { !props.redux.store.user.admin && props.redux.store.queueChoice.queue_view && !props.redux.store.party.id
           ? <div><FontAwesome name="chevron-left" onClick={() => { props.redux.dispatch.setQueueView(null); }} /></div>
-          : <a id="brand" href="#">Q</a> }
+          : <a id="brand" href="#">enQue</a> }
         </Navbar.Text>
         <Navbar.Text pullRight={true}>
           { props.redux.store.user.admin

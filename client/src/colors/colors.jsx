@@ -5,11 +5,11 @@ export const colors = first_name => {
   if (initial === 'A') {
     var color = 'aqua'
   } else if (initial === 'B') {
-    var color = 'blue'
-  } else if (initial === 'C') {
-    var color = 'cyan'
-  } else if (initial === 'D') {
     var color = 'dodgerblue'
+  } else if (initial === 'C') {
+    var color = 'limegreen'
+  } else if (initial === 'D') {
+    var color = 'lightgray'
   } else if (initial === 'E') {
     var color = 'seagreen'
   } else if (initial === 'F') {
@@ -19,17 +19,17 @@ export const colors = first_name => {
   } else if (initial === 'H') {
     var color = 'hotpink'
   } else if (initial === 'I') {
-    var color = 'indianred'
+    var color = 'silver'
   } else if (initial === 'J') {
     var color = 'royalblue'
   } else if (initial === 'K') {
     var color = 'khaki'
   } else if (initial === 'L') {
-    var color = 'limegreen'
+    var color = 'cyan'
   } else if (initial === 'M') {
     var color = 'midnightblue'
   } else if (initial === 'O') {
-    var color = 'orange'
+    var color = 'teal'
   } else if (initial === 'P') {
     var color = 'purple'
   } else if (initial === 'Q') {
@@ -37,9 +37,9 @@ export const colors = first_name => {
   } else if (initial === 'R') {
     var color = 'red'
   } else if (initial === 'S') {
-    var color = 'silver'
+    var color = 'indianred'
   } else if (initial === 'T') {
-    var color = 'teal'
+    var color = 'orange'
   } else if (initial === 'U') {
     var color = 'peru'
   } else if (initial === 'V') {
