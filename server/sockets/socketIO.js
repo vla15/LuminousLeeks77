@@ -54,7 +54,7 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
     .then(result => {
       // res.send(result);
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.queue_view === parsaeInt(queueId) && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
+        if (party.attributes.id === null && party.attributes.queue_view === parseInt(queueId) && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
           models.Queue.where({ id: queueId }).fetch({
             withRelated: ['parties']
           })
