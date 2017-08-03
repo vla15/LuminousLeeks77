@@ -10,11 +10,9 @@ module.exports.updatePartyLocation = (req, res) => {
       models.Party.where({ id: req.params.partyid })
         .fetch()
         .then(party => {
-          console.log('party', party.serialize());
           SocketIO.sendQueueInfoToHostWithSocket(party.get('queue_id'));
         });
       res.status(200).send('successfully saved party location in database');
-      console.log('successfully saved party location in database');
     });
 };
 
@@ -80,9 +78,7 @@ module.exports.getPartyInfoCustomer = (req, res) => {
 };
 
 
-//remove not operator when launching
 module.exports.enqueue = (req, res, next) => {
-  console.log('IN ENQUEUE');
   //if (req.isAuthenticated()) {
   models.Profile.where({ id: req.params.userid })
     .fetch()
@@ -157,10 +153,10 @@ module.exports.enqueue = (req, res, next) => {
   // }
 };
 
+
 // http://localhost:3000/api/partyinfo/rm/1/5
 module.exports.dequeue = (req, res, next) => {
 
-  // console.log('testing dequeueeeee works------>')
   // if ( req.isAuthenticated()) {
   models.Party.where({id: req.params.partyid})
     .fetch()
