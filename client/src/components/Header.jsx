@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Navbar, Nav, NavItem, Row, Col, Grid, NavDropdown, MenuItem } from 'react-bootstrap';
 import { ViewToggle } from '../components/ViewToggle.jsx';
@@ -18,6 +19,12 @@ export const Header = props => {
           { !props.redux.store.user.admin && props.redux.store.queueChoice.queue_view && !props.redux.store.party.id
             ? <div><FontAwesome name="chevron-left" onClick={() => { props.redux.dispatch.setQueueView(null, props.redux.store.user.profile_id); }} /></div>
             : <a id="brand" href="#">enQue</a> }
+        </Navbar.Text>
+        &nbsp;&nbsp;
+        <Navbar.Text>
+          { props.redux.store.user.admin
+            ? <a id="brand" href="#">Host</a>
+            : <a id="brand" href="#"></a> }
         </Navbar.Text>
         <Navbar.Text pullRight={true}>
           { props.redux.store.user.admin
