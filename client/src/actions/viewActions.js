@@ -8,4 +8,11 @@ viewActions.setViewHost = viewOption => {
   };  
 };
 
+viewActions.setViewQueueChoiceList = viewOption => {
+  return {
+    type: actionTypes.SET_VIEW_QUEUE_CHOICE,
+    payload: viewOption
+  };  
+};
+
 module.exports = viewActions;

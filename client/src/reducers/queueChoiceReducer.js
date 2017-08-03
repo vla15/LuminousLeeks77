@@ -6,7 +6,7 @@ const queueChoiceReducer = (state = {queueList: [], queue_view: null}, action) =
       queueList: action.payload
     };
 
-  case 'SET_IS_ENQUEUED':
+  case 'SET_QUEUE_VIEW':
     return {
       ...state, 
       queue_view: action.payload

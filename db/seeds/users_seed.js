@@ -19,13 +19,13 @@ var generateRandomLongitutde = () => {
   var max = -122.51000;
   var min = -122.38000;
   return (Math.random() * (max - min) + min).toFixed(6);
-}
+};
 
 var generateRandomLatitude = () => {
   var max = 37.80778;
   var min = 37.71000;
   return (Math.random() * (max - min) + min).toFixed(6);
-}
+};
 
 let createAuthRecord = (knex, id) => {
   return knex('auths').insert({
@@ -154,7 +154,7 @@ exports.seed = (knex, Promise) => {
       });
     })
     .then(() => {
-      knex('auths').del()
+      knex('auths').del();
     })
     .then(()=> {
       let records = [];
