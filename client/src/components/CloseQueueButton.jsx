@@ -8,7 +8,7 @@ export const CloseQueueButton = props => {
         <Col xs={12}>
           <Button
             block={true}
-            onClick={() => { props.redux.dispatch.toggleQueue(1); }}
+            onClick={() => { props.redux.dispatch.toggleQueue(props.redux.store.user.admin); }}
           >
             Close Queue
           </Button>

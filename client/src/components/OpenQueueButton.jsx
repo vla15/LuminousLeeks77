@@ -8,7 +8,7 @@ export const OpenQueueButton = props => {
         <Col xs={12} className="center">
           <Button
             block={true}
-            onClick={() => { props.redux.dispatch.toggleQueue(1); }}
+            onClick={() => { props.redux.dispatch.toggleQueue(props.redux.store.user.admin); }}
           >
             Open Queue
           </Button>
