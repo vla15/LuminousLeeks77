@@ -8,20 +8,20 @@ import { colors } from '../colors/colors.jsx';
 
 export const PartyStats = props => {
   return (
-    <Navbar className="party-stats">
+    <Navbar className='party-stats'>
       <Navbar.Text>
         <h6>
-          <span style={{ "color":colors(props.redux.store.queue.name), "vertical-align":"middle" }}> &#9724;</span>
+          <span style={{ 'color': colors(props.redux.store.queue.name), 'vertical-align': 'middle' }}> &#9724;</span>
           &nbsp;&nbsp;
           {props.redux.store.queue.name}
           &nbsp;&nbsp;
           <span
-            className="blink"
+            className='blink'
             style={{
-              "background-color":colors(props.redux.store.party.first_name),
-              "border-radius":"100px",
-              "padding-left":"11px",
-              "font-size":"9px"
+              'background-color':colors(props.redux.store.party.first_name),
+              'border-radius': '100px',
+              'padding-left': '11px',
+              'font-size': '9px'
             }}
           >
           </span>

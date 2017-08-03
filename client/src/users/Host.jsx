@@ -18,7 +18,7 @@ class Host extends React.Component {
       <div className="host">
         <Header redux={this.props.redux} />
         {
-          this.props.redux.store.view === 'Queue Info'
+          this.props.redux.store.view.setView === 'Queue Info'
             ? (this.props.redux.store.queue.is_open === true
               ? <QueueOpen redux={this.props.redux} />
               : this.props.redux.store.queue.parties.length === 0

@@ -1,10 +1,29 @@
 import React from 'react';
-import { Navbar, Row, Col, Button } from 'react-bootstrap';
+import { Navbar, Row, Col, Button, Modal } from 'react-bootstrap';
+
 
 export const EnqueueFormCustomer = props => {
-  console.log('------EnqueueFormCustomer props', props)
   return (
     <Navbar className="enqueue-form-customer" fixedBottom={true}>
+      <Modal 
+        bsSize="small" 
+        show={props.redux.store.view.modalState}
+        onHide={ () => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}
+        keyboard={true}
+      >
+        <Modal.Body bsClass="modal-body">
+          <br></br>
+          <br></br>
+          You've been dequeued
+          <br></br>
+          <br></br>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className="modal-body-btn" onClick={() => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}>
+              OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Row>
         <Col xs={2}>
           <Button
@@ -26,7 +45,7 @@ export const EnqueueFormCustomer = props => {
             onClick={() => {
               props.redux.dispatch.updatePartySize(props.redux.store.party.party_size + 1);
             }}
-            >
+          >
             +
           </Button>
         </Col>

@@ -17,7 +17,12 @@ class QueueChoice extends React.Component {
     return (
       <div>
         <Header redux={this.props.redux}/>
-        <QueueChoiceList redux={this.props.redux}/>
+        {
+          this.props.redux.store.view.setView === 'Queue Info'
+            ? <QueueChoiceList redux={this.props.redux}/>
+            : <QueueChoiceMap redux={this.props.redux} />
+        }
+        
       </div>
     );
   }

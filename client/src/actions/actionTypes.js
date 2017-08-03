@@ -24,5 +24,7 @@ actionTypes.GO_TO_PROFILE = 'GO_TO_PROFILE';
 actionTypes.SET_QUEUE_VIEW = 'SET_QUEUE_VIEW';
 actionTypes.GET_QUEUE_CHOICE_LIST = 'GET_QUEUE_CHOICE_LIST';
 actionTypes.SET_VIEW_QUEUE_CHOICE = 'SET_VIEW_QUEUE_CHOICE';
+actionTypes.TOGGLE_MODAL = 'TOGGLE_MODAL';
+actionTypes.SET_VIEW_CUSTOMER = 'SET_VIEW_CUSTOMER';
 
 module.exports = actionTypes;

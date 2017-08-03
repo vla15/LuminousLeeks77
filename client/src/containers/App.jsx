@@ -41,13 +41,17 @@ const mapDispatchToProps = dispatch => {
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
 
       setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
+      setViewCustomer: (viewOption) => { dispatch(viewActions.setViewCustomer(viewOption)); },
+      
       setViewQueueChoiceList: (viewOption) => { dispatch(viewActions.setViewQueueChoiceList(viewOption)); },
       goToProfile: () => { dispatch(userActions.goToProfile()); },
 
       getQueueChoiceList: (user_id) => { dispatch(queueChoiceActions.getQueueChoiceList(user_id)); },
       setQueueView: (queue_id, user_id) => { dispatch(queueChoiceActions.setQueueView(queue_id, user_id)); },
 
-      testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
+      testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); },
+
+      toggleModal: (modalState) => { dispatch(viewActions.toggleModal(modalState)); }
     }
   };
 };
