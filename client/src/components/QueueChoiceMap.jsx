@@ -9,7 +9,33 @@ import { colors } from '../colors/colors.jsx';
 
 export class QueueChoiceMap extends React.Component {
 
-  constructor(props) { super(props); }
+  constructor(props) { 
+    super(props); 
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
+    };
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.onMapClicked = this.onMapClicked.bind(this);
+  }
+
+  onMarkerClick(props, marker, e) {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  }
+
+  onMapClicked(props) {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -51,7 +77,7 @@ export class QueueChoiceMap extends React.Component {
             scrollwheel={false}
             navigationControl={false}
             mapTypeControl={false}
-            zoomControl={true}
+            zoomControl={false}
             scaleControl={true}
             disableDoubleClickZoom={true}
             className="map"
@@ -60,6 +86,7 @@ export class QueueChoiceMap extends React.Component {
 
             { this.props.redux.store.queueChoice.queueList.map(queue => {
               return <Marker
+                onClick={this.onMarkerClick}
                 key={queue.id}
                 title={queue.name}
                 name={queue.name}
@@ -67,7 +94,13 @@ export class QueueChoiceMap extends React.Component {
                 position={{lat: queue.lat, lng: queue.lng}}
               />;
             }) }
-
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}>
+              <div>
+                {this.state.selectedPlace.name}
+              </div>
+            </InfoWindow>
             <Marker
               title={'Party'}
               name={'Party'}
@@ -85,7 +118,14 @@ export class QueueChoiceMap extends React.Component {
 
 QueueChoiceMap.defaultProps = { mapStyles: mapStyles };
 
+// let googleKey;
+// if (process.env.GOOGLE_MAP_KEY) {
+//   googleKey = process.env.GOOGLE_MAP_KEY
+// } else {
+//   googleKey = config.GOOGLE_MAP_KEY;
+// }
+
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw',
+  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo',
   version: '3.27'
 })(QueueChoiceMap);
