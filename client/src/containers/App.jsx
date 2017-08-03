@@ -23,7 +23,7 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch: {
       enqueueCustomer: (uid, qid, ps, fn, pn, lat, lng) => { dispatch(partyActions.enqueueCustomer(uid, qid, ps, fn, pn, lat, lng)); },
-      dequeueCustomer: (queue_id, party_id) => { dispatch(partyActions.dequeueCustomer(queue_id, party_id)); },
+      dequeueCustomer: (queue_id, party_id, user_id) => { dispatch(partyActions.dequeueCustomer(queue_id, party_id, user_id)); },
       getPartyInfo: (queue_id, user_id) => { dispatch(partyActions.getPartyInfo(queue_id, user_id)); },
       updatePhoneNumber: phoneNumber => { dispatch(partyActions.updatePhoneNumber(phoneNumber)); },
       updatePartySize: partySize => { dispatch(partyActions.updatePartySize(partySize)); },
@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => {
       updatePartyLocation: (party_id, lat, lng) => { dispatch(partyActions.updatePartyLocation(party_id, lat, lng)); },
 
       enqueueHost: (uid, qid, ps, fn, pn, lat, lng) => { dispatch(queueActions.enqueueHost(uid, qid, ps, fn, pn, lat, lng)); },
-      dequeueHost: (queue_id, party_id) => { dispatch(queueActions.dequeueHost(queue_id, party_id)); },
+      dequeueHost: (queue_id, party_id, user_id) => { dispatch(queueActions.dequeueHost(queue_id, party_id, user_id)); },
       getQueueInfoCustomer: queue_id => { dispatch(queueActions.getQueueInfoCustomer(queue_id)); },
       getQueueInfoHost: queue_id => { dispatch(queueActions.getQueueInfoHost(queue_id)); },
       toggleQueue: queue_id => { dispatch(queueActions.toggleQueue(queue_id)); },
@@ -41,10 +41,11 @@ const mapDispatchToProps = dispatch => {
       setUserInfo: () => { dispatch(userActions.setUserInfo()); },
 
       setViewHost: (viewOption) => { dispatch(viewActions.setViewHost(viewOption)); },
+      setViewQueueChoiceList: (viewOption) => { dispatch(viewActions.setViewQueueChoiceList(viewOption)); },
       goToProfile: () => { dispatch(userActions.goToProfile()); },
 
-      getQueueChoiceList: () => { dispatch(queueChoiceActions.getQueueChoiceList()); },
-      setQueueView: (queueId) => { dispatch(queueChoiceActions.setQueueView(queueId)); },
+      getQueueChoiceList: (user_id) => { dispatch(queueChoiceActions.getQueueChoiceList(user_id)); },
+      setQueueView: (queue_id, user_id) => { dispatch(queueChoiceActions.setQueueView(queue_id, user_id)); },
 
       testSocketConnect: () => { dispatch(testSocketActions.testSocketConnect()); }
     }

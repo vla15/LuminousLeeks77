@@ -103,10 +103,10 @@ module.exports.updateViewing = (req, res) => {
         throw profile;
       }
       //profile.set('socket_id', socketId);
-      return profile.save('queue_view', queue , { method: 'update' });
+      return profile.save('queue_view', queue, { method: 'update' });
     })
     .then(result => {
-      res.sendStatus(304);
+      res.sendStatus(200);
     })
     .catch(err => {
       console.log('no profile found');

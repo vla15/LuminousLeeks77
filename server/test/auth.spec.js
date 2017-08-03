@@ -32,7 +32,9 @@ describe('Authentication', () => {
       let response = httpMocks.createResponse();
       models.Profile.where({ email: 'admin@domain.com' }).fetch()
         .then(profile => {
+          console.log('======profile', profile)
           passport.authenticate('local-login', {}, (err, user, info) => {
+            console.log('user---->', user)
             expect(user).to.be.an('object');
             expect(user.id).to.equal(profile.get('id'));
             expect(user.email).to.equal(profile.get('email'));

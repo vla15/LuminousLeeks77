@@ -47,7 +47,7 @@ export class HostMap extends React.Component {
             centerAroundCurrentLocation={false}
             visible={true}
             onReady={this.mapReady.bind(this)}
-            style={{ position: "fixed !important", height: "100%" }}
+            style={{ position: 'fixed !important', height: '100%' }}
             styles={this.props.mapStyles}
             scrollwheel={false}
             navigationControl={false}
@@ -76,8 +76,8 @@ export class HostMap extends React.Component {
             }) }
           </Map>
           { this.props.redux.store.queue.is_open
-          ? <CloseQueueButton redux={this.props.redux} />
-          : <OpenQueueButton redux={this.props.redux} /> }
+            ? <CloseQueueButton redux={this.props.redux} />
+            : <OpenQueueButton redux={this.props.redux} /> }
         </div>
       );
     }

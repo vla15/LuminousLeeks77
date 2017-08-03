@@ -17,8 +17,8 @@ export const QueueStats = props => {
           {props.redux.store.queue.name}
           &nbsp;&nbsp;
           { props.redux.store.queue.is_open
-          ? <FontAwesome name="check-circle" className="green" />
-          : <FontAwesome name="plus-circle" className="red" />}
+            ? <FontAwesome name="check-circle" className="green" />
+            : <FontAwesome name="plus-circle" className="red" />}
         </h6>
       </Navbar.Text>
       <Navbar.Text pullRight={true}>

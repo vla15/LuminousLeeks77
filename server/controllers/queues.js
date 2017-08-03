@@ -13,6 +13,7 @@ module.exports.toggleQueue = (req, res, next) => {
     .then(queue => {
       res.result = queue;
       SocketIO.updatePartiesOnToggleQueue(req.params.queueid);
+      SocketIO.updateQueueList();
       res.send('ok');
     })
     .error(err => {

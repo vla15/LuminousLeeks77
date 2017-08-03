@@ -11,7 +11,7 @@ export const PartyInfo = props => {
             <Button
               className="neutral"
               block={true}
-              onClick={() => { props.redux.dispatch.dequeueCustomer(props.redux.store.queueChoice.queue_view, props.redux.store.party.id); }}
+              onClick={() => { props.redux.dispatch.dequeueCustomer(props.redux.store.queueChoice.queue_view, props.redux.store.party.id, props.redux.store.user.profile_id); }}
             >
               Dequeue
             </Button>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { QueueChoiceList } from '../queueChoiceViews/QueueChoiceList.jsx';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { Header } from '../components/Header.jsx';
 import QueueChoiceMap from '../components/QueueChoiceMap.jsx';
-
 
 class QueueChoice extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class QueueChoice extends React.Component {
   }
 
   componentDidMount() {
-    this.props.redux.dispatch.getQueueChoiceList();
+    this.props.redux.dispatch.getQueueChoiceList(this.props.redux.store.user.profile_id);
   }
 
   render() {

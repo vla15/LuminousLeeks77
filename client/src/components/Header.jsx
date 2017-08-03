@@ -16,8 +16,8 @@ export const Header = props => {
       <Navbar>
         <Navbar.Text>
           { !props.redux.store.user.admin && props.redux.store.queueChoice.queue_view && !props.redux.store.party.id
-          ? <div><FontAwesome name="chevron-left" onClick={() => { props.redux.dispatch.setQueueView(null); }} /></div>
-          : <a id="brand" href="#">enQue</a> }
+            ? <div><FontAwesome name="chevron-left" onClick={() => { props.redux.dispatch.setQueueView(null, props.redux.store.user.profile_id); }} /></div>
+            : <a id="brand" href="#">enQue</a> }
         </Navbar.Text>
         <Navbar.Text pullRight={true}>
           { props.redux.store.user.admin
@@ -25,16 +25,16 @@ export const Header = props => {
             : <div></div>}
           <a href="/profile">
             { props.redux.store.user.photo
-            ? <img src={props.redux.store.user.photo} style={photoStyle} className="img-circle"/>
-          : <FontAwesome name="user-o"/> }
+              ? <img src={props.redux.store.user.photo} style={photoStyle} className="img-circle"/>
+              : <FontAwesome name="user-o"/> }
           </a>
         </Navbar.Text>
       </Navbar>
       { !props.redux.store.user.admin && props.redux.store.party.id
-      ? <PartyStats redux={props.redux} />
-      : !props.redux.store.user.admin && !props.redux.store.queueChoice.queue_view
-      ? <QueueChoiceStats redux={props.redux} />
-      : <QueueStats redux={props.redux} /> }
+        ? <PartyStats redux={props.redux} />
+        : !props.redux.store.user.admin && !props.redux.store.queueChoice.queue_view
+          ? <QueueChoiceStats redux={props.redux} />
+          : <QueueStats redux={props.redux} /> }
     </div>
   );
 };

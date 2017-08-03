@@ -7,7 +7,7 @@ import { colors } from '../colors/colors.jsx'
 export const QueueChoiceListItem = props => {
   return (
     <Row
-      onClick={() => { props.redux.dispatch.setQueueView(props.queue.id);}}
+      onClick={ () => { props.redux.dispatch.setQueueView(props.queue.id, props.redux.store.user.profile_id); }}
       style={{"border-left": `10px solid ${colors(props.queue.name)}`}}
     >
       <Col xs={4}>
@@ -31,8 +31,8 @@ export const QueueChoiceListItem = props => {
       <Col xs={2}>
         <h6 className="text-center">
           { props.queue.is_open
-          ? <FontAwesome name="check-circle" className="green" />
-          : <FontAwesome name="plus-circle" className="red" />}
+            ? <FontAwesome name="check-circle" className="green" />
+            : <FontAwesome name="plus-circle" className="red" />}
         </h6>
       </Col>
     </Row>

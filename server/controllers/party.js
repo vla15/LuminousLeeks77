@@ -48,8 +48,6 @@ module.exports.getQueueIdBasedOnUserId = (req, res) => {
 //gets all parties for the host;
 //passing in queue Id and partyId
 module.exports.getPartyInfoCustomer = (req, res) => {
-  console.log('what is happening in getPartyInfoCustomer', req.params.queueid);
-  console.log('req.params.userid', req.params.userid);
   return models.Party
     .where({ profile_id: req.params.userid })
     .fetch({ require: true })
@@ -144,6 +142,7 @@ module.exports.enqueue = (req, res, next) => {
           SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
           SocketIO.sendSocketDataForParties(req.params.queueid);
           SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
+          SocketIO.updateQueueList();
           return next();
         })
         .error(err => {
@@ -206,6 +205,7 @@ module.exports.dequeue = (req, res, next) => {
           SocketIO.sendSocketDataForParties(req.params.queueid);
           SocketIO.updateQueueInfoForNonqueuedCustomers(req.params.queueid);
           SocketIO.sendQueueInfoToHostWithSocket(req.params.queueid);
+          SocketIO.updateQueueList();
           next();
         })
         .error(err => {
