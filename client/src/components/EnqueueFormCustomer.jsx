@@ -5,11 +5,16 @@ import { Navbar, Row, Col, Button, Modal } from 'react-bootstrap';
 export const EnqueueFormCustomer = props => {
   return (
     <Navbar className="enqueue-form-customer" fixedBottom={true}>
-      <Modal bsSize='small' show={props.redux.store.view.modalState}>
-        <Modal.Body>
-          You've been dequeued by the host.
+      <Modal 
+        bsSize="small" 
+        show={props.redux.store.view.modalState}
+        onHide={ () => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}
+        keyboard={true}
+      >
+        <Modal.Body bsClass="modal-body">
+          You've been dequeued by the host
         </Modal.Body>
-        <Button onClick={() => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}>
+        <Button className="modal-body-btn" block onClick={() => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}>
             OK
         </Button>
       </Modal>
