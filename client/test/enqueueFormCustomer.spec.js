@@ -13,7 +13,7 @@ const setup = function () {
 
 describe('EnqueueFormCustomer ..', () => {
 
-  it('passport passes false if email and password do not match', () => {
+  it('should EnqueueFormCustomer component', () => {
     const wrapper = setup();
     expect(wrapper.find('button').length).toBe(3);
   });
