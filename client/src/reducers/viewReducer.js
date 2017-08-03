@@ -11,6 +11,9 @@ const viewReducer = (state = initial, action) => {
       queueList: action.payload
     };
 
+  case 'SET_VIEW_CUSTOMER':
+    return action.payload;
+
   }
 
   return state;
