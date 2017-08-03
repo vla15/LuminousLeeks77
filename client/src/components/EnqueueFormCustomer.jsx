@@ -12,11 +12,17 @@ export const EnqueueFormCustomer = props => {
         keyboard={true}
       >
         <Modal.Body bsClass="modal-body">
-          You've been dequeued by the host
+          <br></br>
+          <br></br>
+          You've been dequeued
+          <br></br>
+          <br></br>
         </Modal.Body>
-        <Button className="modal-body-btn" block onClick={() => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}>
-            OK
-        </Button>
+        <Modal.Footer>
+          <Button className="modal-body-btn" onClick={() => { props.redux.dispatch.toggleModal(props.redux.store.view.modalState); }}>
+              OK
+          </Button>
+        </Modal.Footer>
       </Modal>
       <Row>
         <Col xs={2}>
