@@ -9,7 +9,33 @@ import { colors } from '../colors/colors.jsx';
 
 export class QueueChoiceMap extends React.Component {
 
-  constructor(props) { super(props); }
+  constructor(props) { 
+    super(props); 
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
+    };
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+    this.onMapClicked = this.onMapClicked.bind(this);
+  }
+
+  onMarkerClick(props, marker, e) {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  }
+
+  onMapClicked(props) {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -60,6 +86,7 @@ export class QueueChoiceMap extends React.Component {
 
             { this.props.redux.store.queueChoice.queueList.map(queue => {
               return <Marker
+                onClick={this.onMarkerClick}
                 key={queue.id}
                 title={queue.name}
                 name={queue.name}
@@ -67,7 +94,13 @@ export class QueueChoiceMap extends React.Component {
                 position={{lat: queue.lat, lng: queue.lng}}
               />;
             }) }
-
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}>
+              <div className="info-window">
+                {this.state.selectedPlace.name}
+              </div>
+            </InfoWindow>
             <Marker
               title={'Party'}
               name={'Party'}
