@@ -3,12 +3,17 @@ import { Navbar, Nav, NavItem, Row, Col, Grid, NavDropdown, MenuItem } from 'rea
 import { ViewToggle } from '../components/ViewToggle.jsx';
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
+import { colors } from '../colors/colors.jsx';
 
 export const QueueStats = props => {
   return (
     <Navbar className="queue-stats">
       <Navbar.Text>
         <h6>
+          { props.redux.store.queue.name
+            ? <span style={{ 'color': colors(props.redux.store.queue.name), 'vertical-align': 'middle' }}> &#9724;</span>
+            : <span></span> }
+          &nbsp;&nbsp;
           {props.redux.store.queue.name}
           &nbsp;&nbsp;
           { props.redux.store.queue.is_open

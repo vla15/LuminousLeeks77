@@ -31,7 +31,6 @@ export class HostMap extends React.Component {
     const service = new google.maps.places.PlacesService(map);
     window.map = map;
     window.google = google;
-    // this.props.updateCenter(this.props.currentCenter);
   }
 
   render() {
@@ -42,10 +41,9 @@ export class HostMap extends React.Component {
         <div>
           <Map
             google={this.props.google}
-            zoom={13}
+            zoom={12}
             disableDefaultUI={true}
             centerAroundCurrentLocation={false}
-            center={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
             visible={true}
             onReady={this.mapReady.bind(this)}
             style={{ position: 'fixed !important', height: '100%' }}
@@ -57,12 +55,13 @@ export class HostMap extends React.Component {
             scaleControl={true}
             disableDoubleClickZoom={true}
             className="map"
-            defaultCenter={{ lat: '37.759703', lng: '-122.428093' }}
+            defaultCenter={{lat: -33, lng: 151}}
           >
 
             <Marker
               name={'Queue'}
               position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
+              icon={{ path: 'M0,0 0,16 16,16 16,0z', fillColor: colors(this.props.redux.store.queue.name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.queue.name) }}
             />
 
             { this.props.redux.store.queue.parties.map(party => {

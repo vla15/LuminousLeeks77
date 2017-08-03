@@ -2,6 +2,7 @@ import React from 'react';
 import { QueueChoiceList } from '../queueChoiceViews/QueueChoiceList.jsx';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { Header } from '../components/Header.jsx';
+import QueueChoiceMap from '../components/QueueChoiceMap.jsx';
 
 class QueueChoice extends React.Component {
   constructor(props) {
@@ -16,7 +17,12 @@ class QueueChoice extends React.Component {
     return (
       <div>
         <Header redux={this.props.redux}/>
-        <QueueChoiceList redux={this.props.redux}/>
+        {
+          this.props.redux.store.view.setView === 'Queue Info'
+            ? <QueueChoiceList redux={this.props.redux}/>
+            : <QueueChoiceMap redux={this.props.redux} />
+        }
+        
       </div>
     );
   }

@@ -8,6 +8,13 @@ viewActions.setViewHost = viewOption => {
   };  
 };
 
+viewActions.setViewCustomer = viewOption => {
+  return {
+    type: actionTypes.SET_VIEW_CUSTOMER,
+    payload: viewOption
+  };  
+};
+
 viewActions.setViewQueueChoiceList = viewOption => {
   return {
     type: actionTypes.SET_VIEW_QUEUE_CHOICE,

@@ -7,12 +7,23 @@ const viewReducer = (state = {setView: initial, modalState: false}, action) => {
       ...state,
       setView: action.payload
     };
-      
 
+  case 'SET_VIEW_QUEUE_CHOICE':
+    return {
+      ...state,
+      setView: action.payload
+    };
+      
   case 'TOGGLE_MODAL':
     return {
       ...state,
       modalState: action.payload 
+    };
+
+  case 'SET_VIEW_CUSTOMER':
+    return {
+      ...state,
+      setView: action.payload
     };
   }
 

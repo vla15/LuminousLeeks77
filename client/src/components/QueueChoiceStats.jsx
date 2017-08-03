@@ -9,8 +9,6 @@ export const QueueChoiceStats = props => {
     <Navbar className="party-stats">
       <Navbar.Text>
         <h6>
-          <FontAwesome name="map-marker" />
-          &nbsp;&nbsp;
           San Francisco
         </h6>
       </Navbar.Text>
