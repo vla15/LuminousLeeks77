@@ -131,7 +131,7 @@ exports.seed = (knex, Promise) => {
     })
     .then(()=> {
       return knex('queues').insert({
-        name: 'Taqueria Castillo',
+        name: 'Amber',
         queue_size: 0,
         organization_id: 4,
         profile_id: 4,
