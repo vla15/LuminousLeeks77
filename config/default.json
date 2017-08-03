@@ -30,5 +30,9 @@
     "accountSID": "ACeec5fd64bc8f7a83cee60354533e872d",
     "authToken": "d0f325a281c7f969d8c9a405253a8c22",
     "number": "+14159686722"
+  },
+
+  "google_map": {
+    "GOOGLE_MAP_KEY": "AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo"
   }
 }

@@ -77,7 +77,7 @@ export class QueueChoiceMap extends React.Component {
             scrollwheel={false}
             navigationControl={false}
             mapTypeControl={false}
-            zoomControl={true}
+            zoomControl={false}
             scaleControl={true}
             disableDoubleClickZoom={true}
             className="map"
@@ -97,7 +97,7 @@ export class QueueChoiceMap extends React.Component {
             <InfoWindow
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}>
-              <div className="info-window">
+              <div>
                 {this.state.selectedPlace.name}
               </div>
             </InfoWindow>
@@ -117,7 +117,14 @@ export class QueueChoiceMap extends React.Component {
 
 QueueChoiceMap.defaultProps = { mapStyles: mapStyles };
 
+// let googleKey;
+// if (process.env.GOOGLE_MAP_KEY) {
+//   googleKey = process.env.GOOGLE_MAP_KEY
+// } else {
+//   googleKey = config.GOOGLE_MAP_KEY;
+// }
+
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyB7eJbU4lKofyW1dqgbLWx-MhaeRvYW_Uw',
+  apiKey: 'AIzaSyAyesbQMyKVVbBgKVi2g6VX7mop2z96jBo',
   version: '3.27'
 })(QueueChoiceMap);
