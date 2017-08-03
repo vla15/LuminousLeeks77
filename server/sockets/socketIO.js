@@ -54,7 +54,7 @@ var updateQueueInfoForNonqueuedCustomers = queueId => {
     .then(result => {
       // res.send(result);
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
+        if (party.attributes.id === null && party.attributes.queue_view === parseInt(queueId) && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
           models.Queue.where({ id: queueId }).fetch({
             withRelated: ['parties']
           })
@@ -118,25 +118,25 @@ var updateQueueList = () => {
   // get all the customers viewing the queue list
   var queues;
   models.Queue.fetchAll()
-  .then(result => {
-    queues = result;
-  })
-  .then(() => {
-    return models.Profile.query(qb => {
-      qb.select('*')
-        .from('profiles')
-        .whereNotNull('socket_id')
-        .whereNull('admin')
-        .whereNull('queue_view');
+    .then(result => {
+      queues = result;
     })
-    .fetchAll();
-  })
-  .then(profiles => {
-    //console.log(profiles);
-    profiles.forEach(profile => {
-      emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_CHOICE_LIST', queues);
+    .then(() => {
+      return models.Profile.query(qb => {
+        qb.select('*')
+          .from('profiles')
+          .whereNotNull('socket_id')
+          .whereNull('admin')
+          .whereNull('queue_view');
+      })
+        .fetchAll();
+    })
+    .then(profiles => { 
+      profiles.forEach(profile => {
+        //console.log(profile);
+        emitSocketMessage(profile.get('socket_id'), 'GET_QUEUE_CHOICE_LIST', queues);
+      });
     });
-  });
 };
 
 var updatePartiesOnToggleQueue = queueId => {
@@ -157,7 +157,8 @@ var updatePartiesOnToggleQueue = queueId => {
     })
     .then(result => {
       result.forEach(party => {
-        if (party.attributes.id === null && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
+        console.log(party.attributes.id, party.attributes.queue_view, party.attributes.socket_id);
+        if (party.attributes.id === null && party.attributes.queue_view === parseInt(queueId) && party.attributes.socket_id && (party.attributes.admin === null || party.attributes.admin === queueId)) {
           emitSocketMessage(party.attributes.socket_id, 'UPDATE_QUEUE_INFO_ON_TOGGLE_QUEUE', queueData);
         }
       });

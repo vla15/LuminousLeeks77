@@ -14,7 +14,7 @@ partyActions.getPartyInfo = (queue_id, user_id) => {
   };
 };
 
-partyActions.dequeueCustomer = (queue_id, party_id) => {
+partyActions.dequeueCustomer = (queue_id, party_id, user_id) => {
   return dispatch => {
     axios.delete(`/api/partyInfo/rm/${queue_id}/${party_id}`)
       .then(result => {
@@ -27,6 +27,7 @@ partyActions.dequeueCustomer = (queue_id, party_id) => {
           payload: result.data
         });
       });
+    axios.put(`api/profiles/viewing/${user_id}/${queue_id}`);
   };
 };
 
@@ -38,6 +39,9 @@ partyActions.enqueueCustomer = (user_id, queue_id, party_size, first_name, phone
           type: actionTypes.ENQUEUE_CUSTOMER,
           payload: result.data[0]
         });
+      })
+      .then(() => {
+        axios.put(`api/profiles/viewing/${user_id}/0`);
       });
   };
 };

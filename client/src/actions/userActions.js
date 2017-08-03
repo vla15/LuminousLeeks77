@@ -20,7 +20,7 @@ userActions.setUserInfo = () => {
         axios.get(`/api/partyinfo/hasparty/${user.data.id}`)
           .then(party => {
             dispatch({
-              type: actionTypes.SET_IS_ENQUEUED,
+              type: actionTypes.SET_QUEUE_VIEW,
               payload: party.data.queue_id
             });
           });
