@@ -41,7 +41,7 @@ export class CustomerMap extends React.Component {
         <div>
           <Map
             google={this.props.google}
-            zoom={13}
+            zoom={12}
             disableDefaultUI={true}
             centerAroundCurrentLocation={true}
             visible={true}
@@ -56,10 +56,12 @@ export class CustomerMap extends React.Component {
             disableDoubleClickZoom={true}
             className='map'
           >
+
           <Marker
             name={'Queue'}
             position={{ lat: this.props.redux.store.queue.lat, lng: this.props.redux.store.queue.lng }}
-          />
+            icon={{ path: 'M0,0 25,0 12.5,21.65', fillColor: colors(this.props.redux.store.queue.name), fillOpacity: 1, scale: 1, strokeColor: colors(this.props.redux.store.queue.name) }}
+            />
 
             <Marker
               title={'Party'}

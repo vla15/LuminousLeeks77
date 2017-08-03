@@ -10,7 +10,29 @@ export const PartyStats = props => {
   return (
     <Navbar className="party-stats">
       <Navbar.Text>
-        <h6>{props.redux.store.queue.name}&nbsp;&nbsp;<FontAwesome name="circle" className="green blink" /></h6>
+        <h6>
+          <span
+            style={{
+              "color":colors(props.redux.store.queue.name),
+              "font-size":"9px"
+            }}
+            >
+            &#9660;
+          </span>
+          &nbsp;&nbsp;
+          {props.redux.store.queue.name}
+          &nbsp;&nbsp;
+          <span
+            className="blink"
+            style={{
+              "background-color":colors(props.redux.store.party.first_name),
+              "border-radius":"100px",
+              "padding-left":"11px",
+              "font-size":"9px"
+            }}
+          >
+          </span>
+        </h6>
       </Navbar.Text>
       <Navbar.Text pullRight={true}>
         <h6>{moment(moment.utc(props.redux.store.party.wait_time) - moment())._i < 0 ? 0
