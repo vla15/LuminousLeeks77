@@ -12,7 +12,7 @@ export const QueueList = props => {
       <Row className="queue-list-header">
         <Col xs={3}>
           <h6>
-            Name
+            Party Name
           </h6>
         </Col>
         <Col xs={2}>
