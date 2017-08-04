@@ -78,6 +78,7 @@ export class HostMap extends React.Component {
             navigationControl={false}
             mapTypeControl={false}
             zoomControl={true}
+            clickableIcons={true}
             scaleControl={true}
             disableDoubleClickZoom={true}
             className="map"

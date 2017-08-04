@@ -53,6 +53,7 @@ export class CustomerMap extends React.Component {
             mapTypeControl={false}
             zoomControl={false}
             scaleControl={false}
+            clickableIcons={true}
             disableDoubleClickZoom={true}
             className='map'
           >
