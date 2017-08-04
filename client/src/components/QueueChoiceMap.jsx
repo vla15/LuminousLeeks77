@@ -90,7 +90,6 @@ export class QueueChoiceMap extends React.Component {
                 key={queue.id}
                 title={queue.name}
                 name={queue.name}
-                redux={this.props.redux}
                 icon={{ path: 'M0,0 0,16 16,16 16,0z', fillColor: colors(queue.name), fillOpacity: 1, scale: 1, strokeColor: colors(queue.name) }}
                 position={{lat: queue.lat, lng: queue.lng}}
               />;
