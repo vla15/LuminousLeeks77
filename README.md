@@ -33,11 +33,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 ## Usage
 
 > Some usage instructions
-How to use this thing
-Screencast of adding to queue
-Pictures
-Get Shyan on this
 
+Demo
+![](http://i.imgur.com/G0Dvfos.gif?raw=true)
+
+Host View
+![](http://i.imgur.com/mB5M539.gif?raw=true)
 
 
 ## Requirements
